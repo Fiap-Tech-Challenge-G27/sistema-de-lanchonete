@@ -24,4 +24,4 @@ services:
       - 5432:5432
     volumes:
       - .docker/postgres/data:/var/lib/postgresql/data
-      - .docker/database_structure.sql:/docker-entrypoint-initdb.d/database_structure.sql
+      # - .docker/database_structure.sql:/docker-entrypoint-initdb.d/database_structure.sql

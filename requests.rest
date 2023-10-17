@@ -2,5 +2,35 @@
 @port = 3000
 @host = {{baseUrl}}:{{port}}
 
-### Get
-GET {{host}}/
+### Post new category
+POST {{host}}/categories
+Content-Type: application/json
+
+{
+    "name": "Food Item",
+    "slug": "food",
+    "description": "Category 1 description"
+}
+
+### Gel all categoris
+GET {{host}}/categories
+
+### Get category by slug
+GET {{host}}/categories/food
+
+### Post new product
+POST {{host}}/products
+Content-Type: application/json
+
+{
+    "name": "Product 1",
+    "slug": "product-1",
+    "description": "Product 1 description",
+    "price": 100,
+    "quantity": 100,
+    "categoryId": "37b656f2-db16-4521-905d-b31893503b13",
+    "status": "active"
+}
+
+### Get all products
+GET {{host}}/products
