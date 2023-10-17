@@ -15,8 +15,15 @@ export class ProductsService {
     private readonly productRepository: IProductRepository,
   ) {}
   async create(createProductDto: CreateProductDto) {
-    const { name, description, categoryId, price, stock, imageUrls, status } =
-      createProductDto;
+    const {
+      name,
+      description,
+      categoryId,
+      price,
+      quantity,
+      imageUrls,
+      status,
+    } = createProductDto;
 
     const category = await this.categoryRepository.findCategoryById(categoryId);
 
@@ -25,7 +32,7 @@ export class ProductsService {
       description,
       category,
       price,
-      stock,
+      quantity,
       status,
     );
 
