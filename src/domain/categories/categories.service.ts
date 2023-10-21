@@ -36,6 +36,11 @@ export class CategoriesService implements ICategoriesService {
 
   async findBySlug(slug: string) {
     const category = this.categoryRepository.findCategoryBySlug(slug);
+
+    if (!category) {
+      throw new HttpException('Category not found', 404);
+    }
+
     return category;
   }
 
