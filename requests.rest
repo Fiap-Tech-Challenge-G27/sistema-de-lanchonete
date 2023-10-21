@@ -7,8 +7,8 @@ POST {{host}}/categories
 Content-Type: application/json
 
 {
-    "name": "Food Item",
-    "slug": "food",
+    "name": "ent",
+    "slug": "entradas",
     "description": "Category 1 description"
 }
 
@@ -17,6 +17,16 @@ GET {{host}}/categories
 
 ### Get category by slug
 GET {{host}}/categories/food
+
+### Update category
+PATCH {{host}}/categories/14e5ddd7-8e12-4739-b4c6-339a347fbb1a
+Content-Type: application/json
+
+{
+    "name": "Food Itens Category",
+    "slug": "food",
+    "description": "Category produts of food"
+}
 
 ### Post new product
 POST {{host}}/products
@@ -27,10 +37,13 @@ Content-Type: application/json
     "slug": "product-1",
     "description": "Product 1 description",
     "price": 100,
-    "quantity": 100,
     "categoryId": "37b656f2-db16-4521-905d-b31893503b13",
     "status": "active"
 }
 
 ### Get all products
 GET {{host}}/products
+
+### Delete product
+
+DELETE {{host}}/products/12321

@@ -22,8 +22,6 @@ export class ProductModelRepository implements IProductRepository {
   }
 
   async findAllProducts() {
-    // get product and category name
-
     const listOfProducts = await this.productRepository.find({
       relations: ['category'],
       loadEagerRelations: false,
@@ -39,5 +37,45 @@ export class ProductModelRepository implements IProductRepository {
         product.status,
       );
     });
+  }
+
+  async findProductById(id: string) {
+    const productModel = await this.productRepository.findOne({
+      where: { id },
+      relations: ['category'],
+      loadEagerRelations: false,
+    });
+
+    if (!productModel) {
+      return null;
+    }
+
+    return new Product(
+      productModel.name,
+      productModel.description,
+      productModel.category,
+      productModel.price,
+      productModel.quantity,
+      productModel.status,
+    );
+  }
+
+  async deleteProduct(id: string) {
+    await this.productRepository.delete(id);
+  }
+
+  async updateProduct(id: string, product: Product) {
+    const productModel = await this.productRepository.findOne({
+      where: { id },
+    });
+
+    productModel.name = product.name;
+    productModel.description = product.description;
+    productModel.category = <any>product.category;
+    productModel.price = product.price;
+    productModel.quantity = product.quantity;
+    productModel.status = product.status;
+
+    await this.productRepository.save(productModel);
   }
 }

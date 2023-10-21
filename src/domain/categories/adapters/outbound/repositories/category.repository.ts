@@ -11,42 +11,70 @@ export class CategoryModelRepository implements ICategoryRepository {
     @InjectRepository(CategoryModel)
     private readonly categoryRepository: Repository<CategoryModel>,
   ) {}
-  async createCategory(category: Category) {
+  async createCategory(category: Category): Promise<Category> {
+    console.log('category', category);
+
     const categoryModel = new CategoryModel();
     categoryModel.name = category.name;
     categoryModel.slug = category.slug;
     categoryModel.description = category.description;
 
-    await this.categoryRepository.save(categoryModel);
+    const categoryCreated = await this.categoryRepository.save(categoryModel);
+
+    return this.modelToEntity(categoryCreated);
   }
 
   async findAllCategories() {
-    return await this.categoryRepository.find();
+    const categories = await this.categoryRepository.find();
+
+    return categories.map((category) => this.modelToEntity(category));
   }
 
   async findCategoryById(id: string) {
-    const category = await this.categoryRepository.findOne({
-      where: { id },
-    });
-    return category;
+    try {
+      const category = await this.categoryRepository.findOne({
+        where: { id },
+      });
+
+      return this.modelToEntity(category);
+    } catch (error) {
+      return null;
+    }
   }
 
   async findCategoryBySlug(slug: string) {
-    const category = await this.categoryRepository.findOne({
-      where: { slug },
-    });
-    return category;
+    try {
+      const category = await this.categoryRepository.findOne({
+        where: { slug },
+      });
+      return this.modelToEntity(category);
+    } catch (error) {
+      return null;
+    }
   }
-  async updateCategory(category: Category): Promise<Category> {
+  async updateCategory(id: string, category: Category): Promise<Category> {
     const categoryModel = await this.categoryRepository.findOne({
-      where: { id: category.id },
+      where: { id },
     });
 
     categoryModel.name = category.name;
+    categoryModel.slug = category.slug;
     categoryModel.description = category.description;
 
     await this.categoryRepository.save(categoryModel);
 
-    return categoryModel;
+    return this.modelToEntity(categoryModel);
+  }
+
+  modelToEntity(categoryModel: CategoryModel): Category {
+    const category = new Category(
+      categoryModel.name,
+      categoryModel.slug,
+      categoryModel.description,
+    );
+    category.id = categoryModel.id;
+    category.createdAt = categoryModel.createdAt;
+    category.updatedAt = categoryModel.updatedAt;
+    return category;
   }
 }

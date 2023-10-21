@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { HttpException, Inject, Injectable } from '@nestjs/common';
 import { CreateCategoryDto } from './adapters/inbound/dto/create-category.dto';
 import { UpdateCategoryDto } from './adapters/inbound/dto/update-category.dto';
 import { Category } from './entities/category.entity';
@@ -18,7 +18,7 @@ export class CategoriesService implements ICategoriesService {
       await this.categoryRepository.findCategoryBySlug(slug);
 
     if (categoryAlreadyExists) {
-      return categoryAlreadyExists;
+      return new HttpException('Category already exists with this slug', 409);
     }
 
     const category = new Category(name, slug, description);
@@ -45,20 +45,22 @@ export class CategoriesService implements ICategoriesService {
     const categoryExists = await this.categoryRepository.findCategoryById(id);
 
     if (!categoryExists) {
-      throw new Error("Category doesn't exists");
+      throw new HttpException('Category not found', 404);
     }
 
-    const categoryAlreadyExists =
+    const slugAlreadyExists =
       await this.categoryRepository.findCategoryBySlug(slug);
 
-    if (categoryAlreadyExists) {
-      return categoryAlreadyExists;
+    if (slugAlreadyExists && slugAlreadyExists.id !== id) {
+      throw new HttpException('Category already exists with this slug', 409);
     }
 
     const category = new Category(name, slug, description);
 
-    const updatedCategory =
-      await this.categoryRepository.updateCategory(category);
+    const updatedCategory = await this.categoryRepository.updateCategory(
+      id,
+      category,
+    );
 
     return updatedCategory;
   }
