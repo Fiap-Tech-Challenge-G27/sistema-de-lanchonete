@@ -15,25 +15,24 @@ export class ProductsService implements IProductService {
     private readonly productRepository: IProductRepository,
   ) {}
   async create(createProductDto: CreateProductDto) {
-    const {
-      name,
-      description,
-      categoryId,
-      price,
-      quantity,
-      imageUrls,
-      status,
-    } = createProductDto;
+    const { name, description, categoryId, price, quantity, status } =
+      createProductDto;
+
+    console.log(categoryId);
 
     const category = await this.categoryRepository.findCategoryById(categoryId);
+
+    if (!category) {
+      throw new HttpException('Category not found', 404);
+    }
 
     const product = new Product(
       name,
       description,
-      category,
       price,
       quantity,
       status,
+      category,
     );
 
     const createdProduct = await this.productRepository.createProduct(product);
@@ -53,15 +52,8 @@ export class ProductsService implements IProductService {
       throw new HttpException('Product not found', 404);
     }
 
-    const {
-      name,
-      description,
-      categoryId,
-      price,
-      quantity,
-      imageUrls,
-      status,
-    } = updateProductDto;
+    const { name, description, categoryId, price, quantity, status } =
+      updateProductDto;
 
     const category = await this.categoryRepository.findCategoryById(categoryId);
 

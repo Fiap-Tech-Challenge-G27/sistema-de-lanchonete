@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { CategoryModel } from '../models/category.model';
 import { Category } from '../../../entities/category.entity';
 import { ICategoryRepository } from '../../../ports/ICategoryRepository';
+import { Product } from 'src/domain/products/entities/product.entity';
 
 @Injectable()
 export class CategoryModelRepository implements ICategoryRepository {
@@ -75,6 +76,21 @@ export class CategoryModelRepository implements ICategoryRepository {
     category.id = categoryModel.id;
     category.createdAt = categoryModel.createdAt;
     category.updatedAt = categoryModel.updatedAt;
+
+    if (categoryModel.products) {
+      category.products = categoryModel.products.map((product) => {
+        const newProduct = new Product(
+          product.name,
+          product.description,
+          product.price,
+          product.quantity,
+          product.status,
+        );
+
+        newProduct.id = product.id;
+        return newProduct;
+      });
+    }
     return category;
   }
 }

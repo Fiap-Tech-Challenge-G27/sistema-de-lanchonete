@@ -21,7 +21,13 @@ export class ProductModelRepository implements IProductRepository {
 
     const productCreated = await this.productRepository.save(productModel);
 
-    return this.modelToEntity(productCreated);
+    const getProduct = await this.productRepository.findOne({
+      where: { id: productCreated.id },
+      relations: ['category'],
+      loadEagerRelations: false,
+    });
+
+    return this.modelToEntity(getProduct);
   }
 
   async findAllProducts(): Promise<Product[]> {
@@ -72,14 +78,14 @@ export class ProductModelRepository implements IProductRepository {
     const product = new Product(
       productModel.name,
       productModel.description,
+      productModel.price,
+      productModel.quantity,
+      productModel.status,
       new Category(
         productModel.category.name,
         productModel.category.slug,
         productModel.category.description,
       ),
-      productModel.price,
-      productModel.quantity,
-      productModel.status,
     );
     product.id = productModel.id;
     product.createdAt = productModel.createdAt;

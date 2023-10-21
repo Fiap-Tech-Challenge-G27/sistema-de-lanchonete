@@ -27,6 +27,7 @@ export class ProductModel {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
     orphanedRowAction: 'delete',
+    nullable: false,
   })
   @JoinColumn({ name: 'category_id' })
   category: CategoryModel;
@@ -51,6 +52,9 @@ export class ProductModel {
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
+
+  @DeleteDateColumn({ name: 'deleted_at' })
+  deletedAt?: Date;
 
   constructor(
     name?: string,
