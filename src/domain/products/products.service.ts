@@ -18,8 +18,6 @@ export class ProductsService implements IProductService {
     const { name, description, categoryId, price, quantity, status } =
       createProductDto;
 
-    console.log(categoryId);
-
     const category = await this.categoryRepository.findCategoryById(categoryId);
 
     if (!category) {

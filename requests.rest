@@ -8,9 +8,9 @@ POST {{host}}/categories
 Content-Type: application/json
 
 {
-    "name": "ent",
-    "slug": "entradas",
-    "description": "Category 1 description"
+    "name": "Food",
+    "slug": "food",
+    "description": "Food description"
 }
 
 ### Gel all categories
@@ -33,7 +33,7 @@ Content-Type: application/json
 ### Post new product
 # @prompt productName
 
-@categoryId = {{getAllCategories.response.body.$[0].id}}
+@categoryId = {{getAllCategories.response.body.$[1].id}}
 POST {{host}}/products
 Content-Type: application/json
 
@@ -50,4 +50,4 @@ Content-Type: application/json
 GET {{host}}/products
 
 ### Delete product
-DELETE {{host}}/products/6af8993f-c935-41a1-a542-a1e5bfebb01a
+DELETE {{host}}/products/60900816-7be1-44b6-ad7d-9a9e99c80998

@@ -13,8 +13,6 @@ export class CategoryModelRepository implements ICategoryRepository {
     private readonly categoryRepository: Repository<CategoryModel>,
   ) {}
   async createCategory(category: Category): Promise<Category> {
-    console.log('category', category);
-
     const categoryModel = new CategoryModel();
     categoryModel.name = category.name;
     categoryModel.slug = category.slug;

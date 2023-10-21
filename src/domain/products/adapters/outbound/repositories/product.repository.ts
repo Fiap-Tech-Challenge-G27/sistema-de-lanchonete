@@ -54,7 +54,7 @@ export class ProductModelRepository implements IProductRepository {
   }
 
   async deleteProduct(id: string) {
-    await this.productRepository.delete(id);
+    await this.productRepository.softDelete(id);
   }
 
   async updateProduct(id: string, product: Product): Promise<Product> {
