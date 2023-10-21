@@ -47,10 +47,10 @@ export class ProductModel {
   quantity: number;
 
   @CreateDateColumn({ name: 'created_at' })
-  createdAt: string;
+  createdAt: Date;
 
   @UpdateDateColumn({ name: 'updated_at' })
-  updatedAt: string;
+  updatedAt: Date;
 
   constructor(
     name?: string,

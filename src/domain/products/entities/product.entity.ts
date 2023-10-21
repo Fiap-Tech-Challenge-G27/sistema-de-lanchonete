@@ -2,7 +2,7 @@ import { Category } from 'src/domain/categories/entities/category.entity';
 import { ProductImage } from './productImage.entity';
 
 export class Product {
-  id: number;
+  id: string;
   name: string;
   description: string;
   category: Category;

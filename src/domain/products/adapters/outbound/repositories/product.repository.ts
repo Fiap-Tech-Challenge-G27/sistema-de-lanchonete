@@ -3,13 +3,14 @@ import { Product } from 'src/domain/products/entities/product.entity';
 import { IProductRepository } from 'src/domain/products/ports/IProductRepository';
 import { ProductModel } from '../models/product.model';
 import { Repository } from 'typeorm';
+import { Category } from 'src/domain/categories/entities/category.entity';
 
 export class ProductModelRepository implements IProductRepository {
   constructor(
     @InjectRepository(ProductModel)
     private readonly productRepository: Repository<ProductModel>,
   ) {}
-  async createProduct(product: Product) {
+  async createProduct(product: Product): Promise<Product> {
     const productModel = new ProductModel();
     productModel.name = product.name;
     productModel.description = product.description;
@@ -18,53 +19,39 @@ export class ProductModelRepository implements IProductRepository {
     productModel.quantity = product.quantity;
     productModel.status = product.status;
 
-    await this.productRepository.save(productModel);
+    const productCreated = await this.productRepository.save(productModel);
+
+    return this.modelToEntity(productCreated);
   }
 
-  async findAllProducts() {
+  async findAllProducts(): Promise<Product[]> {
     const listOfProducts = await this.productRepository.find({
       relations: ['category'],
       loadEagerRelations: false,
     });
 
-    return listOfProducts.map((product) => {
-      return new Product(
-        product.name,
-        product.description,
-        product.category,
-        product.price,
-        product.quantity,
-        product.status,
-      );
-    });
+    return listOfProducts.map((product) => this.modelToEntity(product));
   }
 
-  async findProductById(id: string) {
-    const productModel = await this.productRepository.findOne({
-      where: { id },
-      relations: ['category'],
-      loadEagerRelations: false,
-    });
+  async findProductById(id: string): Promise<Product> {
+    try {
+      const productModel = await this.productRepository.findOne({
+        where: { id },
+        relations: ['category'],
+        loadEagerRelations: false,
+      });
 
-    if (!productModel) {
+      return this.modelToEntity(productModel);
+    } catch (error) {
       return null;
     }
-
-    return new Product(
-      productModel.name,
-      productModel.description,
-      productModel.category,
-      productModel.price,
-      productModel.quantity,
-      productModel.status,
-    );
   }
 
   async deleteProduct(id: string) {
     await this.productRepository.delete(id);
   }
 
-  async updateProduct(id: string, product: Product) {
+  async updateProduct(id: string, product: Product): Promise<Product> {
     const productModel = await this.productRepository.findOne({
       where: { id },
     });
@@ -76,6 +63,27 @@ export class ProductModelRepository implements IProductRepository {
     productModel.quantity = product.quantity;
     productModel.status = product.status;
 
-    await this.productRepository.save(productModel);
+    const productUpdated = await this.productRepository.save(productModel);
+
+    return this.modelToEntity(productUpdated);
+  }
+
+  modelToEntity(productModel: ProductModel): Product {
+    const product = new Product(
+      productModel.name,
+      productModel.description,
+      new Category(
+        productModel.category.name,
+        productModel.category.slug,
+        productModel.category.description,
+      ),
+      productModel.price,
+      productModel.quantity,
+      productModel.status,
+    );
+    product.id = productModel.id;
+    product.createdAt = productModel.createdAt;
+    product.updatedAt = productModel.updatedAt;
+    return product;
   }
 }
