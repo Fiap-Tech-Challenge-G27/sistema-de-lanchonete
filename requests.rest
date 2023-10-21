@@ -3,34 +3,51 @@
 @host = {{baseUrl}}:{{port}}
 
 ### Post new category
+# @name newCategory
 POST {{host}}/categories
 Content-Type: application/json
 
 {
-    "name": "Food Item",
+    "name": "Food",
     "slug": "food",
-    "description": "Category 1 description"
+    "description": "Food description"
 }
 
-### Gel all categoris
+### Gel all categories
+# @name getAllCategories
 GET {{host}}/categories
 
 ### Get category by slug
 GET {{host}}/categories/food
 
+### Update category
+PATCH {{host}}/categories/63337e86-d11f-4fd6-9319-b558c225ff32
+Content-Type: application/json
+
+{
+    "name": "Food Category",
+    "slug": "food",
+    "description": "Category produts of food"
+}
+
 ### Post new product
+# @prompt productName
+
+@categoryId = {{getAllCategories.response.body.$[1].id}}
 POST {{host}}/products
 Content-Type: application/json
 
 {
-    "name": "Product 1",
-    "slug": "product-1",
-    "description": "Product 1 description",
+    "name": "{{productName}}",
+    "description": "{{productName}} description",
     "price": 100,
-    "quantity": 100,
-    "categoryId": "37b656f2-db16-4521-905d-b31893503b13",
+    "quantity": 10,
+    "categoryId": "{{categoryId}}",
     "status": "active"
 }
 
 ### Get all products
 GET {{host}}/products
+
+### Delete product
+DELETE {{host}}/products/60900816-7be1-44b6-ad7d-9a9e99c80998

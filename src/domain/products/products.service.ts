@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { HttpException, Inject, Injectable } from '@nestjs/common';
 import { CreateProductDto } from './adapters/inbound/dtos/create-product.dto';
 import { UpdateProductDto } from './adapters/inbound/dtos/update-product.dto';
 import { IProductService } from './ports/IProductService';
@@ -7,7 +7,7 @@ import { ICategoryRepository } from '../categories/ports/ICategoryRepository';
 import { IProductRepository } from './ports/IProductRepository';
 
 @Injectable()
-export class ProductsService {
+export class ProductsService implements IProductService {
   constructor(
     @Inject(ICategoryRepository)
     private readonly categoryRepository: ICategoryRepository,
@@ -15,25 +15,22 @@ export class ProductsService {
     private readonly productRepository: IProductRepository,
   ) {}
   async create(createProductDto: CreateProductDto) {
-    const {
-      name,
-      description,
-      categoryId,
-      price,
-      quantity,
-      imageUrls,
-      status,
-    } = createProductDto;
+    const { name, description, categoryId, price, quantity, status } =
+      createProductDto;
 
     const category = await this.categoryRepository.findCategoryById(categoryId);
+
+    if (!category) {
+      throw new HttpException('Category not found', 404);
+    }
 
     const product = new Product(
       name,
       description,
-      category,
       price,
       quantity,
       status,
+      category,
     );
 
     const createdProduct = await this.productRepository.createProduct(product);
@@ -47,10 +44,39 @@ export class ProductsService {
   }
 
   async update(id: string, updateProductDto: UpdateProductDto) {
-    return `This action updates a #${id} product`;
+    const product = await this.productRepository.findProductById(id);
+
+    if (!product) {
+      throw new HttpException('Product not found', 404);
+    }
+
+    const { name, description, categoryId, price, quantity, status } =
+      updateProductDto;
+
+    const category = await this.categoryRepository.findCategoryById(categoryId);
+
+    product.name = name;
+    product.description = description;
+    product.category = category;
+    product.price = price;
+    product.quantity = quantity;
+    product.status = status;
+
+    const updatedProduct = await this.productRepository.updateProduct(
+      id,
+      product,
+    );
+
+    return updatedProduct;
   }
 
   async remove(id: string) {
-    return `This action removes a #${id} product`;
+    const product = await this.productRepository.findProductById(id);
+
+    if (!product) {
+      throw new HttpException('Product not found', 404);
+    }
+
+    return await this.productRepository.deleteProduct(id);
   }
 }
