@@ -12,10 +12,10 @@ export class CustomerModel {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ name: 'name', unique: false, length: 100, nullable: true })
+  @Column({ name: 'name', unique: false, length: 100, nullable: false })
   name: string;
 
-  @Column({ name: 'email', unique: true, length: 100, nullable: true })
+  @Column({ name: 'email', unique: true, length: 100, nullable: false })
   email: string;
 
   @Column({ name: 'cpf', unique: true, length: 11, nullable: false })
