@@ -1,14 +1,12 @@
 import { Category } from 'src/domain/categories/entities/category.entity';
-import { ProductImage } from './productImage.entity';
 
 export class Product {
-  id: number;
+  id: string;
   name: string;
   description: string;
   category: Category;
   price: number;
   quantity: number;
-  imageUrls: ProductImage[];
   status: string;
   createdAt: Date;
   updatedAt: Date;
@@ -16,10 +14,10 @@ export class Product {
   constructor(
     name: string,
     description: string,
-    category: Category,
     price: number,
     quantity: number,
     status: string,
+    category?: Category,
   ) {
     this.name = name;
     this.description = description;

@@ -4,6 +4,5 @@ export class CreateProductDto {
   categoryId: string;
   price: number;
   quantity: number;
-  imageUrls: string[];
   status: string;
 }
