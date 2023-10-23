@@ -4,8 +4,9 @@ import { UpdateCustomerDto } from '../adapters/inbound/dto/update-customer.dto';
 export interface ICustomersService {
   create(createCustomeDto: CreateCustomerDto);
   findAll();
-  findOne(id: string);
-  update(id: string, updateCustomeDto: UpdateCustomerDto);
+  findOne(cpf: string);
+  remove(cpf: string);
+  update(cpf: string, updateCustomeDto: UpdateCustomerDto);
 }
 
 export const ICustomersService = Symbol('ICustomersService');
