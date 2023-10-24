@@ -60,8 +60,11 @@ Content-Type: application/json
 {
     "name": "Hugo Marques",
     "email": "hugo@gmail.com",
-    "cpf": "12345678912"
+    "cpf": "1234"
 }
 
 ### Get customer  by cpf
 GET {{host}}/customers/12345678912
+
+### Get all customers
+GET {{host}}/customers

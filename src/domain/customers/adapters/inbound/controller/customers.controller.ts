@@ -23,7 +23,7 @@ export class CustomersController {
 
   @Get(':cpf')
   findOne(@Param('cpf') cpf: string) {
-    return this.customersService.findOne(cpf);
+    return this.customersService.findCustomerByCpf(cpf);
   }
 
   @Patch(':cpf')
