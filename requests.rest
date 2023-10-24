@@ -51,3 +51,20 @@ GET {{host}}/products
 
 ### Delete product
 DELETE {{host}}/products/60900816-7be1-44b6-ad7d-9a9e99c80998
+
+### Post new customer
+# @name newCustomer
+POST {{host}}/customers
+Content-Type: application/json
+
+{
+    "name": "Hugo Marques",
+    "email": "hugomarques@gmail.com",
+    "cpf": "12345678912"
+}
+
+### Get customer  by cpf
+GET {{host}}/customers/
+
+### Get all customers
+GET {{host}}/customers
