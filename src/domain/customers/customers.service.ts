@@ -24,7 +24,7 @@ export class CustomersService implements ICustomersService {
       return new HttpException('Customer already exists with this cpf', 409);
     }
 
-    const customer = new Customer(name, cpf, email);
+    const customer = new Customer(name, email, cpf);
 
     const createdCustomer =
       await this.customerRepository.createCustomer(customer);

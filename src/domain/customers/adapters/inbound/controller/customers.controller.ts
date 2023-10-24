@@ -7,9 +7,9 @@ import { ICustomersService } from 'src/domain/customers/ports/ICustomersService'
 @ApiTags('customers')
 @Controller('customers')
 export class CustomersController {
-  constructor(    
+  constructor(
     @Inject(ICustomersService)
-    private readonly customersService: ICustomersService,) {}
+    private readonly customersService: ICustomersService,) { }
 
   @Post()
   create(@Body() createCustomerDto: CreateCustomerDto) {
@@ -23,7 +23,7 @@ export class CustomersController {
 
   @Get(':cpf')
   findOne(@Param('cpf') cpf: string) {
-    return this.customersService.findCustomerByCpf(cpf);
+    return this.customersService.findOne(cpf);
   }
 
   @Patch(':cpf')
