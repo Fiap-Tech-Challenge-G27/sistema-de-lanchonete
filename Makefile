@@ -41,7 +41,7 @@ db-up:
 
 .PHONY: app-up ## up all services
 app-up:
-	@docker compose up --build app
+	@docker compose run --service-ports app
 
 .PHONY: dk-down ## down all services
 dk-down:

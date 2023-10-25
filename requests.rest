@@ -21,7 +21,9 @@ GET {{host}}/categories
 GET {{host}}/categories/food
 
 ### Update category
-PATCH {{host}}/categories/63337e86-d11f-4fd6-9319-b558c225ff32
+# @prompt categoryId
+
+PATCH {{host}}/categories/{{categoryId}}
 Content-Type: application/json
 
 {
@@ -33,7 +35,7 @@ Content-Type: application/json
 ### Post new product
 # @prompt productName
 
-@categoryId = {{getAllCategories.response.body.$[1].id}}
+@categoryId = {{getAllCategories.response.body.$[0].id}}
 POST {{host}}/products
 Content-Type: application/json
 
@@ -47,10 +49,11 @@ Content-Type: application/json
 }
 
 ### Get all products
+# @name getAllProducts
 GET {{host}}/products
 
 ### Delete product
-DELETE {{host}}/products/60900816-7be1-44b6-ad7d-9a9e99c80998
+DELETE {{host}}/products/4148c311-0b60-4dea-be3d-95418aecd087
 
 ### Post new customer
 # @name newCustomer
@@ -67,4 +70,23 @@ Content-Type: application/json
 GET {{host}}/customers/
 
 ### Get all customers
+# @name getAllCustomers
 GET {{host}}/customers
+
+### Post Order
+@customerCPF = {{getAllCustomers.response.body.$[0].cpf}}
+@productID_0 = {{getAllProducts.response.body.$[0].id}}
+@productID_1 = {{getAllProducts.response.body.$[1].id}}
+POST {{host}}/orders
+Content-Type: application/json
+
+{
+    "customer_cpf": "{{customerCPF}}",
+    "product_id_amount_id": {
+        "{{productID_0}}": 1,
+        "{{productID_1}}": 2
+    }
+}
+
+### Get Order
+GET {{host}}/orders
