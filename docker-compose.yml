@@ -7,7 +7,7 @@ services:
     build:
       context: .docker/
       dockerfile: Dockerfile
-    entrypoint: .docker/entrypoint.sh
+    entrypoint: ["bash", "-c", "npm install && npm run start:dev"]
     ports:
       - 3000:3000
     volumes:
@@ -27,3 +27,6 @@ services:
     volumes:
       - .docker/postgres/data:/var/lib/postgresql/data
       # - .docker/database_structure.sql:/docker-entrypoint-initdb.d/database_structure.sql
+    environment:
+        POSTGRES_HOST_AUTH_METHOD: trust
+        POSTGRES_HOST_ADDR: 0.0.0.0
