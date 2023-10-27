@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Inject } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Inject,
+} from '@nestjs/common';
 import { CreateCustomerDto } from '../dto/create-customer.dto';
 import { UpdateCustomerDto } from '../dto/update-customer.dto';
 import { ApiTags } from '@nestjs/swagger';
@@ -9,7 +18,8 @@ import { ICustomersService } from 'src/domain/customers/ports/ICustomersService'
 export class CustomersController {
   constructor(
     @Inject(ICustomersService)
-    private readonly customersService: ICustomersService,) { }
+    private readonly customersService: ICustomersService,
+  ) {}
 
   @Post()
   create(@Body() createCustomerDto: CreateCustomerDto) {
@@ -27,7 +37,10 @@ export class CustomersController {
   }
 
   @Patch(':cpf')
-  update(@Param('cpf') cpf: string, @Body() updateCustomerDto: UpdateCustomerDto) {
+  update(
+    @Param('cpf') cpf: string,
+    @Body() updateCustomerDto: UpdateCustomerDto,
+  ) {
     return this.customersService.update(cpf, updateCustomerDto);
   }
 

@@ -12,13 +12,13 @@ export class CustomerModel {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ name: 'name', type: "text", unique: false, nullable: false })
+  @Column({ name: 'name', type: 'text', unique: false, nullable: false })
   name: string;
 
-  @Column({ name: 'email', type: "text", unique: true, nullable: false })
+  @Column({ name: 'email', type: 'text', unique: true, nullable: false })
   email: string;
 
-  @Column({ name: 'cpf', type: "text", unique: true, nullable: false })
+  @Column({ name: 'cpf', type: 'text', unique: true, nullable: false })
   cpf: string;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamp' })

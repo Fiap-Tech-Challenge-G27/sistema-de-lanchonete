@@ -16,7 +16,15 @@ import { CustomerModel } from '../customers/adapters/outbound/models/customer.mo
 import { ProductModel } from '../products/adapters/outbound/models/product.model';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([OrderModel, OrdersProductsAmountsModel, CategoryModel, CustomerModel, ProductModel])],
+  imports: [
+    TypeOrmModule.forFeature([
+      OrderModel,
+      OrdersProductsAmountsModel,
+      CategoryModel,
+      CustomerModel,
+      ProductModel,
+    ]),
+  ],
   controllers: [OrdersController],
   providers: [
     OrdersService,
@@ -30,12 +38,12 @@ import { ProductModel } from '../products/adapters/outbound/models/product.model
     },
     {
       provide: ICustomerRepository,
-      useClass: CustomerModelRepository
+      useClass: CustomerModelRepository,
     },
     {
       provide: IProductRepository,
-      useClass: ProductModelRepository
-    }
+      useClass: ProductModelRepository,
+    },
   ],
 })
-export class OrdersModule { }
+export class OrdersModule {}

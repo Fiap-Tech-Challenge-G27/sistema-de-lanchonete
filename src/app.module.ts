@@ -23,7 +23,7 @@ import { OrdersModule } from './domain/orders/orders.module';
     CategoriesModule,
     ProductsModule,
     CustomersModule,
-    OrdersModule
+    OrdersModule,
   ],
   controllers: [AppController],
   providers: [AppService, PostgresConfigServiceService],

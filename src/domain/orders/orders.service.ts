@@ -16,26 +16,33 @@ export class OrdersService implements IOrdersService {
     private readonly customerRepository: ICustomerRepository,
     @Inject(IProductRepository)
     private readonly productRepository: IProductRepository,
-  ) { }
+  ) {}
 
   async create(createOrderDto: CreateOrderDto) {
     const { customer_cpf, product_id_amount_id } = createOrderDto;
 
-    const customer = await this.customerRepository.findCustomerByCpf(customer_cpf)
-    const product_amounts = await this.fetch_product_amounts(product_id_amount_id)
+    const customer =
+      await this.customerRepository.findCustomerByCpf(customer_cpf);
+    const product_amounts =
+      await this.fetch_product_amounts(product_id_amount_id);
     const order = new Order(customer, product_amounts);
 
     return await this.orderRepository.create(order);
   }
 
-  private async fetch_product_amounts(product_id_amount_id: Map<string, number>) {
-    const product_amounts_promises = Object.keys(product_id_amount_id).map(async (product_id) => {
-      const amount: number = product_id_amount_id[product_id]
-      const product = await this.productRepository.findProductById(product_id)
+  private async fetch_product_amounts(
+    product_id_amount_id: Map<string, number>,
+  ) {
+    const product_amounts_promises = Object.keys(product_id_amount_id).map(
+      async (product_id) => {
+        const amount: number = product_id_amount_id[product_id];
+        const product =
+          await this.productRepository.findProductById(product_id);
 
-      return [product, amount] as [Product, number]
-    })
-    return await Promise.all(product_amounts_promises)
+        return [product, amount] as [Product, number];
+      },
+    );
+    return await Promise.all(product_amounts_promises);
   }
 
   async findAll() {
