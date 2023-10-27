@@ -29,5 +29,4 @@ export class OrdersController {
   findAll() {
     return this.ordersService.findAll();
   }
-
 }

@@ -1,9 +1,12 @@
 import {
   Column,
   CreateDateColumn,
-  Entity, JoinColumn, ManyToOne, OneToMany,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
-  UpdateDateColumn
+  UpdateDateColumn,
 } from 'typeorm';
 import { OrdersProductsAmountsModel } from './orders_products_amounts.model';
 import { CustomerModel } from 'src/domain/customers/adapters/outbound/models/customer.model';
@@ -14,18 +17,21 @@ export class OrderModel {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @OneToMany(() => OrdersProductsAmountsModel, (order_product_amount) => order_product_amount.order)
+  @OneToMany(
+    () => OrdersProductsAmountsModel,
+    (order_product_amount) => order_product_amount.order,
+  )
   orders_products_amounts: OrdersProductsAmountsModel[];
 
   @Column({
-    type: "enum",
-    enum: OrderState
+    type: 'enum',
+    enum: OrderState,
   })
   state: OrderState;
 
   @ManyToOne(() => CustomerModel, { eager: true, nullable: false })
   @JoinColumn({ name: 'customer_id' })
-  customer: CustomerModel
+  customer: CustomerModel;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
   createdAt: Date;
@@ -33,4 +39,3 @@ export class OrderModel {
   @UpdateDateColumn({ name: 'updated_at', type: 'timestamp' })
   updatedAt: Date;
 }
-

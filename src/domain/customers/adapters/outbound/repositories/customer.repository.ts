@@ -40,7 +40,6 @@ export class CustomerModelRepository implements ICustomerRepository {
     }
   }
 
-
   async updateCustomer(cpf: string, customer: Customer): Promise<Customer> {
     const customerModel = await this.customerRepository.findOne({
       where: { cpf },
