@@ -24,9 +24,9 @@ create table "products"(
 drop table if exists "customers";
 create table "customers"(
     "customer_id" BIGINT primary key,
-    "cpf" TEXT not null,
-    "name" TEXT not null,
-    "email" TEXT not null,
+    "cpf" CHAR(11) not null,
+    "name" CHAR(200) not null,
+    "email" CHAR(200) not null,
     constraint "orders_client_id_foreign" foreign key("client_id") references "customers"("client_id")
 );
 
