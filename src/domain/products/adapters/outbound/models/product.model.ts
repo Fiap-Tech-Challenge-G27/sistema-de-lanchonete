@@ -38,7 +38,7 @@ export class ProductModel {
   })
   imageUrls: ProductImageModel[];
 
-  @Column({ name: 'price', nullable: true })
+  @Column({ name: 'price', nullable: true, type: 'decimal' })
   price: number;
 
   @Column({ name: 'quantity', nullable: true })

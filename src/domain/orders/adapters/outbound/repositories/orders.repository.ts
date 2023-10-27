@@ -18,36 +18,42 @@ export class OrderModelRepository implements IOrderRepository {
     private readonly orderRepository: Repository<OrderModel>,
     @InjectRepository(OrdersProductsAmountsModel)
     private readonly orderProductAmountRepository: Repository<OrdersProductsAmountsModel>,
-
-  ) { }
+  ) {}
 
   async create(order: Order): Promise<Order> {
     const orderModel = new OrderModel();
-    orderModel.state = order.state
+    orderModel.state = order.state;
 
-    orderModel.customer = new CustomerModel()
-    orderModel.customer.cpf = order.customer.cpf
-    orderModel.customer.name = order.customer.name
-    orderModel.customer.email = order.customer.email
-    orderModel.customer.id = order.customer.id
+    orderModel.customer = new CustomerModel();
+    orderModel.customer.cpf = order.customer.cpf;
+    orderModel.customer.name = order.customer.name;
+    orderModel.customer.email = order.customer.email;
+    orderModel.customer.id = order.customer.id;
 
     const orderCreated = await this.orderRepository.save(orderModel);
 
     orderCreated.orders_products_amounts = await Promise.all(
       order.productAmounts.map(async ([product, amount]) => {
-        return await this._saveOrderProductAmountModel(orderCreated, product, amount)
-      })
-    )
+        return await this._saveOrderProductAmountModel(
+          orderCreated,
+          product,
+          amount,
+        );
+      }),
+    );
 
     return this.modelToEntity(orderCreated);
   }
 
-  private async _saveOrderProductAmountModel(orderModel: OrderModel, product: Product, amount: number) {
-    const order_product_amount_model = new OrdersProductsAmountsModel()
-    order_product_amount_model.order_id = orderModel.id
-    order_product_amount_model.order = orderModel
-    order_product_amount_model.amount = amount
-
+  private async _saveOrderProductAmountModel(
+    orderModel: OrderModel,
+    product: Product,
+    amount: number,
+  ) {
+    const order_product_amount_model = new OrdersProductsAmountsModel();
+    order_product_amount_model.order_id = orderModel.id;
+    order_product_amount_model.order = orderModel;
+    order_product_amount_model.amount = amount;
 
     const productModel = new ProductModel();
     productModel.name = product.name;
@@ -56,12 +62,14 @@ export class OrderModelRepository implements IOrderRepository {
     productModel.price = product.price;
     productModel.quantity = product.quantity;
     productModel.status = product.status;
-    productModel.id = product.id
+    productModel.id = product.id;
 
-    order_product_amount_model.product_id = product.id
-    order_product_amount_model.product = productModel
+    order_product_amount_model.product_id = product.id;
+    order_product_amount_model.product = productModel;
 
-    return await this.orderProductAmountRepository.save(order_product_amount_model);
+    return await this.orderProductAmountRepository.save(
+      order_product_amount_model,
+    );
   }
 
   async findAll(): Promise<Order[]> {
@@ -69,10 +77,10 @@ export class OrderModelRepository implements IOrderRepository {
       relations: {
         orders_products_amounts: {
           product: {
-            category: true
-          }
-        }
-      }
+            category: true,
+          },
+        },
+      },
     });
 
     return orders.map((order) => this.modelToEntity(order));
@@ -85,10 +93,10 @@ export class OrderModelRepository implements IOrderRepository {
         relations: {
           orders_products_amounts: {
             product: {
-              category: true
-            }
-          }
-        }
+              category: true,
+            },
+          },
+        },
       });
 
       return this.modelToEntity(order);
@@ -114,19 +122,19 @@ export class OrderModelRepository implements IOrderRepository {
           new Category(
             obj.product.category.name,
             obj.product.category.slug,
-            obj.product.category.description
-          )
-        )
+            obj.product.category.description,
+          ),
+        );
 
-        return [product, obj.amount]
+        return [product, obj.amount];
       }),
-      orderModel.state
+      orderModel.state,
     );
 
-    order.id = orderModel.id
-    order.createdAt = orderModel.createdAt
-    order.updatedAt = orderModel.updatedAt
+    order.id = orderModel.id;
+    order.createdAt = orderModel.createdAt;
+    order.updatedAt = orderModel.updatedAt;
 
-    return order
+    return order;
   }
 }
