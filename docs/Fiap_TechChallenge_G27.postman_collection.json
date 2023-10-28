@@ -55,6 +55,27 @@
 		},
 		{
 			"name": "Get all categories",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();",
+							"",
+							"if(!jsonData.error){",
+							"    const context = pm.environment.name ? pm.environment : pm.collectionVariables;",
+							"    context.set(\"_lastCategoryId\", jsonData[0].id);",
+							"    context.set(\"_lastCategorySlug\", jsonData[0].slug);",
+							"}",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -72,6 +93,19 @@
 		},
 		{
 			"name": "Get categories and products by slug",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Response status code is 200', function () {",
+							"    pm.expect(pm.response.code).to.equal(200);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -87,7 +121,7 @@
 					"variable": [
 						{
 							"key": "slug",
-							"value": "food"
+							"value": "{{_lastCategorySlug}}"
 						}
 					]
 				}
@@ -142,6 +176,26 @@
 		},
 		{
 			"name": "Get all products",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();",
+							"",
+							"if(!jsonData.error){",
+							"    const context = pm.environment.name ? pm.environment : pm.collectionVariables;",
+							"    context.set(\"_lastProductId\", jsonData[0].id);",
+							"}",
+							"",
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -174,7 +228,7 @@
 					"variable": [
 						{
 							"key": "productId",
-							"value": "5b9c9a8f-0b24-4e80-91a5-268b6d0035d9"
+							"value": ""
 						}
 					]
 				}
@@ -230,6 +284,23 @@
 		},
 		{
 			"name": "Get all customers",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Response status code is 200', function () {",
+							"    pm.response.to.have.status(200);",
+							"})",
+							"",
+							"pm.test('Response body is an array', function () {",
+							"    pm.expect(pm.response.json()).to.be.an('array');",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -292,7 +363,7 @@
 			"response": []
 		},
 		{
-			"name": "Create a order Copy",
+			"name": "Get orders",
 			"event": [
 				{
 					"listen": "test",
@@ -305,8 +376,8 @@
 							"    context.set(\"_lastCustomerId\", jsonData.id);",
 							"}",
 							"",
-							"pm.test(\"Status code is 201\", function () {",
-							"    pm.response.to.have.status(201);",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
 							"});"
 						],
 						"type": "text/javascript"
