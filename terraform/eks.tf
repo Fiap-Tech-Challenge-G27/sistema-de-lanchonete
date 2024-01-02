@@ -75,23 +75,3 @@ resource "aws_iam_role" "fargate_execution_role" {
     ],
   })
 }
-
-
-# module "eks" {
-#   source          = "terraform-aws-modules/eks/aws"
-#   cluster_name    = "my-eks-cluster"
-#   subnet_ids         = [data.aws_subnet.public_1, data.aws_subnet.public_2] # Subnets existentes na região us-east-1
-#   vpc_id          = "vpc-xxxxxxxxxxxxxxxxx" # VPC existente na região us-east-1
-#   cluster_version = "1.21" # Versão do Kubernetes
-
-#   fargate_profiles = {
-#     default = {
-#       subnets = [data.aws_subnet.public_1, data.aws_subnet.public_2] # Subnets existentes na região us-east-1
-#     }
-#   }
-# }
-
-# output "kubeconfig" {
-#   value       = module.eks.kubeconfig
-#   description = "Kubeconfig para acessar o cluster EKS"
-# }
