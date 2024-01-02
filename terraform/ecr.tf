@@ -1,5 +1,5 @@
-resource "aws_ecr_repository" "my_repository" {
-  name = "my-repository"
+resource "aws_ecr_repository" "ecr-techchallenge" {
+  name = "4soat-techchallenge"
   image_scanning_configuration {
     scan_on_push = true
   }
@@ -7,7 +7,7 @@ resource "aws_ecr_repository" "my_repository" {
 }
 
 resource "aws_ecr_repository_policy" "my_repository_policy" {
-  repository = aws_ecr_repository.my_repository.name
+  repository = aws_ecr_repository.ecr-techchallenge.name
   policy = <<EOF
 {
   "Version": "2008-10-17",
