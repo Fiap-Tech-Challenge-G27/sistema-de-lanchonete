@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: app
-          image: your-docker-image:tag
+          image: your-docker-image:{{VERSION}}
           ports:
             - containerPort: 3000
           volumeMounts:
