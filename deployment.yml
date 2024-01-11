@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: techchallenge
-          image: <nome-do-usuário>/techchallenge:latest
+          image: techchallenge:latest
           ports:
             - containerPort: 8080
       restartPolicy: Always
