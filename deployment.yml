@@ -30,6 +30,8 @@ spec:
   resources:
     requests:
       storage: 1Gi
+  hostPath:
+    path: .docker/postgres/data
 
 ---
 apiVersion: apps/v1
@@ -55,6 +57,16 @@ spec:
             - name: postgres-data
               mountPath: /var/lib/postgresql/data
       restartPolicy: Always
+  volumeClaimTemplates:
+    - metadata:
+        name: postgres-data
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+        claimName: postgres-data
 
 ---
 apiVersion: autoscaling/v2beta1

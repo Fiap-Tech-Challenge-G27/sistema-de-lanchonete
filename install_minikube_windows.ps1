@@ -1,3 +1,4 @@
+Write-Host "Iniciando instalação do MiniKube."
 # # Executar o script como administrador
 # Set-ExecutionPolicy RemoteSigned
 
@@ -15,6 +16,12 @@ $path += ";$(Get-Location)\minikube"
 [Environment]::SetEnvironmentVariable("Path", $path)
 
 Write-Host "MiniKube instalado com sucesso."
+Write-Host "Iniciando MiniKube."
+
+# Iniciar o MiniKube
+.\minikube.exe start
+
+Write-Host "Iniciando instalação do kubectl."
 
 $kubectlUrl = "https://dl.k8s.io/release/v1.29.0/bin/windows/amd64/kubectl.exe"
 $arquivo2 = "kubectl.exe"
@@ -30,7 +37,8 @@ $path += ";$(Get-Location)\kubectl"
 
 Write-Host "kubectl instalado com sucesso."
 
-
-# Iniciar o MiniKube
-.\minikube.exe start
 .\kubectl.exe version --client
+
+docker build -t techchallenge .docker/Dockerfile
+./minikube image load techchallenge
+kubectl rollout force -f deployment.yaml
