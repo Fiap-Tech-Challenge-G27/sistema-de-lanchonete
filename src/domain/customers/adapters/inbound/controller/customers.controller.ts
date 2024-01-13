@@ -8,8 +8,8 @@ import {
   Delete,
   Inject,
 } from '@nestjs/common';
-import { CreateCustomerDto } from '../dto/create-customer.dto';
-import { UpdateCustomerDto } from '../dto/update-customer.dto';
+import { CreateCustomerDto } from '../../../dtos/create-customer.dto';
+import { UpdateCustomerDto } from '../../../dtos/update-customer.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { ICustomersService } from 'src/domain/customers/ports/ICustomersService';
 

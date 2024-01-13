@@ -1,10 +1,10 @@
 import { HttpException, Inject, Injectable } from '@nestjs/common';
-import { IOrderRepository } from './ports/IOrderRepository';
+import { IOrderRepository } from './repositories/IOrderRepository';
 import { IOrdersService } from './ports/IOrdersService';
-import { CreateOrderDto } from './ports/dto/create-order.dto';
+import { CreateOrderDto } from './dtos/create-order.dto';
 import { Order } from './entities/order.entity';
-import { ICustomerRepository } from '../customers/ports/ICustomerRepository';
-import { IProductRepository } from '../products/ports/IProductRepository';
+import { ICustomerRepository } from '../customers/repositories/ICustomerRepository';
+import { IProductRepository } from '../products/respositories/IProductRepository';
 import { Product } from '../products/entities/product.entity';
 
 @Injectable()

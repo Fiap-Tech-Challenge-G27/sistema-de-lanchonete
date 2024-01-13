@@ -9,8 +9,8 @@ import {
   ParseUUIDPipe,
 } from '@nestjs/common';
 import { ProductsService } from '../../../products.service';
-import { CreateProductDto } from '../dtos/create-product.dto';
-import { UpdateProductDto } from '../dtos/update-product.dto';
+import { CreateProductDto } from '../../../dtos/create-product.dto';
+import { UpdateProductDto } from '../../../dtos/update-product.dto';
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('products')

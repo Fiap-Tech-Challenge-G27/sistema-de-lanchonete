@@ -4,9 +4,9 @@ import { ProductsController } from './adapters/inbound/controllers/products.cont
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ProductModel } from '../../frameworks/database/postgres/products/models/product.model';
 import { ProductImageModel } from '../../frameworks/database/postgres/products/models/productImage.model';
-import { ICategoryRepository } from '../categories/ports/ICategoryRepository';
+import { ICategoryRepository } from '../categories/repositories/ICategoryRepository';
 import { CategoryModelRepository } from '../../frameworks/database/postgres/categories/repositories/category.repository';
-import { IProductRepository } from './ports/IProductRepository';
+import { IProductRepository } from './respositories/IProductRepository';
 import { ProductModelRepository } from '../../frameworks/database/postgres/products/repositories/product.repository';
 import { CategoryModel } from '../../frameworks/database/postgres/categories/models/category.model';
 

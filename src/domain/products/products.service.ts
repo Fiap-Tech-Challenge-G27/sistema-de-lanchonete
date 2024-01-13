@@ -1,10 +1,10 @@
 import { HttpException, Inject, Injectable } from '@nestjs/common';
-import { CreateProductDto } from './adapters/inbound/dtos/create-product.dto';
-import { UpdateProductDto } from './adapters/inbound/dtos/update-product.dto';
+import { CreateProductDto } from './dtos/create-product.dto';
+import { UpdateProductDto } from './dtos/update-product.dto';
 import { IProductService } from './ports/IProductService';
 import { Product } from './entities/product.entity';
-import { ICategoryRepository } from '../categories/ports/ICategoryRepository';
-import { IProductRepository } from './ports/IProductRepository';
+import { ICategoryRepository } from '../categories/repositories/ICategoryRepository';
+import { IProductRepository } from './respositories/IProductRepository';
 
 @Injectable()
 export class ProductsService implements IProductService {

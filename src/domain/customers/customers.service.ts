@@ -1,8 +1,8 @@
 import { HttpException, Inject, Injectable } from '@nestjs/common';
-import { CreateCustomerDto } from './adapters/inbound/dto/create-customer.dto';
-import { UpdateCustomerDto } from './adapters/inbound/dto/update-customer.dto';
+import { CreateCustomerDto } from './dtos/create-customer.dto';
+import { UpdateCustomerDto } from './dtos/update-customer.dto';
 import { Customer } from './entities/customer.entity';
-import { ICustomerRepository } from './ports/ICustomerRepository';
+import { ICustomerRepository } from './repositories/ICustomerRepository';
 import { ICustomersService } from './ports/ICustomersService';
 
 @Injectable()

@@ -1,5 +1,5 @@
-import { CreateCategoryDto } from '../adapters/inbound/dto/create-category.dto';
-import { UpdateCategoryDto } from '../adapters/inbound/dto/update-category.dto';
+import { CreateCategoryDto } from '../dtos/create-category.dto';
+import { UpdateCategoryDto } from '../dtos/update-category.dto';
 
 export interface ICategoriesService {
   create(createCategoryDto: CreateCategoryDto);

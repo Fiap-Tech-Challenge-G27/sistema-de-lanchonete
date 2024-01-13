@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { CategoriesService } from './categories.service';
-import { CreateCategoryDto } from './adapters/inbound/dto/create-category.dto';
-import { ICategoryRepository } from './ports/ICategoryRepository';
+import { CreateCategoryDto } from './dtos/create-category.dto';
+import { ICategoryRepository } from './repositories/ICategoryRepository';
 import { Category } from './entities/category.entity';
 
 describe('CategoriesService', () => {

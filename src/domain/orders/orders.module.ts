@@ -1,14 +1,14 @@
 import { Module } from '@nestjs/common';
 import { OrdersService } from './orders.service';
 import { OrdersController } from './adapters/inbound/controller/orders.controller';
-import { IOrderRepository } from './ports/IOrderRepository';
+import { IOrderRepository } from './repositories/IOrderRepository';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { OrderModel } from '../../frameworks/database/postgres/orders/models/order.model';
 import { IOrdersService } from './ports/IOrdersService';
 import { OrderModelRepository } from '../../frameworks/database/postgres/orders/repositories/orders.repository';
-import { ICustomerRepository } from '../customers/ports/ICustomerRepository';
+import { ICustomerRepository } from '../customers/repositories/ICustomerRepository';
 import { CustomerModelRepository } from '../../frameworks/database/postgres/customers/repositories/customer.repository';
-import { IProductRepository } from '../products/ports/IProductRepository';
+import { IProductRepository } from '../products/respositories/IProductRepository';
 import { ProductModelRepository } from '../../frameworks/database/postgres/products/repositories/product.repository';
 import { OrdersProductsAmountsModel } from '../../frameworks/database/postgres/orders/models/orders_products_amounts.model';
 import { CategoryModel } from '../../frameworks/database/postgres/categories/models/category.model';

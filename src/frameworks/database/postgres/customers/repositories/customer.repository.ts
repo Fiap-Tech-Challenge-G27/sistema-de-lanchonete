@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CustomerModel } from '../models/customer.model';
 import { Customer } from '../../../../../domain/customers/entities/customer.entity';
-import { ICustomerRepository } from '../../../../../domain/customers/ports/ICustomerRepository';
+import { ICustomerRepository } from '../../../../../domain/customers/repositories/ICustomerRepository';
 
 @Injectable()
 export class CustomerModelRepository implements ICustomerRepository {

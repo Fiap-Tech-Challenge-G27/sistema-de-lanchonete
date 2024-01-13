@@ -1,6 +1,6 @@
 import { Product } from '../entities/product.entity';
-import { CreateProductDto } from '../adapters/inbound/dtos/create-product.dto';
-import { UpdateProductDto } from 'src/domain/products/adapters/inbound/dtos/update-product.dto';
+import { CreateProductDto } from '../dtos/create-product.dto';
+import { UpdateProductDto } from 'src/domain/products/dtos/update-product.dto';
 
 export interface IProductService {
   create: (createProductDto: CreateProductDto) => Promise<Product>;

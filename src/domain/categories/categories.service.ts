@@ -1,8 +1,8 @@
 import { HttpException, Inject, Injectable } from '@nestjs/common';
-import { CreateCategoryDto } from './adapters/inbound/dto/create-category.dto';
-import { UpdateCategoryDto } from './adapters/inbound/dto/update-category.dto';
+import { CreateCategoryDto } from './dtos/create-category.dto';
+import { UpdateCategoryDto } from './dtos/update-category.dto';
 import { Category } from './entities/category.entity';
-import { ICategoryRepository } from './ports/ICategoryRepository';
+import { ICategoryRepository } from './repositories/ICategoryRepository';
 import { ICategoriesService } from './ports/ICategoriesService';
 
 @Injectable()

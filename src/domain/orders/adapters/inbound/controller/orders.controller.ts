@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { IOrdersService } from 'src/domain/orders/ports/IOrdersService';
-import { CreateOrderDto } from 'src/domain/orders/ports/dto/create-order.dto';
+import { CreateOrderDto } from 'src/domain/orders/dtos/create-order.dto';
 
 @ApiTags('orders')
 @Controller('orders')

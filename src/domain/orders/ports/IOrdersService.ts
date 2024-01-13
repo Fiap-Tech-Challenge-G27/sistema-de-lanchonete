@@ -1,4 +1,4 @@
-import { CreateOrderDto } from './dto/create-order.dto';
+import { CreateOrderDto } from '../dtos/create-order.dto';
 
 export interface IOrdersService {
   create(createCustomeDto: CreateOrderDto);

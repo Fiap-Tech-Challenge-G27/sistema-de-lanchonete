@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { CustomersService } from './customers.service';
 import { CustomersController } from './adapters/inbound/controller/customers.controller';
-import { ICustomerRepository } from './ports/ICustomerRepository';
+import { ICustomerRepository } from './repositories/ICustomerRepository';
 import { CustomerModelRepository } from '../../frameworks/database/postgres/customers/repositories/customer.repository';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CustomerModel } from '../../frameworks/database/postgres/customers/models/customer.model';
