@@ -5,11 +5,11 @@ import { IOrderRepository } from 'src/domain/orders/ports/IOrderRepository';
 import { Repository } from 'typeorm';
 import { OrderModel } from '../models/order.model';
 import { OrdersProductsAmountsModel } from '../models/orders_products_amounts.model';
-import { ProductModel } from 'src/domain/products/adapters/outbound/models/product.model';
+import { ProductModel } from 'src/frameworks/database/postgres/products/models/product.model';
 import { Customer } from 'src/domain/customers/entities/customer.entity';
 import { Product } from 'src/domain/products/entities/product.entity';
 import { Category } from 'src/domain/categories/entities/category.entity';
-import { CustomerModel } from 'src/domain/customers/adapters/outbound/models/customer.model';
+import { CustomerModel } from 'src/frameworks/database/postgres/customers/models/customer.model';
 
 @Injectable()
 export class OrderModelRepository implements IOrderRepository {

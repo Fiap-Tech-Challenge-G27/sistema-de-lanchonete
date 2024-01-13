@@ -1,4 +1,4 @@
-import { ProductModel } from 'src/domain/products/adapters/outbound/models/product.model';
+import { ProductModel } from 'src/frameworks/database/postgres/products/models/product.model';
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
 import { OrderModel } from './order.model';
 

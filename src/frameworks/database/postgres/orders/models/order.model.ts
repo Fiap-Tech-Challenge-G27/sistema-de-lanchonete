@@ -9,7 +9,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { OrdersProductsAmountsModel } from './orders_products_amounts.model';
-import { CustomerModel } from 'src/domain/customers/adapters/outbound/models/customer.model';
+import { CustomerModel } from 'src/frameworks/database/postgres/customers/models/customer.model';
 import { OrderState } from 'src/domain/orders/entities/order.entity';
 
 @Entity({ name: 'orders' })

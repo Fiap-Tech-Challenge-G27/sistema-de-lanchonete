@@ -3,17 +3,17 @@ import { OrdersService } from './orders.service';
 import { OrdersController } from './adapters/inbound/controller/orders.controller';
 import { IOrderRepository } from './ports/IOrderRepository';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { OrderModel } from './adapters/outbound/models/order.model';
+import { OrderModel } from '../../frameworks/database/postgres/orders/models/order.model';
 import { IOrdersService } from './ports/IOrdersService';
-import { OrderModelRepository } from './adapters/outbound/repositories/orders.repository';
+import { OrderModelRepository } from '../../frameworks/database/postgres/orders/repositories/orders.repository';
 import { ICustomerRepository } from '../customers/ports/ICustomerRepository';
-import { CustomerModelRepository } from '../customers/adapters/outbound/repositories/customer.repository';
+import { CustomerModelRepository } from '../../frameworks/database/postgres/customers/repositories/customer.repository';
 import { IProductRepository } from '../products/ports/IProductRepository';
-import { ProductModelRepository } from '../products/adapters/outbound/repositories/product.repository';
-import { OrdersProductsAmountsModel } from './adapters/outbound/models/orders_products_amounts.model';
-import { CategoryModel } from '../../framworks/data-services/postgres/categories/models/category.model';
-import { CustomerModel } from '../customers/adapters/outbound/models/customer.model';
-import { ProductModel } from '../products/adapters/outbound/models/product.model';
+import { ProductModelRepository } from '../../frameworks/database/postgres/products/repositories/product.repository';
+import { OrdersProductsAmountsModel } from '../../frameworks/database/postgres/orders/models/orders_products_amounts.model';
+import { CategoryModel } from '../../frameworks/database/postgres/categories/models/category.model';
+import { CustomerModel } from '../../frameworks/database/postgres/customers/models/customer.model';
+import { ProductModel } from '../../frameworks/database/postgres/products/models/product.model';
 
 @Module({
   imports: [

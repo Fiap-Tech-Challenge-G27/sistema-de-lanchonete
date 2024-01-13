@@ -10,7 +10,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { ProductImageModel } from './productImage.model';
-import { CategoryModel } from 'src/framworks/data-services/postgres/categories/models/category.model';
+import { CategoryModel } from 'src/frameworks/database/postgres/categories/models/category.model';
 
 @Entity({ name: 'products' })
 export class ProductModel {
