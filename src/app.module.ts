@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { PostgresConfigServiceService } from './libs/databases/postgres.service';
+import { PostgresConfigServiceService } from './infrastructure/databases/postgres.service';
 
 import { AppService } from './domain/app.service';
 import { AppController } from './app.controller';
