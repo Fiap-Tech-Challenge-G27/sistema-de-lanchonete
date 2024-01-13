@@ -21,6 +21,7 @@ docker compose up --build
 ```
 
 #### Observações:
+
 A aplicação será executada na porta 3000.
 Ao acessar a rota [localhost:3000/api-docs](localhost:3000/api-docs) no navegador você terá acesso ao Swagger que poderá ser utilizado para executar as interações com a aplicação, caso prefiram foi disponibilizado na pasta [/docs](https://github.com/hiagofss/fiap-tech-challenge-01/tree/main/docs) o arquivo com a Collection do [Postman](https://github.com/hiagofss/fiap-tech-challenge-01/blob/main/docs/Fiap_TechChallenge_G27.postman_collection.json).
 

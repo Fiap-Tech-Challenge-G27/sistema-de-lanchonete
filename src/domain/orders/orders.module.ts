@@ -11,7 +11,7 @@ import { CustomerModelRepository } from '../customers/adapters/outbound/reposito
 import { IProductRepository } from '../products/ports/IProductRepository';
 import { ProductModelRepository } from '../products/adapters/outbound/repositories/product.repository';
 import { OrdersProductsAmountsModel } from './adapters/outbound/models/orders_products_amounts.model';
-import { CategoryModel } from '../categories/adapters/outbound/models/category.model';
+import { CategoryModel } from '../../framworks/data-services/postgres/categories/models/category.model';
 import { CustomerModel } from '../customers/adapters/outbound/models/customer.model';
 import { ProductModel } from '../products/adapters/outbound/models/product.model';
 
