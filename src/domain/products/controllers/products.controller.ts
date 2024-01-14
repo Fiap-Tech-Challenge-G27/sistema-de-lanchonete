@@ -7,16 +7,20 @@ import {
   Param,
   Delete,
   ParseUUIDPipe,
+  Inject,
 } from '@nestjs/common';
-import { ProductsService } from '../../../products.service';
-import { CreateProductDto } from '../../../dtos/create-product.dto';
-import { UpdateProductDto } from '../../../dtos/update-product.dto';
+import { CreateProductDto } from '../dtos/create-product.dto';
+import { UpdateProductDto } from '../dtos/update-product.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { IProductService } from '../ports/IProductService';
 
 @ApiTags('products')
 @Controller('products')
 export class ProductsController {
-  constructor(private readonly productsService: ProductsService) {}
+  constructor(
+    @Inject(IProductService)
+    private readonly productsService: IProductService,
+  ) {}
 
   @Post()
   async create(@Body() createProductDto: CreateProductDto) {

@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { CategoriesService } from './categories.service';
-import { CategoriesController } from './adapters/inbound/controller/categories.controller';
+import { CategoriesController } from './controller/categories.controller';
 import { ICategoryRepository } from './repositories/ICategoryRepository';
 import { CategoryModelRepository } from '../../frameworks/database/postgres/categories/repositories/category.repository';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -11,7 +11,10 @@ import { ICategoriesService } from './ports/ICategoriesService';
   imports: [TypeOrmModule.forFeature([CategoryModel])],
   controllers: [CategoriesController],
   providers: [
-    CategoriesService,
+    {
+      provide: ICategoriesService,
+      useClass: CategoriesService,
+    },
     {
       provide: ICategoryRepository,
       useClass: CategoryModelRepository,

@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { CustomersService } from './customers.service';
-import { CustomersController } from './adapters/inbound/controller/customers.controller';
+import { CustomersController } from './controller/customers.controller';
 import { ICustomerRepository } from './repositories/ICustomerRepository';
 import { CustomerModelRepository } from '../../frameworks/database/postgres/customers/repositories/customer.repository';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -11,7 +11,10 @@ import { ICustomersService } from './ports/ICustomersService';
   imports: [TypeOrmModule.forFeature([CustomerModel])],
   controllers: [CustomersController],
   providers: [
-    CustomersService,
+    {
+      provide: ICustomersService,
+      useClass: CustomersService,
+    },
     {
       provide: ICustomerRepository,
       useClass: CustomerModelRepository,
