@@ -1,10 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CreateCustomerDto } from '../dtos/create-customer.dto';
 import { UpdateCustomerDto } from '../dtos/update-customer.dto';
-import { CustomerEntity } from '../entities/customer.entity';
-import { ICustomerRepository } from '../repositories/ICustomerRepository';
+import { ICustomerRepository } from '../repositories/customer.repository.interface';
 import { ICustomersService } from './customers.service.interface';
 import { IExceptionService } from '@shared/exceptions/exceptions.interface';
+import { CustomerMapper } from '../mappers/customer.mapper';
 
 @Injectable()
 export class CustomersService implements ICustomersService {
@@ -13,6 +13,7 @@ export class CustomersService implements ICustomersService {
     private readonly customerRepository: ICustomerRepository,
     @Inject(IExceptionService)
     private readonly exceptionService: IExceptionService,
+    private readonly customerMapper: CustomerMapper,
   ) {}
 
   async create(createCustomerDto: CreateCustomerDto) {
@@ -28,7 +29,7 @@ export class CustomersService implements ICustomersService {
       });
     }
 
-    const customer = new CustomerEntity(name, email, cpf);
+    const customer = this.customerMapper.mapDtoToEntity(createCustomerDto);
 
     const createdCustomer =
       await this.customerRepository.createCustomer(customer);
@@ -76,7 +77,7 @@ export class CustomersService implements ICustomersService {
       });
     }
 
-    const customer = new CustomerEntity(name, email, cpf);
+    const customer = this.customerMapper.mapDtoToEntity(updateCustomerDto);
 
     const updatedCustomer = await this.customerRepository.updateCustomer(
       cpf,
@@ -86,7 +87,16 @@ export class CustomersService implements ICustomersService {
     return updatedCustomer;
   }
 
-  remove(cpf: string) {
-    throw new Error('Method not implemented.');
+  async remove(cpf: string) {
+    const customer = await this.customerRepository.findCustomerByCpf(cpf);
+
+    if (!customer) {
+      this.exceptionService.notFoundException({
+        message: 'Customer not found',
+        code: 404,
+      });
+    }
+
+    return await this.customerRepository.deleteCustomer(customer.id);
   }
 }

@@ -1,6 +1,6 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { ProductEntity } from '@products/entities/product.entity';
-import { IProductRepository } from '@products/respositories/IProductRepository';
+import { IProductRepository } from '@domain/products/respositories/product.repository.interface';
 import { ProductModel } from '../models/product.model';
 import { Repository } from 'typeorm';
 import { CategoryEntity } from '@categories/entities/category.entity';
@@ -11,13 +11,7 @@ export class ProductModelRepository implements IProductRepository {
     private readonly productRepository: Repository<ProductModel>,
   ) {}
   async createProduct(product: ProductEntity): Promise<ProductEntity> {
-    const productModel = new ProductModel();
-    productModel.name = product.name;
-    productModel.description = product.description;
-    productModel.category = <any>product.category;
-    productModel.price = product.price;
-    productModel.quantity = product.quantity;
-    productModel.status = product.status;
+    const productModel = this.mapEntityToModel(product);
 
     const productCreated = await this.productRepository.save(productModel);
 
@@ -27,7 +21,7 @@ export class ProductModelRepository implements IProductRepository {
       loadEagerRelations: false,
     });
 
-    return this.modelToEntity(getProduct);
+    return this.mapModelToEntity(getProduct);
   }
 
   async findAllProducts(): Promise<ProductEntity[]> {
@@ -36,7 +30,7 @@ export class ProductModelRepository implements IProductRepository {
       loadEagerRelations: false,
     });
 
-    return listOfProducts.map((product) => this.modelToEntity(product));
+    return listOfProducts.map((product) => this.mapModelToEntity(product));
   }
 
   async findProductById(id: string): Promise<ProductEntity> {
@@ -47,7 +41,7 @@ export class ProductModelRepository implements IProductRepository {
         loadEagerRelations: false,
       });
 
-      return this.modelToEntity(productModel);
+      return this.mapModelToEntity(productModel);
     } catch (error) {
       return null;
     }
@@ -74,25 +68,36 @@ export class ProductModelRepository implements IProductRepository {
 
     const productUpdated = await this.productRepository.save(productModel);
 
-    return this.modelToEntity(productUpdated);
+    return this.mapModelToEntity(productUpdated);
   }
 
-  modelToEntity(productModel: ProductModel): ProductEntity {
+  mapModelToEntity(dataModel: ProductModel): ProductEntity {
     const product = new ProductEntity(
-      productModel.name,
-      productModel.description,
-      productModel.price,
-      productModel.quantity,
-      productModel.status,
+      dataModel.name,
+      dataModel.description,
+      dataModel.price,
+      dataModel.quantity,
+      dataModel.status,
       new CategoryEntity(
-        productModel.category.name,
-        productModel.category.slug,
-        productModel.category.description,
+        dataModel.category.name,
+        dataModel.category.slug,
+        dataModel.category.description,
       ),
     );
-    product.id = productModel.id;
-    product.createdAt = productModel.createdAt;
-    product.updatedAt = productModel.updatedAt;
+    product.id = dataModel.id;
+    product.createdAt = dataModel.createdAt;
+    product.updatedAt = dataModel.updatedAt;
+    return product;
+  }
+  mapEntityToModel(dataEntity: ProductEntity): ProductModel {
+    const product = new ProductModel();
+    product.name = dataEntity.name;
+    product.description = dataEntity.description;
+    product.category = <any>dataEntity.category;
+    product.price = dataEntity.price;
+    product.quantity = dataEntity.quantity;
+    product.status = dataEntity.status;
+
     return product;
   }
 }

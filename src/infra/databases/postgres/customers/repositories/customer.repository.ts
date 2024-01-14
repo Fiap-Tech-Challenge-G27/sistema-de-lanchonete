@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CustomerModel } from '../models/customer.model';
 import { CustomerEntity } from '@domain/customers/entities/customer.entity';
-import { ICustomerRepository } from '@domain/customers/repositories/ICustomerRepository';
+import { ICustomerRepository } from '@domain/customers/repositories/customer.repository.interface';
 
 @Injectable()
 export class CustomerModelRepository implements ICustomerRepository {
@@ -19,13 +19,13 @@ export class CustomerModelRepository implements ICustomerRepository {
 
     const customerCreated = await this.customerRepository.save(customerModel);
 
-    return this.modelToEntity(customerCreated);
+    return this.mapModelToEntity(customerCreated);
   }
 
   async findAllCustomers() {
     const customers = await this.customerRepository.find();
 
-    return customers.map((customer) => this.modelToEntity(customer));
+    return customers.map((customer) => this.mapModelToEntity(customer));
   }
 
   async findCustomerByCpf(cpf: string) {
@@ -34,7 +34,7 @@ export class CustomerModelRepository implements ICustomerRepository {
         where: { cpf },
       });
 
-      return this.modelToEntity(customer);
+      return this.mapModelToEntity(customer);
     } catch (error) {
       return null;
     }
@@ -54,18 +54,30 @@ export class CustomerModelRepository implements ICustomerRepository {
 
     await this.customerRepository.save(customerModel);
 
-    return this.modelToEntity(customerModel);
+    return this.mapModelToEntity(customerModel);
   }
 
-  modelToEntity(customerModel: CustomerModel): CustomerEntity {
+  async deleteCustomer(id: string): Promise<void> {
+    await this.customerRepository.delete({ id });
+  }
+
+  mapModelToEntity(dataModel: CustomerModel): CustomerEntity {
     const customer = new CustomerEntity(
-      customerModel.name,
-      customerModel.email,
-      customerModel.cpf,
+      dataModel.name,
+      dataModel.email,
+      dataModel.cpf,
+      dataModel.id,
+      dataModel.createdAt,
+      dataModel.updatedAt,
     );
-    customer.id = customerModel.id;
-    customer.createdAt = customerModel.createdAt;
-    customer.updatedAt = customerModel.updatedAt;
+    return customer;
+  }
+  mapEntityToModel(dataEntity: CustomerEntity): CustomerModel {
+    const customer = new CustomerModel(
+      dataEntity.name,
+      dataEntity.email,
+      dataEntity.cpf,
+    );
     return customer;
   }
 }

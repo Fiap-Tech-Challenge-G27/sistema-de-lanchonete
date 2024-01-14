@@ -1,10 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CreateCategoryDto } from '../dtos/create-category.dto';
 import { UpdateCategoryDto } from '../dtos/update-category.dto';
-import { ICategoryRepository } from '../repositories/ICategoryRepository';
+import { ICategoryRepository } from '../repositories/category.repository.interface';
 import { ICategoriesService } from './categories.service.interface';
-import { CategoryMapper } from '../mappers/category.mapper';
 import { IExceptionService } from '@shared/exceptions/exceptions.interface';
+import { CategoryMapper } from '../mappers/category.mapper';
 
 @Injectable()
 export class CategoriesService implements ICategoriesService {

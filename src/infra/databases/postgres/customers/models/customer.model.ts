@@ -1,4 +1,3 @@
-import { ProductModel } from 'src/infra/databases/postgres/products/models/product.model';
 import {
   Column,
   CreateDateColumn,

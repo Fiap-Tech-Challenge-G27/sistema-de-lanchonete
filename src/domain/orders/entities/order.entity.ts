@@ -8,9 +8,19 @@ export enum OrderState {
   Ready = 'Ready',
   Finishe = 'Finished',
 }
-export class Order {
+
+export class OrderProductEntity {
+  product: ProductEntity;
+  amount: number;
+
+  constructor(product: ProductEntity, amount: number) {
+    this.product = product;
+    this.amount = amount;
+  }
+}
+export class OrderEntity {
   customer: CustomerEntity;
-  productAmounts: Array<[ProductEntity, number]>;
+  orderProducts: OrderProductEntity[];
   state: OrderState;
 
   id: string;
@@ -19,11 +29,11 @@ export class Order {
 
   constructor(
     customer: CustomerEntity,
-    productAmounts: Array<[ProductEntity, number]>,
+    orderProducts: OrderProductEntity[],
     state: OrderState = OrderState.Received,
   ) {
     this.customer = customer;
-    this.productAmounts = productAmounts;
+    this.orderProducts = orderProducts;
     this.state = state;
   }
 }

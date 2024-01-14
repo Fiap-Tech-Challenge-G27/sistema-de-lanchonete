@@ -3,9 +3,10 @@ import { CreateProductDto } from '../dtos/create-product.dto';
 import { UpdateProductDto } from '../dtos/update-product.dto';
 import { IProductService } from './products.service.interface';
 import { ProductEntity } from '../entities/product.entity';
-import { ICategoryRepository } from '@categories/repositories/ICategoryRepository';
-import { IProductRepository } from '../respositories/IProductRepository';
+import { ICategoryRepository } from '@domain/categories/repositories/category.repository.interface';
+import { IProductRepository } from '../respositories/product.repository.interface';
 import { IExceptionService } from '@shared/exceptions/exceptions.interface';
+import { ProductMapper } from '../mappers/product.mapper';
 
 @Injectable()
 export class ProductsService implements IProductService {
@@ -16,6 +17,7 @@ export class ProductsService implements IProductService {
     private readonly productRepository: IProductRepository,
     @Inject(IExceptionService)
     private readonly exceptionService: IExceptionService,
+    private readonly productMapper: ProductMapper,
   ) {}
   async create(createProductDto: CreateProductDto) {
     const { name, description, categoryId, price, quantity, status } =
@@ -30,13 +32,9 @@ export class ProductsService implements IProductService {
       });
     }
 
-    const product = new ProductEntity(
-      name,
-      description,
-      price,
-      quantity,
-      status,
+    const product = this.productMapper.mapDtoToEntity(
       category,
+      createProductDto,
     );
 
     const createdProduct = await this.productRepository.createProduct(product);

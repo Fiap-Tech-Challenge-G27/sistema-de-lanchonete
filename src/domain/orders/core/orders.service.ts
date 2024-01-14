@@ -1,11 +1,12 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { IOrderRepository } from '../repositories/IOrderRepository';
+import { CreateOrderDto, OrderProducts } from '../dtos/create-order.dto';
+import { IOrderRepository } from '../repositories/order.repository.interface';
 import { IOrdersService } from './orders.service.interface';
-import { CreateOrderDto } from '../dtos/create-order.dto';
-import { Order } from '../entities/order.entity';
-import { ICustomerRepository } from '@customers/repositories/ICustomerRepository';
-import { IProductRepository } from '@products/respositories/IProductRepository';
-import { ProductEntity } from '@products/entities/product.entity';
+import { ICustomerRepository } from '@domain/customers/repositories/customer.repository.interface';
+import { IProductRepository } from '@domain/products/respositories/product.repository.interface';
+import { IExceptionService } from '@domain/shared/exceptions/exceptions.interface';
+import { OrderMapper } from '../mappers/order.mapper';
+import { OrderProductMapper } from '../mappers/order-product.mapper';
 
 @Injectable()
 export class OrdersService implements IOrdersService {
@@ -16,33 +17,45 @@ export class OrdersService implements IOrdersService {
     private readonly customerRepository: ICustomerRepository,
     @Inject(IProductRepository)
     private readonly productRepository: IProductRepository,
+    @Inject(IExceptionService)
+    private readonly exceptionService: IExceptionService,
+    private readonly orderMapper: OrderMapper,
+    private readonly orderProductMapper: OrderProductMapper,
   ) {}
 
   async create(createOrderDto: CreateOrderDto) {
-    const { customer_cpf, product_id_amount_id } = createOrderDto;
+    const { customer_cpf, orderProducts } = createOrderDto;
 
     const customer =
       await this.customerRepository.findCustomerByCpf(customer_cpf);
-    const product_amounts =
-      await this.fetch_product_amounts(product_id_amount_id);
-    const order = new Order(customer, product_amounts);
+
+    if (!customer) {
+      this.exceptionService.notFoundException({
+        message: 'Customer not found',
+        code: 404,
+      });
+    }
+
+    const orderProductsEntity = await this.getOrderProducts(orderProducts);
+
+    const order = this.orderMapper.mapDtoToEntity(
+      customer,
+      orderProductsEntity,
+    );
 
     return await this.orderRepository.create(order);
   }
 
-  private async fetch_product_amounts(
-    product_id_amount_id: Map<string, number>,
-  ) {
-    const product_amounts_promises = Object.keys(product_id_amount_id).map(
-      async (product_id) => {
-        const amount: number = product_id_amount_id[product_id];
-        const product =
-          await this.productRepository.findProductById(product_id);
+  private async getOrderProducts(orderProducts: OrderProducts[]) {
+    const orderProdutsEntity = orderProducts.map(
+      async ({ productId, amount }) => {
+        const product = await this.productRepository.findProductById(productId);
 
-        return [product, amount] as [ProductEntity, number];
+        return this.orderProductMapper.mapDtoToEntity(product, amount);
       },
     );
-    return await Promise.all(product_amounts_promises);
+
+    return await Promise.all(orderProdutsEntity);
   }
 
   async findAll() {

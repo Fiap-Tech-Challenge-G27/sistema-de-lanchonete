@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { CategoriesService } from './categories.service';
 import { CreateCategoryDto } from '../dtos/create-category.dto';
-import { ICategoryRepository } from '../repositories/ICategoryRepository';
-import { Category } from '../entities/category.entity';
+import { ICategoryRepository } from '../repositories/category.repository.interface';
+import { CategoryEntity } from '../entities/category.entity';
 
 describe('CategoriesService', () => {
   let service: CategoriesService;
@@ -34,22 +34,24 @@ describe('CategoriesService', () => {
 
   beforeEach(async () => {
     const mockCategoryRepository: ICategoryRepository = {
-      createCategory: function (category: Category): Promise<Category> {
+      createCategory: function (
+        category: CategoryEntity,
+      ): Promise<CategoryEntity> {
         throw new Error('Function not implemented.');
       },
-      findAllCategories: function (): Promise<Category[]> {
+      findAllCategories: function (): Promise<CategoryEntity[]> {
         throw new Error('Function not implemented.');
       },
-      findCategoryById: function (name: string): Promise<Category> {
+      findCategoryById: function (name: string): Promise<CategoryEntity> {
         throw new Error('Function not implemented.');
       },
-      findCategoryBySlug: function (name: string): Promise<Category> {
+      findCategoryBySlug: function (name: string): Promise<CategoryEntity> {
         throw new Error('Function not implemented.');
       },
       updateCategory: function (
         id: string,
-        category: Category,
-      ): Promise<Category> {
+        category: CategoryEntity,
+      ): Promise<CategoryEntity> {
         throw new Error('Function not implemented.');
       },
     };

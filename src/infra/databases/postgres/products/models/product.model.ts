@@ -5,11 +5,9 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
-  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { ProductImageModel } from './productImage.model';
 import { CategoryModel } from 'src/infra/databases/postgres/categories/models/category.model';
 
 @Entity({ name: 'products' })

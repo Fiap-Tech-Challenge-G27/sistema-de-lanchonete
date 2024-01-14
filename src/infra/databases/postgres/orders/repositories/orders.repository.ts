@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Order } from '@orders/entities/order.entity';
-import { IOrderRepository } from '@orders/repositories/IOrderRepository';
+import { OrderEntity, OrderProductEntity } from '@orders/entities/order.entity';
+import { IOrderRepository } from '@domain/orders/repositories/order.repository.interface';
 import { Repository } from 'typeorm';
 import { OrderModel } from '../models/order.model';
 import { OrdersProductsAmountsModel } from '../models/orders_products_amounts.model';
 import { ProductModel } from 'src/infra/databases/postgres/products/models/product.model';
 import { CustomerEntity } from '@customers/entities/customer.entity';
 import { ProductEntity } from '@products/entities/product.entity';
-import { CategoryEntity } from '@categories/entities/category.entity';
 import { CustomerModel } from 'src/infra/databases/postgres/customers/models/customer.model';
+import { CategoryEntity } from '@domain/categories/entities/category.entity';
 
 @Injectable()
 export class OrderModelRepository implements IOrderRepository {
@@ -20,29 +20,22 @@ export class OrderModelRepository implements IOrderRepository {
     private readonly orderProductAmountRepository: Repository<OrdersProductsAmountsModel>,
   ) {}
 
-  async create(order: Order): Promise<Order> {
-    const orderModel = new OrderModel();
-    orderModel.state = order.state;
-
-    orderModel.customer = new CustomerModel();
-    orderModel.customer.cpf = order.customer.cpf;
-    orderModel.customer.name = order.customer.name;
-    orderModel.customer.email = order.customer.email;
-    orderModel.customer.id = order.customer.id;
+  async create(order: OrderEntity): Promise<OrderEntity> {
+    const orderModel = this.mapEntityToModel(order);
 
     const orderCreated = await this.orderRepository.save(orderModel);
 
     orderCreated.orders_products_amounts = await Promise.all(
-      order.productAmounts.map(async ([product, amount]) => {
+      order.orderProducts.map(async (orderProduct) => {
         return await this._saveOrderProductAmountModel(
           orderCreated,
-          product,
-          amount,
+          orderProduct.product,
+          orderProduct.amount,
         );
       }),
     );
 
-    return this.modelToEntity(orderCreated);
+    return this.mapModelToEntity(orderCreated);
   }
 
   private async _saveOrderProductAmountModel(
@@ -72,7 +65,7 @@ export class OrderModelRepository implements IOrderRepository {
     );
   }
 
-  async findAll(): Promise<Order[]> {
+  async findAll(): Promise<OrderEntity[]> {
     const orders = await this.orderRepository.find({
       relations: {
         orders_products_amounts: {
@@ -83,10 +76,10 @@ export class OrderModelRepository implements IOrderRepository {
       },
     });
 
-    return orders.map((order) => this.modelToEntity(order));
+    return orders.map((order) => this.mapModelToEntity(order));
   }
 
-  async findById(id: string): Promise<Order> {
+  async findById(id: string): Promise<OrderEntity> {
     try {
       const order = await this.orderRepository.findOne({
         where: { id },
@@ -99,34 +92,37 @@ export class OrderModelRepository implements IOrderRepository {
         },
       });
 
-      return this.modelToEntity(order);
+      return this.mapModelToEntity(order);
     } catch (error) {
       return null;
     }
   }
 
-  modelToEntity(orderModel: OrderModel): Order {
-    const order = new Order(
+  mapModelToEntity(orderModel: OrderModel): OrderEntity {
+    const order = new OrderEntity(
       new CustomerEntity(
         orderModel.customer.name,
         orderModel.customer.email,
         orderModel.customer.cpf,
       ),
-      orderModel.orders_products_amounts.map(function (obj) {
+      orderModel.orders_products_amounts.map(function (item) {
+        const productItem = item.product;
+        const categoryItem = item.product.category;
         const product = new ProductEntity(
-          obj.product.name,
-          obj.product.description,
-          obj.product.price,
-          obj.product.quantity,
-          obj.product.status,
-          new CategoryEntity(
-            obj.product.category.name,
-            obj.product.category.slug,
-            obj.product.category.description,
-          ),
-        );
+          productItem.name,
+          productItem.description,
 
-        return [product, obj.amount];
+          productItem.price,
+          productItem.quantity,
+          productItem.status,
+          new CategoryEntity(
+            categoryItem.name,
+            categoryItem.slug,
+            categoryItem.description,
+          ),
+          productItem.id,
+        );
+        return new OrderProductEntity(product, item.amount);
       }),
       orderModel.state,
     );
@@ -136,5 +132,13 @@ export class OrderModelRepository implements IOrderRepository {
     order.updatedAt = orderModel.updatedAt;
 
     return order;
+  }
+
+  mapEntityToModel(dataEntity: OrderEntity): OrderModel {
+    const orderModel = new OrderModel();
+    orderModel.state = dataEntity.state;
+    orderModel.customer = dataEntity.customer;
+
+    return orderModel;
   }
 }

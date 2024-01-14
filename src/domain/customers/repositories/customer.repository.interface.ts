@@ -8,6 +8,7 @@ export interface ICustomerRepository {
     cpf: string,
     customer: CustomerEntity,
   ): Promise<CustomerEntity>;
+  deleteCustomer(id: string): Promise<void>;
 }
 
 export const ICustomerRepository = Symbol('ICustomerRepository');

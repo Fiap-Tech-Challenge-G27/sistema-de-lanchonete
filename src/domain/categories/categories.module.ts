@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { CategoriesService } from './core/categories.service';
 import { CategoriesController } from './controller/categories.controller';
-import { ICategoryRepository } from './repositories/ICategoryRepository';
+import { ICategoryRepository } from './repositories/category.repository.interface';
 import { CategoryModelRepository } from '@infra/databases/postgres/categories/repositories/category.repository';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CategoryModel } from '@infra/databases/postgres/categories/models/category.model';
