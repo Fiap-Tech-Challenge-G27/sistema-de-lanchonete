@@ -18,6 +18,9 @@ export class ProductEntity {
     quantity: number,
     status: string,
     category?: CategoryEntity,
+    id?: string,
+    createdAt?: Date,
+    updatedAt?: Date,
   ) {
     this.name = name;
     this.description = description;
@@ -25,5 +28,8 @@ export class ProductEntity {
     this.price = price;
     this.quantity = quantity;
     this.status = status;
+    this.id = id;
+    this.createdAt = createdAt;
+    this.updatedAt = updatedAt;
   }
 }
