@@ -36,6 +36,13 @@ export class OrdersService implements IOrdersService {
       });
     }
 
+    if (!orderProducts.length) {
+      this.exceptionService.badRequestException({
+        message: 'Order products is empty',
+        code: 400,
+      });
+    }
+
     const orderProductsEntity = await this.getOrderProducts(orderProducts);
 
     const order = this.orderMapper.mapDtoToEntity(
