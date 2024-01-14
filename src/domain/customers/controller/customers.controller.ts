@@ -11,7 +11,7 @@ import {
 import { CreateCustomerDto } from '../dtos/create-customer.dto';
 import { UpdateCustomerDto } from '../dtos/update-customer.dto';
 import { ApiTags } from '@nestjs/swagger';
-import { ICustomersService } from 'src/domain/customers/ports/ICustomersService';
+import { ICustomersService } from 'src/domain/customers/core/customers.service.interface';
 
 @ApiTags('customers')
 @Controller('customers')

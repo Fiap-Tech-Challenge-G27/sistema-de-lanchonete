@@ -1,4 +1,4 @@
-import { CategoryModel } from 'src/frameworks/database/postgres/categories/models/category.model';
+import { CategoryModel } from 'src/infra/databases/postgres/categories/models/category.model';
 import { CreateCategoryDto } from '../dtos/create-category.dto';
 import { CategoryEntity } from '../entities/category.entity';
 import { UpdateCategoryDto } from '../dtos/update-category.dto';

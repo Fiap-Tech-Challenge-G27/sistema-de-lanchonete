@@ -9,7 +9,7 @@ import {
   ParseUUIDPipe,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { IOrdersService } from 'src/domain/orders/ports/IOrdersService';
+import { IOrdersService } from 'src/domain/orders/core/orders.service.interface';
 import { CreateOrderDto } from 'src/domain/orders/dtos/create-order.dto';
 
 @ApiTags('orders')
