@@ -2,13 +2,13 @@ import { Module } from '@nestjs/common';
 import { CategoriesService } from './core/categories.service';
 import { CategoriesController } from './controller/categories.controller';
 import { ICategoryRepository } from './repositories/ICategoryRepository';
-import { CategoryModelRepository } from '../../infra/databases/postgres/categories/repositories/category.repository';
+import { CategoryModelRepository } from '@infra/databases/postgres/categories/repositories/category.repository';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CategoryModel } from '../../infra/databases/postgres/categories/models/category.model';
+import { CategoryModel } from '@infra/databases/postgres/categories/models/category.model';
 import { ICategoriesService } from './core/categories.service.interface';
 import { CategoryMapper } from './mappers/category.mapper';
-import { ExceptionsService } from 'src/infra/exceptions/exceptions.service';
-import { IExceptionService } from '../shared/exceptions/exceptions.interface';
+import { ExceptionsService } from '@infra/exceptions/exceptions.service';
+import { IExceptionService } from '@shared/exceptions/exceptions.interface';
 
 @Module({
   imports: [TypeOrmModule.forFeature([CategoryModel])],

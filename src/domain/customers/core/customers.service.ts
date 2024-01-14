@@ -1,10 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { CreateCustomerDto } from '../dtos/create-customer.dto';
 import { UpdateCustomerDto } from '../dtos/update-customer.dto';
-import { Customer } from '../entities/customer.entity';
+import { CustomerEntity } from '../entities/customer.entity';
 import { ICustomerRepository } from '../repositories/ICustomerRepository';
 import { ICustomersService } from './customers.service.interface';
-import { IExceptionService } from 'src/domain/shared/exceptions/exceptions.interface';
+import { IExceptionService } from '@shared/exceptions/exceptions.interface';
 
 @Injectable()
 export class CustomersService implements ICustomersService {
@@ -28,7 +28,7 @@ export class CustomersService implements ICustomersService {
       });
     }
 
-    const customer = new Customer(name, email, cpf);
+    const customer = new CustomerEntity(name, email, cpf);
 
     const createdCustomer =
       await this.customerRepository.createCustomer(customer);
@@ -76,7 +76,7 @@ export class CustomersService implements ICustomersService {
       });
     }
 
-    const customer = new Customer(name, email, cpf);
+    const customer = new CustomerEntity(name, email, cpf);
 
     const updatedCustomer = await this.customerRepository.updateCustomer(
       cpf,

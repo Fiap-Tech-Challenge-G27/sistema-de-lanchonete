@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Order } from 'src/domain/orders/entities/order.entity';
-import { IOrderRepository } from 'src/domain/orders/repositories/IOrderRepository';
+import { Order } from '@orders/entities/order.entity';
+import { IOrderRepository } from '@orders/repositories/IOrderRepository';
 import { Repository } from 'typeorm';
 import { OrderModel } from '../models/order.model';
 import { OrdersProductsAmountsModel } from '../models/orders_products_amounts.model';
 import { ProductModel } from 'src/infra/databases/postgres/products/models/product.model';
-import { Customer } from 'src/domain/customers/entities/customer.entity';
-import { ProductEntity } from 'src/domain/products/entities/product.entity';
-import { CategoryEntity } from 'src/domain/categories/entities/category.entity';
+import { CustomerEntity } from '@customers/entities/customer.entity';
+import { ProductEntity } from '@products/entities/product.entity';
+import { CategoryEntity } from '@categories/entities/category.entity';
 import { CustomerModel } from 'src/infra/databases/postgres/customers/models/customer.model';
 
 @Injectable()
@@ -107,7 +107,7 @@ export class OrderModelRepository implements IOrderRepository {
 
   modelToEntity(orderModel: OrderModel): Order {
     const order = new Order(
-      new Customer(
+      new CustomerEntity(
         orderModel.customer.name,
         orderModel.customer.email,
         orderModel.customer.cpf,

@@ -3,9 +3,9 @@ import { CreateProductDto } from '../dtos/create-product.dto';
 import { UpdateProductDto } from '../dtos/update-product.dto';
 import { IProductService } from './products.service.interface';
 import { ProductEntity } from '../entities/product.entity';
-import { ICategoryRepository } from '../../categories/repositories/ICategoryRepository';
+import { ICategoryRepository } from '@categories/repositories/ICategoryRepository';
 import { IProductRepository } from '../respositories/IProductRepository';
-import { IExceptionService } from 'src/domain/shared/exceptions/exceptions.interface';
+import { IExceptionService } from '@shared/exceptions/exceptions.interface';
 
 @Injectable()
 export class ProductsService implements IProductService {

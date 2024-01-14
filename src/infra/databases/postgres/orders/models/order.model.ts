@@ -10,7 +10,7 @@ import {
 } from 'typeorm';
 import { OrdersProductsAmountsModel } from './orders_products_amounts.model';
 import { CustomerModel } from 'src/infra/databases/postgres/customers/models/customer.model';
-import { OrderState } from 'src/domain/orders/entities/order.entity';
+import { OrderState } from '@orders/entities/order.entity';
 
 @Entity({ name: 'orders' })
 export class OrderModel {

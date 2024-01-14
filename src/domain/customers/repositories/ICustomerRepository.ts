@@ -1,10 +1,13 @@
-import { Customer } from '../entities/customer.entity';
+import { CustomerEntity } from '../entities/customer.entity';
 
 export interface ICustomerRepository {
-  createCustomer(customer: Customer): Promise<Customer>;
-  findAllCustomers(): Promise<Customer[]>;
-  findCustomerByCpf(cpf: string): Promise<Customer>;
-  updateCustomer(cpf: string, customer: Customer): Promise<Customer>;
+  createCustomer(customer: CustomerEntity): Promise<CustomerEntity>;
+  findAllCustomers(): Promise<CustomerEntity[]>;
+  findCustomerByCpf(cpf: string): Promise<CustomerEntity>;
+  updateCustomer(
+    cpf: string,
+    customer: CustomerEntity,
+  ): Promise<CustomerEntity>;
 }
 
 export const ICustomerRepository = Symbol('ICustomerRepository');

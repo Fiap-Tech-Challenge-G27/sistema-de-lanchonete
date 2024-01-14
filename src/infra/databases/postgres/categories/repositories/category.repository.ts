@@ -2,9 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CategoryModel } from '../models/category.model';
-import { CategoryEntity } from '../../../../../domain/categories/entities/category.entity';
-import { ICategoryRepository } from '../../../../../domain/categories/repositories/ICategoryRepository';
-import { CategoryMapper } from 'src/domain/categories/mappers/category.mapper';
+import { CategoryEntity } from '@domain/categories/entities/category.entity';
+import { ICategoryRepository } from '@domain/categories/repositories/ICategoryRepository';
+import { CategoryMapper } from '@categories/mappers/category.mapper';
 
 @Injectable()
 export class CategoryModelRepository implements ICategoryRepository {

@@ -8,7 +8,7 @@ import {
 import {
   IExceptionService,
   IExceptionBody,
-} from 'src/domain/shared/exceptions/exceptions.interface';
+} from '@shared/exceptions/exceptions.interface';
 
 @Injectable()
 export class ExceptionsService implements IExceptionService {

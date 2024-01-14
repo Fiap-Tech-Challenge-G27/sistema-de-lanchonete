@@ -4,7 +4,7 @@ import { UpdateCategoryDto } from '../dtos/update-category.dto';
 import { ICategoryRepository } from '../repositories/ICategoryRepository';
 import { ICategoriesService } from './categories.service.interface';
 import { CategoryMapper } from '../mappers/category.mapper';
-import { IExceptionService } from 'src/domain/shared/exceptions/exceptions.interface';
+import { IExceptionService } from '@shared/exceptions/exceptions.interface';
 
 @Injectable()
 export class CategoriesService implements ICategoriesService {

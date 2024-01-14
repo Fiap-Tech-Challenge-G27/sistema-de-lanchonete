@@ -3,9 +3,9 @@ import { IOrderRepository } from '../repositories/IOrderRepository';
 import { IOrdersService } from './orders.service.interface';
 import { CreateOrderDto } from '../dtos/create-order.dto';
 import { Order } from '../entities/order.entity';
-import { ICustomerRepository } from '../../customers/repositories/ICustomerRepository';
-import { IProductRepository } from '../../products/respositories/IProductRepository';
-import { ProductEntity } from '../../products/entities/product.entity';
+import { ICustomerRepository } from '@customers/repositories/ICustomerRepository';
+import { IProductRepository } from '@products/respositories/IProductRepository';
+import { ProductEntity } from '@products/entities/product.entity';
 
 @Injectable()
 export class OrdersService implements IOrdersService {

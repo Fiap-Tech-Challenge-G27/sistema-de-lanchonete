@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CustomerModel } from '../models/customer.model';
-import { Customer } from '../../../../../domain/customers/entities/customer.entity';
-import { ICustomerRepository } from '../../../../../domain/customers/repositories/ICustomerRepository';
+import { CustomerEntity } from '@domain/customers/entities/customer.entity';
+import { ICustomerRepository } from '@domain/customers/repositories/ICustomerRepository';
 
 @Injectable()
 export class CustomerModelRepository implements ICustomerRepository {
@@ -11,7 +11,7 @@ export class CustomerModelRepository implements ICustomerRepository {
     @InjectRepository(CustomerModel)
     private readonly customerRepository: Repository<CustomerModel>,
   ) {}
-  async createCustomer(customer: Customer): Promise<Customer> {
+  async createCustomer(customer: CustomerEntity): Promise<CustomerEntity> {
     const customerModel = new CustomerModel();
     customerModel.name = customer.name;
     customerModel.email = customer.email;
@@ -40,7 +40,10 @@ export class CustomerModelRepository implements ICustomerRepository {
     }
   }
 
-  async updateCustomer(cpf: string, customer: Customer): Promise<Customer> {
+  async updateCustomer(
+    cpf: string,
+    customer: CustomerEntity,
+  ): Promise<CustomerEntity> {
     const customerModel = await this.customerRepository.findOne({
       where: { cpf },
     });
@@ -54,8 +57,8 @@ export class CustomerModelRepository implements ICustomerRepository {
     return this.modelToEntity(customerModel);
   }
 
-  modelToEntity(customerModel: CustomerModel): Customer {
-    const customer = new Customer(
+  modelToEntity(customerModel: CustomerModel): CustomerEntity {
+    const customer = new CustomerEntity(
       customerModel.name,
       customerModel.email,
       customerModel.cpf,

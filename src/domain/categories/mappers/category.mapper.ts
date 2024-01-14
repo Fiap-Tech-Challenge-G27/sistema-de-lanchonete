@@ -1,8 +1,8 @@
-import { CategoryModel } from 'src/infra/databases/postgres/categories/models/category.model';
+import { CategoryModel } from '@infra/databases/postgres/categories/models/category.model';
 import { CreateCategoryDto } from '../dtos/create-category.dto';
 import { CategoryEntity } from '../entities/category.entity';
 import { UpdateCategoryDto } from '../dtos/update-category.dto';
-import { ProductEntity } from 'src/domain/products/entities/product.entity';
+import { ProductEntity } from '@products/entities/product.entity';
 
 export class CategoryMapper extends CategoryEntity {
   public mapDtoToEntity(
