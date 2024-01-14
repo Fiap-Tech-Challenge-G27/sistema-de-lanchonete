@@ -1,5 +1,5 @@
 import { Customer } from 'src/domain/customers/entities/customer.entity';
-import { Product } from 'src/domain/products/entities/product.entity';
+import { ProductEntity } from 'src/domain/products/entities/product.entity';
 
 export enum OrderState {
   PendingPayment = 'PendingPayment',
@@ -10,7 +10,7 @@ export enum OrderState {
 }
 export class Order {
   customer: Customer;
-  productAmounts: Array<[Product, number]>;
+  productAmounts: Array<[ProductEntity, number]>;
   state: OrderState;
 
   id: string;
@@ -19,7 +19,7 @@ export class Order {
 
   constructor(
     customer: Customer,
-    productAmounts: Array<[Product, number]>,
+    productAmounts: Array<[ProductEntity, number]>,
     state: OrderState = OrderState.Received,
   ) {
     this.customer = customer;

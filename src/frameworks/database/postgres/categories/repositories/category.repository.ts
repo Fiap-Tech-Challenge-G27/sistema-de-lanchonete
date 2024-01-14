@@ -2,31 +2,32 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CategoryModel } from '../models/category.model';
-import { Category } from '../../../../../domain/categories/entities/category.entity';
+import { CategoryEntity } from '../../../../../domain/categories/entities/category.entity';
 import { ICategoryRepository } from '../../../../../domain/categories/repositories/ICategoryRepository';
-import { Product } from 'src/domain/products/entities/product.entity';
+import { ProductEntity } from 'src/domain/products/entities/product.entity';
+import { CategoryMapper } from 'src/domain/categories/mappers/category.mapper';
 
 @Injectable()
 export class CategoryModelRepository implements ICategoryRepository {
   constructor(
     @InjectRepository(CategoryModel)
     private readonly categoryRepository: Repository<CategoryModel>,
+    private readonly categoryMapper: CategoryMapper,
   ) {}
-  async createCategory(category: Category): Promise<Category> {
-    const categoryModel = new CategoryModel();
-    categoryModel.name = category.name;
-    categoryModel.slug = category.slug;
-    categoryModel.description = category.description;
+  async createCategory(category: CategoryEntity): Promise<CategoryEntity> {
+    const categoryModel = this.categoryMapper.mapEntityToModel(category);
 
     const categoryCreated = await this.categoryRepository.save(categoryModel);
 
-    return this.modelToEntity(categoryCreated);
+    return this.categoryMapper.mapModelToEntity(categoryCreated);
   }
 
   async findAllCategories() {
     const categories = await this.categoryRepository.find();
 
-    return categories.map((category) => this.modelToEntity(category));
+    return categories.map((category) =>
+      this.categoryMapper.mapModelToEntity(category),
+    );
   }
 
   async findCategoryById(id: string) {
@@ -35,7 +36,7 @@ export class CategoryModelRepository implements ICategoryRepository {
         where: { id },
       });
 
-      return this.modelToEntity(category);
+      return this.categoryMapper.mapModelToEntity(category);
     } catch (error) {
       return null;
     }
@@ -46,12 +47,15 @@ export class CategoryModelRepository implements ICategoryRepository {
       const category = await this.categoryRepository.findOne({
         where: { slug },
       });
-      return this.modelToEntity(category);
+      return this.categoryMapper.mapModelToEntity(category);
     } catch (error) {
       return null;
     }
   }
-  async updateCategory(id: string, category: Category): Promise<Category> {
+  async updateCategory(
+    id: string,
+    category: CategoryEntity,
+  ): Promise<CategoryEntity> {
     const categoryModel = await this.categoryRepository.findOne({
       where: { id },
     });
@@ -62,33 +66,6 @@ export class CategoryModelRepository implements ICategoryRepository {
 
     await this.categoryRepository.save(categoryModel);
 
-    return this.modelToEntity(categoryModel);
-  }
-
-  modelToEntity(categoryModel: CategoryModel): Category {
-    const category = new Category(
-      categoryModel.name,
-      categoryModel.slug,
-      categoryModel.description,
-    );
-    category.id = categoryModel.id;
-    category.createdAt = categoryModel.createdAt;
-    category.updatedAt = categoryModel.updatedAt;
-
-    if (categoryModel.products) {
-      category.products = categoryModel.products.map((product) => {
-        const newProduct = new Product(
-          product.name,
-          product.description,
-          product.price,
-          product.quantity,
-          product.status,
-        );
-
-        newProduct.id = product.id;
-        return newProduct;
-      });
-    }
-    return category;
+    return this.categoryMapper.mapModelToEntity(categoryModel);
   }
 }

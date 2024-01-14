@@ -1,16 +1,16 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import { Product } from 'src/domain/products/entities/product.entity';
+import { ProductEntity } from 'src/domain/products/entities/product.entity';
 import { IProductRepository } from 'src/domain/products/respositories/IProductRepository';
 import { ProductModel } from '../models/product.model';
 import { Repository } from 'typeorm';
-import { Category } from 'src/domain/categories/entities/category.entity';
+import { CategoryEntity } from 'src/domain/categories/entities/category.entity';
 
 export class ProductModelRepository implements IProductRepository {
   constructor(
     @InjectRepository(ProductModel)
     private readonly productRepository: Repository<ProductModel>,
   ) {}
-  async createProduct(product: Product): Promise<Product> {
+  async createProduct(product: ProductEntity): Promise<ProductEntity> {
     const productModel = new ProductModel();
     productModel.name = product.name;
     productModel.description = product.description;
@@ -30,7 +30,7 @@ export class ProductModelRepository implements IProductRepository {
     return this.modelToEntity(getProduct);
   }
 
-  async findAllProducts(): Promise<Product[]> {
+  async findAllProducts(): Promise<ProductEntity[]> {
     const listOfProducts = await this.productRepository.find({
       relations: ['category'],
       loadEagerRelations: false,
@@ -39,7 +39,7 @@ export class ProductModelRepository implements IProductRepository {
     return listOfProducts.map((product) => this.modelToEntity(product));
   }
 
-  async findProductById(id: string): Promise<Product> {
+  async findProductById(id: string): Promise<ProductEntity> {
     try {
       const productModel = await this.productRepository.findOne({
         where: { id },
@@ -57,7 +57,10 @@ export class ProductModelRepository implements IProductRepository {
     await this.productRepository.softDelete(id);
   }
 
-  async updateProduct(id: string, product: Product): Promise<Product> {
+  async updateProduct(
+    id: string,
+    product: ProductEntity,
+  ): Promise<ProductEntity> {
     const productModel = await this.productRepository.findOne({
       where: { id },
     });
@@ -74,14 +77,14 @@ export class ProductModelRepository implements IProductRepository {
     return this.modelToEntity(productUpdated);
   }
 
-  modelToEntity(productModel: ProductModel): Product {
-    const product = new Product(
+  modelToEntity(productModel: ProductModel): ProductEntity {
+    const product = new ProductEntity(
       productModel.name,
       productModel.description,
       productModel.price,
       productModel.quantity,
       productModel.status,
-      new Category(
+      new CategoryEntity(
         productModel.category.name,
         productModel.category.slug,
         productModel.category.description,

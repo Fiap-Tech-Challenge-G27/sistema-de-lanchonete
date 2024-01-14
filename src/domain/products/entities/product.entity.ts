@@ -1,10 +1,10 @@
-import { Category } from 'src/domain/categories/entities/category.entity';
+import { CategoryEntity } from 'src/domain/categories/entities/category.entity';
 
-export class Product {
+export class ProductEntity {
   id: string;
   name: string;
   description: string;
-  category: Category;
+  category: CategoryEntity;
   price: number;
   quantity: number;
   status: string;
@@ -17,7 +17,7 @@ export class Product {
     price: number,
     quantity: number,
     status: string,
-    category?: Category,
+    category?: CategoryEntity,
   ) {
     this.name = name;
     this.description = description;

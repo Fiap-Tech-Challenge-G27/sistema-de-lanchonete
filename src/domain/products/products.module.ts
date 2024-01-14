@@ -10,6 +10,7 @@ import { IProductRepository } from './respositories/IProductRepository';
 import { ProductModelRepository } from '../../frameworks/database/postgres/products/repositories/product.repository';
 import { CategoryModel } from '../../frameworks/database/postgres/categories/models/category.model';
 import { IProductService } from './ports/IProductService';
+import { CategoryMapper } from '../categories/mappers/category.mapper';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { IProductService } from './ports/IProductService';
       provide: IProductRepository,
       useClass: ProductModelRepository,
     },
+    CategoryMapper,
   ],
 })
 export class ProductsModule {}

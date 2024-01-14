@@ -5,7 +5,7 @@ import { CreateOrderDto } from './dtos/create-order.dto';
 import { Order } from './entities/order.entity';
 import { ICustomerRepository } from '../customers/repositories/ICustomerRepository';
 import { IProductRepository } from '../products/respositories/IProductRepository';
-import { Product } from '../products/entities/product.entity';
+import { ProductEntity } from '../products/entities/product.entity';
 
 @Injectable()
 export class OrdersService implements IOrdersService {
@@ -39,7 +39,7 @@ export class OrdersService implements IOrdersService {
         const product =
           await this.productRepository.findProductById(product_id);
 
-        return [product, amount] as [Product, number];
+        return [product, amount] as [ProductEntity, number];
       },
     );
     return await Promise.all(product_amounts_promises);

@@ -6,6 +6,7 @@ import { CategoryModelRepository } from '../../frameworks/database/postgres/cate
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CategoryModel } from '../../frameworks/database/postgres/categories/models/category.model';
 import { ICategoriesService } from './ports/ICategoriesService';
+import { CategoryMapper } from './mappers/category.mapper';
 
 @Module({
   imports: [TypeOrmModule.forFeature([CategoryModel])],
@@ -23,6 +24,7 @@ import { ICategoriesService } from './ports/ICategoriesService';
       provide: ICategoriesService,
       useClass: CategoriesService,
     },
+    CategoryMapper,
   ],
 })
 export class CategoriesModule {}

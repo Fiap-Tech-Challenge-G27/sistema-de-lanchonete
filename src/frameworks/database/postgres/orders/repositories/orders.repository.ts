@@ -7,8 +7,8 @@ import { OrderModel } from '../models/order.model';
 import { OrdersProductsAmountsModel } from '../models/orders_products_amounts.model';
 import { ProductModel } from 'src/frameworks/database/postgres/products/models/product.model';
 import { Customer } from 'src/domain/customers/entities/customer.entity';
-import { Product } from 'src/domain/products/entities/product.entity';
-import { Category } from 'src/domain/categories/entities/category.entity';
+import { ProductEntity } from 'src/domain/products/entities/product.entity';
+import { CategoryEntity } from 'src/domain/categories/entities/category.entity';
 import { CustomerModel } from 'src/frameworks/database/postgres/customers/models/customer.model';
 
 @Injectable()
@@ -47,7 +47,7 @@ export class OrderModelRepository implements IOrderRepository {
 
   private async _saveOrderProductAmountModel(
     orderModel: OrderModel,
-    product: Product,
+    product: ProductEntity,
     amount: number,
   ) {
     const order_product_amount_model = new OrdersProductsAmountsModel();
@@ -113,13 +113,13 @@ export class OrderModelRepository implements IOrderRepository {
         orderModel.customer.cpf,
       ),
       orderModel.orders_products_amounts.map(function (obj) {
-        const product = new Product(
+        const product = new ProductEntity(
           obj.product.name,
           obj.product.description,
           obj.product.price,
           obj.product.quantity,
           obj.product.status,
-          new Category(
+          new CategoryEntity(
             obj.product.category.name,
             obj.product.category.slug,
             obj.product.category.description,

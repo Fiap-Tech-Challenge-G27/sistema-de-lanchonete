@@ -2,7 +2,7 @@ import { HttpException, Inject, Injectable } from '@nestjs/common';
 import { CreateProductDto } from './dtos/create-product.dto';
 import { UpdateProductDto } from './dtos/update-product.dto';
 import { IProductService } from './ports/IProductService';
-import { Product } from './entities/product.entity';
+import { ProductEntity } from './entities/product.entity';
 import { ICategoryRepository } from '../categories/repositories/ICategoryRepository';
 import { IProductRepository } from './respositories/IProductRepository';
 
@@ -24,7 +24,7 @@ export class ProductsService implements IProductService {
       throw new HttpException('Category not found', 404);
     }
 
-    const product = new Product(
+    const product = new ProductEntity(
       name,
       description,
       price,
