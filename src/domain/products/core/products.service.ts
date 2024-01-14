@@ -2,7 +2,6 @@ import { Inject, Injectable } from '@nestjs/common';
 import { CreateProductDto } from '../dtos/create-product.dto';
 import { UpdateProductDto } from '../dtos/update-product.dto';
 import { IProductService } from './products.service.interface';
-import { ProductEntity } from '../entities/product.entity';
 import { ICategoryRepository } from '@domain/categories/repositories/category.repository.interface';
 import { IProductRepository } from '../respositories/product.repository.interface';
 import { IExceptionService } from '@shared/exceptions/exceptions.interface';
@@ -20,8 +19,7 @@ export class ProductsService implements IProductService {
     private readonly productMapper: ProductMapper,
   ) {}
   async create(createProductDto: CreateProductDto) {
-    const { name, description, categoryId, price, quantity, status } =
-      createProductDto;
+    const { categoryId } = createProductDto;
 
     const category = await this.categoryRepository.findCategoryById(categoryId);
 

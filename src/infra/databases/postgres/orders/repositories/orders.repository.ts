@@ -8,7 +8,6 @@ import { OrdersProductsAmountsModel } from '../models/orders_products_amounts.mo
 import { ProductModel } from 'src/infra/databases/postgres/products/models/product.model';
 import { CustomerEntity } from '@customers/entities/customer.entity';
 import { ProductEntity } from '@products/entities/product.entity';
-import { CustomerModel } from 'src/infra/databases/postgres/customers/models/customer.model';
 import { CategoryEntity } from '@domain/categories/entities/category.entity';
 
 @Injectable()

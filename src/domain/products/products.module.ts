@@ -14,7 +14,6 @@ import { CategoryMapper } from '../categories/mappers/category.mapper';
 import { IExceptionService } from '../shared/exceptions/exceptions.interface';
 import { ExceptionsService } from 'src/infra/exceptions/exceptions.service';
 import { ProductMapper } from './mappers/product.mapper';
-import { OrderProductEntity } from '@domain/orders/entities/order.entity';
 
 @Module({
   imports: [

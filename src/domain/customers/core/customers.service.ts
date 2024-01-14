@@ -17,7 +17,7 @@ export class CustomersService implements ICustomersService {
   ) {}
 
   async create(createCustomerDto: CreateCustomerDto) {
-    const { name, email, cpf } = createCustomerDto;
+    const { cpf } = createCustomerDto;
 
     const customerAlreadyExists =
       await this.customerRepository.findCustomerByCpf(cpf);
@@ -56,8 +56,6 @@ export class CustomersService implements ICustomersService {
   }
 
   async update(cpf: string, updateCustomerDto: UpdateCustomerDto) {
-    const { name, email } = updateCustomerDto;
-
     const customerExists = await this.customerRepository.findCustomerByCpf(cpf);
 
     if (!customerExists) {
