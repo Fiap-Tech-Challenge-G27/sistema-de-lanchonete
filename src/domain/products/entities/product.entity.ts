@@ -1,10 +1,10 @@
-import { Category } from 'src/domain/categories/entities/category.entity';
+import { CategoryEntity } from '@categories/entities/category.entity';
 
-export class Product {
+export class ProductEntity {
   id: string;
   name: string;
   description: string;
-  category: Category;
+  category: CategoryEntity;
   price: number;
   quantity: number;
   status: string;
@@ -17,7 +17,10 @@ export class Product {
     price: number,
     quantity: number,
     status: string,
-    category?: Category,
+    category?: CategoryEntity,
+    id?: string,
+    createdAt?: Date,
+    updatedAt?: Date,
   ) {
     this.name = name;
     this.description = description;
@@ -25,5 +28,8 @@ export class Product {
     this.price = price;
     this.quantity = quantity;
     this.status = status;
+    this.id = id;
+    this.createdAt = createdAt;
+    this.updatedAt = updatedAt;
   }
 }

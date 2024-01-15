@@ -1,17 +1,29 @@
-import { Product } from 'src/domain/products/entities/product.entity';
+import { ProductEntity } from '@products/entities/product.entity';
 
-export class Category {
+export class CategoryEntity {
   id: string;
   name: string;
   slug: string;
   description: string;
   createdAt: Date;
   updatedAt: Date;
-  products: Product[];
+  products: ProductEntity[];
 
-  constructor(name, slug, description) {
+  constructor(
+    name: string,
+    slug: string,
+    description: string,
+    id?: string,
+    createdAt?: Date,
+    updatedAt?: Date,
+    products?: ProductEntity[],
+  ) {
     this.name = name;
     this.slug = slug;
     this.description = description;
+    this.id = id;
+    this.createdAt = createdAt;
+    this.updatedAt = updatedAt;
+    this.products = products;
   }
 }

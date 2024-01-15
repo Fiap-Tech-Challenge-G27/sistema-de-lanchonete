@@ -16,6 +16,15 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
+    "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "@infra/*": ["src/infra/*"],
+      "@domain/*": ["src/domain/*"],
+      "@shared/*": ["src/domain/shared/*"],
+      "@orders/*": ["src/domain/orders/*"],
+      "@products/*": ["src/domain/products/*"],
+      "@customers/*": ["src/domain/customers/*"],
+      "@categories/*": ["src/domain/categories/*"],
+    }
   }
 }

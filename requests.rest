@@ -82,9 +82,15 @@ Content-Type: application/json
 
 {
     "customer_cpf": "{{customerCPF}}",
-    "product_id_amount_id": {
-        "{{productID_0}}": 1,
-        "{{productID_1}}": 2
+    "orderProducts": {
+        {
+          "productId": "{{productID_0}}",
+          "amount": 1
+        },
+        {
+          "productId": "{{productID_1}}",
+          "amount": 2
+        }
     }
 }
 
