@@ -15,7 +15,9 @@ if (Test-Path $arquivo) {
     Write-Host "Iniciando MiniKube."
 
     # Iniciar o MiniKube
-    .\minikube.exe start --driver=docker
+    # .\minikube.exe start --driver=docker
+    .\minikube.exe start --driver=hyperv
+    docker context use default
 }
 else {
     Write-Host "O minikube não existe. Instalando..."
@@ -68,3 +70,4 @@ if ($null -eq $isKubectlInstalled) {
 .\minikube.exe image build  -t techchallenge .
 # .\minikube.exe image load techchallenge
 kubectl apply -f deployment.yml
+.\minikube.exe service techchallenge
