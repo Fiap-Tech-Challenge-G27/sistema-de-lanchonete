@@ -9,3 +9,7 @@ USER node
 WORKDIR /home/node/app
 
 COPY . .
+
+RUN ls
+
+ENTRYPOINT ["bash", "-c", "npm install && npm run start:dev"]

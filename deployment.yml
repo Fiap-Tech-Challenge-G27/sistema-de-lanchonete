@@ -66,6 +66,8 @@ data:
   POSTGRES_PASSWORD: 'admin'
   POSTGRES_DATABASE: 'app'
   POSTGRES_DB: 'app'
+  TYPEORM_CONNECTION: 'postgres'
+  TYPEORM_URL: 'postgres://admin:admin@database:5432/app'
 
 ---
 apiVersion: v1
@@ -81,7 +83,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: 'D:\Hugo\Dev\fiap-tech-challenge-01\.docker'
+    path: '/data'
 
 ---
 apiVersion: v1
