@@ -40,15 +40,7 @@ kind: ConfigMap
 metadata:
   name: postgres-configmap
 data:
-  DATABASE_DIALECT: 'postgres'
-  POSTGRES_HOST: 'postgres'
-  POSTGRES_PORT: '5432'
-  POSTGRES_USER: 'admin'
   POSTGRES_PASSWORD: 'admin'
-  POSTGRES_DATABASE: 'app'
-  POSTGRES_DB: 'app'
-  TYPEORM_CONNECTION: 'postgres'
-  TYPEORM_URL: 'postgres://admin:admin@database:5432/app'
 
 ---
 apiVersion: v1
