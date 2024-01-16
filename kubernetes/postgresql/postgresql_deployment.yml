@@ -1,30 +1,30 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: postgres
+  name: postgresql
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: postgres
+      app: postgresql
   template:
     metadata:
       labels:
-        app: postgres
+        app: postgresql
     spec:
       volumes:
         - name: postgresql-data
           persistentVolumeClaim:
             claimName: postgresql-data
       containers:
-        - name: postgres
+        - name: postgresql
           image: postgres:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5432
           envFrom:
             - configMapRef:
-                name: postgres-configmap
+                name: postgresql-configmap
           volumeMounts:
             - name: postgresql-data
               mountPath: /var/lib/postgresql/data
@@ -38,7 +38,7 @@ spec:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: postgres-configmap
+  name: postgresql-configmap
 data:
   POSTGRES_PASSWORD: 'admin'
 
