@@ -12,7 +12,10 @@ if ($null -eq $isDockerDesktopRunning) {
 $arquivo = "minikube.exe"
 
 if (Test-Path $arquivo) {
-    Write-Host "O minikube ja existe e esta executavel deste diretorio."
+    Write-Host "Iniciando MiniKube."
+
+    # Iniciar o MiniKube
+    .\minikube.exe start --driver=docker
 }
 else {
     Write-Host "O minikube não existe. Instalando..."
@@ -36,11 +39,6 @@ else {
     Write-Host "MiniKube instalado com sucesso."
 }
 
-Write-Host "Iniciando MiniKube."
-
-# Iniciar o MiniKube
-.\minikube.exe start --driver=docker
-
 $isKubectlInstalled = Get-Command -Name "kubectl"
 
 if ($null -eq $isKubectlInstalled) {
@@ -60,12 +58,13 @@ if ($null -eq $isKubectlInstalled) {
 
     Write-Host "kubectl instalado com sucesso."
 
+    Write-Host "Testando kubectl."
+
+    .\kubectl.exe version --client
+
 }
 
-Write-Host "Testando kubectl."
-
-.\kubectl.exe version --client
 # docker build -t techchallenge .docker/
-.\minikube.exe image build  -t techchallenge .docker/
+.\minikube.exe image build  -t techchallenge .
 # .\minikube.exe image load techchallenge
 kubectl apply -f deployment.yml
