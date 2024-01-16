@@ -1,6 +1,13 @@
-Write-Host "Iniciando instalação do MiniKube."
+$isDockerDesktopRunning = Get-Process Docker
+
+if ($isDockerDesktopRunning -eq $null) {
+    Write-Host "O processo do Docker nao existe. Por favor, inicie o Docker antes de prosseguir com este script."
+    exit
+}
+
+Write-Host "Iniciando instalacao do MiniKube."
 # # Executar o script como administrador
-# Set-ExecutionPolicy RemoteSigned
+Set-ExecutionPolicy RemoteSigned
 
 # Baixar o instalador do MiniKube
 $url = 'https://github.com/kubernetes/minikube/releases/latest/download/minikube-windows-amd64.exe'
@@ -38,6 +45,6 @@ $path += ";$(Get-Location)\kubectl"
 Write-Host "kubectl instalado com sucesso."
 
 .\kubectl.exe version --client
-docker build -t techchallenge .docker/
-./minikube image load techchallenge
-kubectl apply -f deployment.yaml
+# docker build -t techchallenge .docker/
+# .\minikube.exe image load techchallenge
+# kubectl apply -f deployment.yaml

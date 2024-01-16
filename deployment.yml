@@ -42,13 +42,30 @@ spec:
       containers:
         - name: postgres
           image: postgres:latest
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 5432
+          envFrom:
+            - configMapRef:
+                name: postgres-configmap
           volumeMounts:
             - name: data-volume-storage
               mountPath: /var/lib/postgresql/data
       restartPolicy: Always
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-configmap
+data:
+  DATABASE_DIALECT: 'postgres'
+  POSTGRES_HOST: 'postgres'
+  POSTGRES_PORT: '5432'
+  POSTGRES_USER: 'admin'
+  POSTGRES_PASSWORD: 'admin'
+  POSTGRES_DATABASE: 'app'
+  POSTGRES_DB: 'app'
 
 ---
 apiVersion: v1
@@ -64,7 +81,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: '.docker/postgres/data'
+    path: 'D:\Hugo\Dev\fiap-tech-challenge-01\.docker'
 
 ---
 apiVersion: v1
