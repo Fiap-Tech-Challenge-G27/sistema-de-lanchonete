@@ -40,6 +40,7 @@ kind: ConfigMap
 metadata:
   name: postgresql-configmap
 data:
+  POSTGRES_USER: 'admin'
   POSTGRES_PASSWORD: 'admin'
 
 ---
