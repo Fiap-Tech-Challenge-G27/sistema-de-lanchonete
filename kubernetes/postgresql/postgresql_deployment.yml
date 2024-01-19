@@ -28,6 +28,9 @@ spec:
           volumeMounts:
             - name: postgresql-data
               mountPath: /var/lib/postgresql/data
+            - name: postgresql-initdb
+              mountPath: /docker-entrypoint-initdb.d
+              
           resources:
             limits:
               memory: "512Mi"
