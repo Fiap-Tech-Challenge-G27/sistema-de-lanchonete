@@ -14,7 +14,7 @@ if (Test-Path $arquivo) {
 
     # Iniciar o MiniKube
     # .\minikube.exe start --driver=docker
-    .\minikube.exe start --driver=hyperv
+    .\minikube.exe start --driver=docker
     docker context use default
 }
 else {
@@ -78,5 +78,5 @@ kubectl apply -f kubernetes/postgresql/postgresql_service.yml
 .\minikube image build -t tech_challenge_fiap_4_group_27  .
 
 kubectl apply -f kubernetes/backend/backend_deployment.yaml
-kubeclt apply -f kubernetes/backend/backend_service.yml 
+kubectl apply -f kubernetes/backend/backend_service.yml 
 
