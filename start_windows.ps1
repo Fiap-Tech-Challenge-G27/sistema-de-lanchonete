@@ -1,9 +1,7 @@
 # # Executar o script como administrador
 Set-ExecutionPolicy RemoteSigned
 
-$isDockerDesktopRunning = Get-Process Docker
-
-if ($null -eq $isDockerDesktopRunning) {
+if ($null -eq (Get-Process Docker)) {
     Write-Host "O processo do Docker nao existe. Por favor, inicie o Docker antes de prosseguir com este script."
     exit
 }
@@ -20,7 +18,7 @@ if (Test-Path $arquivo) {
     docker context use default
 }
 else {
-    Write-Host "O minikube não existe. Instalando..."
+    Write-Host "O minikube nao existe. Instalando..."
 
     # Baixar o instalador do MiniKube
     $url = 'https://github.com/kubernetes/minikube/releases/latest/download/minikube-windows-amd64.exe'
@@ -39,6 +37,13 @@ else {
     [System.Environment]::SetEnvironmentVariable("Path", "$env:Path;$env:USERPROFILE", [System.EnvironmentVariableTarget]::User)
 
     Write-Host "MiniKube instalado com sucesso."
+
+    Write-Host "Iniciando MiniKube."
+
+    # Iniciar o MiniKube
+    # .\minikube.exe start --driver=docker
+    .\minikube.exe start --driver=docker
+    docker context use default
 }
 
 $isKubectlInstalled = Get-Command -Name "kubectl"
@@ -66,8 +71,12 @@ if ($null -eq $isKubectlInstalled) {
 
 }
 
-# docker build -t techchallenge .docker/
-.\minikube.exe image build  -t techchallenge .
-# .\minikube.exe image load techchallenge
-kubectl apply -f deployment.yml
-.\minikube.exe service techchallenge
+kubectl apply -f kubernetes/postgresql/postgresql_deployment.yml
+kubectl apply -f kubernetes/postgresql/postgresql_service.yml
+# .\minikube service --url=true postgresql
+
+.\minikube image build -t tech_challenge_fiap_4_group_27  .
+
+kubectl apply -f kubernetes/backend/backend_deployment.yaml
+kubeclt apply -f kubernetes/backend/backend_service.yml 
+
