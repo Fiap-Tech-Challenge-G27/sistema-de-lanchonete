@@ -25,6 +25,12 @@ spec:
           envFrom:
             - configMapRef:
                 name: backend-configmap
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 30001
+            initialDelaySeconds: 30
+            periodSeconds: 3
       restartPolicy: Always
 
 ---

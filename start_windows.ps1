@@ -1,5 +1,5 @@
 # # Executar o script como administrador
-Set-ExecutionPolicy RemoteSigned
+# Set-ExecutionPolicy RemoteSigned
 
 if ($null -eq (Get-Process Docker)) {
     Write-Host "O processo do Docker nao existe. Por favor, inicie o Docker antes de prosseguir com este script."
@@ -73,10 +73,15 @@ if ($null -eq $isKubectlInstalled) {
 
 kubectl apply -f kubernetes/postgresql/postgresql_deployment.yml
 kubectl apply -f kubernetes/postgresql/postgresql_service.yml
-# .\minikube service --url=true postgresql
+
 
 .\minikube image build -t tech_challenge_fiap_4_group_27  .
 
 kubectl apply -f kubernetes/backend/backend_deployment.yaml
 kubectl apply -f kubernetes/backend/backend_service.yml 
 
+Write-Host "Aguardando inicializacao da aplicacao."
+
+Start-Sleep -s 60
+
+.\minikube service backend

@@ -1,4 +1,3 @@
-create database if not exists "app";
 drop table if exists "orders";
 drop type if exists "order_status";
 create type "order_status" as enum ('PendingPayment', 'Received', 'InPreparation', 'Ready', 'Finished');

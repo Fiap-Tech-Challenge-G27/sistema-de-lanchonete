@@ -47,6 +47,8 @@ metadata:
 data:
   POSTGRES_USER: 'admin'
   POSTGRES_PASSWORD: 'admin'
+  POSTGRES_DB: 'app'
+
 
 ---
 apiVersion: v1
@@ -55,7 +57,6 @@ metadata:
   name: initdb
 data:
    init.sql: |
-    create database if not exists "app";
     drop table if exists "orders";
     drop type if exists "order_status";
     create type "order_status" as enum ('PendingPayment', 'Received', 'InPreparation', 'Ready', 'Finished');
