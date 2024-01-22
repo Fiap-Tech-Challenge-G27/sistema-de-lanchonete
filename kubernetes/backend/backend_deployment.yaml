@@ -30,7 +30,7 @@ spec:
               path: /
               port: 30001
             initialDelaySeconds: 30
-            periodSeconds: 3
+            periodSeconds: 10
       restartPolicy: Always
 
 ---

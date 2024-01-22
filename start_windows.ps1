@@ -80,7 +80,7 @@ kubectl apply -f kubernetes/postgresql/postgresql_service.yml
 kubectl apply -f kubernetes/backend/backend_deployment.yaml
 kubectl apply -f kubernetes/backend/backend_service.yml 
 
-Write-Host "Aguardando inicializacao da aplicacao."
+Write-Host "Aguardando inicializacao da aplicacao. (60 segundos)"
 
 Start-Sleep -s 60
 
