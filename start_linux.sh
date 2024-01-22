@@ -1,34 +1,74 @@
 #!/bin/bash
 
-# Verificar se o curl está instalado
-if ! command -v curl &>/dev/null; then
-  sudo apt-get install curl
+# Verificar se o Docker está em execução
+if ! pgrep -x "docker" > /dev/null; then
+    echo "O processo do Docker não está em execução. Por favor, inicie o Docker antes de prosseguir com este script."
+    exit 1
 fi
 
-# Baixar o instalador do MiniKube
-curl -LO https://github.com/kubernetes/minikube/releases/download/v1.24.1/minikube-linux-amd64
+# Verificar se o arquivo existe
+arquivo="minikube"
 
-# Instalar o MiniKube
-sudo install minikube-linux-amd64 /usr/local/bin/minikube
+if [ -f "$arquivo" ]; then
+    echo "Iniciando MiniKube."
 
-# Adicionar o binário do MiniKube ao PATH
-echo "/usr/local/bin/minikube" >> ~/.bashrc
-source ~/.bashrc
+    # Iniciar o MiniKube
+    ./minikube start --driver=docker
+    docker context use default
+else
+    echo "O MiniKube não existe. Instalando..."
 
-echo "MiniKube instalado"
+    # Baixar o instalador do MiniKube
+    url='https://github.com/kubernetes/minikube/releases/latest/download/minikube-linux-amd64'
+    arquivo="minikube"
+    wget -O $arquivo $url
 
-# Baixar o kubectl
-curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.24.1/bin/linux/amd64/kubectl
+    # Dar permissão de execução ao MiniKube
+    chmod +x $arquivo
 
-# Instalar o kubectl
-sudo install kubectl /usr/local/bin/kubectl
+    # Mover o MiniKube para um diretório no PATH
+    sudo mv $arquivo /usr/local/bin/
 
-# Adicionar o binário do kubectl ao PATH
-echo "/usr/local/bin/kubectl" >> ~/.bashrc
-source ~/.bashrc
+    echo "MiniKube instalado com sucesso."
 
-echo "kubectl instalado"
+    echo "Iniciando MiniKube."
 
-# Iniciar o MiniKube
-minikube start
-kubectl version --client
+    # Iniciar o MiniKube
+    ./minikube start --driver=docker
+    docker context use default
+fi
+
+# Verificar se o kubectl está instalado
+if ! command -v kubectl &> /dev/null; then
+    echo "O kubectl não está instalado. Instalando..."
+
+    # Baixar o kubectl
+    kubectlUrl="https://dl.k8s.io/release/v1.29.0/bin/linux/amd64/kubectl"
+    arquivo="kubectl"
+
+    wget $kubectlUrl -O $arquivo
+
+    # Dar permissão de execução ao kubectl
+    chmod +x $arquivo
+
+    # Mover o kubectl para um diretório no PATH
+    sudo mv $arquivo /usr/local/bin/
+
+    echo "kubectl instalado com sucesso."
+
+    echo "Testando kubectl."
+    kubectl version --client
+fi
+
+kubectl apply -f kubernetes/postgresql/postgresql_deployment.yml
+kubectl apply -f kubernetes/postgresql/postgresql_service.yml
+
+./minikube image build -t tech_challenge_fiap_4_group_27 .
+
+kubectl apply -f kubernetes/backend/backend_deployment.yaml
+kubectl apply -f kubernetes/backend/backend_service.yml
+
+echo "Aguardando inicialização da aplicação. (60 segundos)"
+sleep 60
+
+./minikube service backend
