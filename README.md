@@ -10,14 +10,14 @@
 | 351426 | HIAGO FILIPE SANTOS DE SOUZA | hiagofss98@gmail.com             |
 | 350866 | Hugo Maia da Silva Marques   | hugomaiadasilvamarques@gmail.com |
 
-### Para executar o projeto:
+### Instruções para execução do projeto em Linux:
 
 1. Faça um Clone do [repositório](https://github.com/hiagofss/fiap-tech-challenge-01).
 2. Entre na pasta do projeto.
 3. Abra o terminal e execute o comando a seguir
 
 ```bash
-docker compose up --build
+sudo sh start_linux.sh
 ```
 
 #### Observações:
