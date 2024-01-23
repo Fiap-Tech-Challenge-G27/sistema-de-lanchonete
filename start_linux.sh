@@ -1,13 +1,10 @@
 #!/bin/bash
 
 # Verificar se o Docker está em execução
-if ! pgrep -x "docker" > /dev/null; then
-    echo "O processo do Docker não está em execução. Por favor, inicie o Docker antes de prosseguir com este script."
+if ! command -v docker &> /dev/null; then then
+    echo "O Docker não existe. Por favor, instale e inicie o Docker antes de prosseguir com este script."
     exit 1
 fi
-
-# Verificar se o arquivo existe
-arquivo="minikube"
 
 if command -v minikube &> /dev/null; then
     echo "Iniciando MiniKube."
