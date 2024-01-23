@@ -14,8 +14,9 @@ if (Test-Path $arquivo) {
 
     # Iniciar o MiniKube
     # .\minikube.exe start --driver=docker
-    .\minikube.exe start --driver=docker
+    .\minikube start --driver=docker
     docker context use default
+    .\minikube addons enable metrics-server
 }
 else {
     Write-Host "O minikube nao existe. Instalando..."
@@ -42,8 +43,9 @@ else {
 
     # Iniciar o MiniKube
     # .\minikube.exe start --driver=docker
-    .\minikube.exe start --driver=docker
+    .\minikube start --driver=docker
     docker context use default
+    .\minikube addons enable metrics-server
 }
 
 $isKubectlInstalled = Get-Command -Name "kubectl"

@@ -21,6 +21,7 @@ else
     # Iniciar o MiniKube
     minikube start --driver=docker
     docker context use default
+    minikube addons enable metrics-server
 fi
 
 # Verificar se o kubectl está instalado

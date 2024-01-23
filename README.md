@@ -28,6 +28,13 @@
 ```bash
 sh start_linux.sh
 ```
+4. Após a aplicação inicializar, se desejar realizar um teste de carga, execute o comando abaixo:
+
+ ```bash
+sh load_generator.sh
+```
+5. Ao ser solicitado, passe como parâmetro a URL interna do Minikube (e não a de túnel) que está exposta com a porta 30001, visto que o teste rodará internamente no cluster
+
 </details>
 <br/>
 <details>
@@ -46,6 +53,13 @@ sh start_linux.sh
 ```powershell
 .\start_windows.ps1
 ```
+
+4. Após a aplicação inicializar, se desejar realizar um teste de carga, execute o comando abaixo:
+
+ ```powershell
+.\load_generator.ps1
+```
+5. Ao ser solicitado, passe como parâmetro a URL interna do Minikube (e não a de túnel) que está exposta com a porta 30001, visto que o teste rodará internamente no cluster
 </details>
 
 
