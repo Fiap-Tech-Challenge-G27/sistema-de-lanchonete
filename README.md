@@ -31,7 +31,7 @@ sh start_linux.sh
 4. Após a aplicação inicializar, se desejar realizar um teste de carga, execute o comando abaixo:
 
  ```bash
-sh load_generator.sh
+sh scripts/load_generator.sh
 ```
 5. Ao ser solicitado, passe como parâmetro a URL interna do Minikube (e não a de túnel) que está exposta com a porta 30001, visto que o teste rodará internamente no cluster
 6. Digite o número de pods de stress test que serão criados para gerar carga na aplicação
@@ -58,7 +58,7 @@ sh load_generator.sh
 4. Após a aplicação inicializar, se desejar realizar um teste de carga, execute o comando abaixo:
 
  ```powershell
-.\load_generator.ps1
+.\scripts\load_generator.ps1
 ```
 5. Ao ser solicitado, passe como parâmetro a URL interna do Minikube (e não a de túnel) que está exposta com a porta 30001, visto que o teste rodará internamente no cluster
 6. Digite o número de pods de stress test que serão criados para gerar carga na aplicação
