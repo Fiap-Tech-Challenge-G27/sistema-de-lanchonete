@@ -6,9 +6,10 @@ input=""
 # Solicita o input do usuário
 read -p "Digite a URL interna do cluster da aplicação (não confundir com URL do tunel criado pelo Minikube):" input
 
-echo "Executando teste de carga em background"
 
-numberOfPods=30
+read -p "Digite a quantidade de pods de stress test para gerar carga:" numberOfPods
+
+echo "Executando teste de carga em background"
 
 for (( c=1; c<=$numberOfPods; c++ ))
 do  

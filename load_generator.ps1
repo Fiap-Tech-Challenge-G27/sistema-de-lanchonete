@@ -5,9 +5,11 @@ $inputURL = ""
 Write-Host "Digite a URL interna do cluster da aplicacao (nao confundir com URL do tunel criado pelo Minikube):"
 $inputURL = Read-Host
 
-Write-Host "Executando teste de carga em background"
+Write-Host "Digite a quantidade de pods de stress test para gerar carga:"
+$numberOfPods = Read-Host
 
-$numberOfPods = 30
+# $numberOfPods = 30
+Write-Host "Executando teste de carga em background"
 
 try {
     for ($i = 1; $i -le $numberOfPods; $i++) {
