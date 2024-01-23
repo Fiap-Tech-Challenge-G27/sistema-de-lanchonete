@@ -34,6 +34,7 @@ sh start_linux.sh
 sh load_generator.sh
 ```
 5. Ao ser solicitado, passe como parâmetro a URL interna do Minikube (e não a de túnel) que está exposta com a porta 30001, visto que o teste rodará internamente no cluster
+6. Digite o número de pods de stress test que serão criados para gerar carga na aplicação
 
 </details>
 <br/>
@@ -60,6 +61,7 @@ sh load_generator.sh
 .\load_generator.ps1
 ```
 5. Ao ser solicitado, passe como parâmetro a URL interna do Minikube (e não a de túnel) que está exposta com a porta 30001, visto que o teste rodará internamente no cluster
+6. Digite o número de pods de stress test que serão criados para gerar carga na aplicação
 </details>
 
 
