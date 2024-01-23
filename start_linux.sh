@@ -45,4 +45,5 @@ kubectl apply -f kubernetes/backend/backend_service.yml
 echo "Aguardando inicialização da aplicação. (60 segundos)"
 sleep 60
 
+echo "Use a URL abaixo para teste da aplicação"
 minikube service backend --url 
