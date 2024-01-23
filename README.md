@@ -23,7 +23,7 @@
 #### Passos:
 1. Faça um Clone do [repositório](https://github.com/hiagofss/fiap-tech-challenge-01).
 2. Entre na pasta do projeto.
-3. Abra o terminal e execute o comando a seguir como administrador
+3. Abra o terminal e execute o comando a seguir como <b>administrador</b>
 
 ```bash
 sh start_linux.sh
@@ -41,7 +41,7 @@ sh start_linux.sh
 #### Passos:
 1. Faça um clone do [repositório](https://github.com/hiagofss/fiap-tech-challenge-01).
 2. Entre na pasta do projeto.
-3. Abra o terminal e execute o comando a seguir como administrador
+3. Abra o terminal e execute o comando a seguir como <b>administrador</b>
 
 ```powershell
 .\start_windows.ps1
