@@ -2,7 +2,7 @@
 $inputURL = ""
 
 # Solicita o input do usuário
-Write-Host "Digite a URL interna do cluster da aplicacao (nao confundir com URL do tunel criado pelo Minikube):"
+Write-Host "Digite a URL interna do cluster da aplicacao que quer testar (URL da porta 30001 exposta pelo Minikube):"
 $inputURL = Read-Host
 
 Write-Host "Digite a quantidade de pods de stress test para gerar carga:"

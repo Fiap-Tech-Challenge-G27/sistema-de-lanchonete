@@ -4,7 +4,7 @@
 input=""
 
 # Solicita o input do usuário
-read -p "Digite a URL interna do cluster da aplicação (não confundir com URL do tunel criado pelo Minikube):" input
+read -p "Digite a URL interna do cluster da aplicacao que quer testar (URL da porta 30001 exposta pelo Minikube):" input
 
 
 read -p "Digite a quantidade de pods de stress test para gerar carga:" numberOfPods
