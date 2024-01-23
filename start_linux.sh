@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Verificar se o Docker está em execução
-if ! command -v docker &> /dev/null; then then
+if ! command -v docker &> /dev/null; then
     echo "O Docker não existe. Por favor, instale e inicie o Docker antes de prosseguir com este script."
     exit 1
 fi
