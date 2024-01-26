@@ -121,7 +121,7 @@
 					"variable": [
 						{
 							"key": "slug",
-							"value": "{{_lastCategorySlug}}"
+							"value": "drink"
 						}
 					]
 				}
@@ -343,7 +343,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"customer_cpf\": \"{{_lastCustomerCpf}}\",\n    \"product_id_amount_id\": {\n        \"{{_lastProductId}}\": 2\n    }\n}",
+					"raw": "{\n    \"customer_cpf\": \"{{_lastCustomerCpf}}\",\n    \"orderProducts\": [\n        {\n            \"productId\": \"{{_lastProductId}}\",\n            \"amount\": 3\n        },\n        {\n            \"productId\": \"f45aa9e3-9eec-4daa-898c-ebbe13bd4d0c\",\n            \"amount\": 10\n        }\n    ]\n}",
 					"options": {
 						"raw": {
 							"language": "json"
