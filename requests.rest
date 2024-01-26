@@ -1,5 +1,5 @@
 @baseUrl = http://localhost
-@port = 3000
+@port = 55109
 @host = {{baseUrl}}:{{port}}
 
 ### Post new category
@@ -82,7 +82,7 @@ Content-Type: application/json
 
 {
     "customer_cpf": "{{customerCPF}}",
-    "orderProducts": {
+    "orderProducts": [
         {
           "productId": "{{productID_0}}",
           "amount": 1
@@ -91,7 +91,7 @@ Content-Type: application/json
           "productId": "{{productID_1}}",
           "amount": 2
         }
-    }
+    ]
 }
 
 ### Get Order
