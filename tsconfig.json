@@ -18,13 +18,13 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "@infra/*": ["src/infra/*"],
-      "@domain/*": ["src/domain/*"],
-      "@shared/*": ["src/domain/shared/*"],
-      "@orders/*": ["src/domain/orders/*"],
-      "@products/*": ["src/domain/products/*"],
-      "@customers/*": ["src/domain/customers/*"],
-      "@categories/*": ["src/domain/categories/*"],
+      "@infra/*": ["src/shared/infra/*"],
+      "@modules/*": ["src/modules/*"],
+      "@shared/*": ["src/shared/*"],
+      "@orders/*": ["src/modules/orders/*"],
+      "@products/*": ["src/modules/products/*"],
+      "@customers/*": ["src/modules/customers/*"],
+      "@categories/*": ["src/modules/categories/*"],
     }
   }
 }
