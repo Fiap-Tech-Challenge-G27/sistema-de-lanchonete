@@ -1,5 +1,7 @@
 @baseUrl = http://localhost
-@port = 55109
+
+##Alterar a porta de acordo com a exposição do serviço pelo Kubernetes
+@port = 56077
 @host = {{baseUrl}}:{{port}}
 
 ### Post new category
