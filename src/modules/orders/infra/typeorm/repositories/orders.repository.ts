@@ -67,7 +67,6 @@ export class OrderRepository implements IOrderRepository {
 
   async findOne(id: string): Promise<OrderEntity> {
     try {
-      console.log('id', id);
       const order = await this.orderRepository.findOne({
         where: { id },
         relations: {
@@ -83,6 +82,10 @@ export class OrderRepository implements IOrderRepository {
     } catch (error) {
       return null;
     }
+  }
+
+  async update(id: string, order: OrderEntity): Promise<OrderEntity> {
+    return this.orderRepository.save(order);
   }
 
   mapModelToEntity(orderModel: Order): OrderEntity {
@@ -113,6 +116,7 @@ export class OrderRepository implements IOrderRepository {
         return new OrderProductEntity(product, item.amount);
       }),
       orderModel.state,
+      orderModel.paymentState,
     );
 
     order.id = orderModel.id;
@@ -125,6 +129,7 @@ export class OrderRepository implements IOrderRepository {
   mapEntityToModel(dataEntity: OrderEntity): Order {
     const orderModel = new Order();
     orderModel.state = dataEntity.state;
+    orderModel.paymentState = dataEntity.paymentState;
     orderModel.customer = dataEntity.customer;
 
     return orderModel;

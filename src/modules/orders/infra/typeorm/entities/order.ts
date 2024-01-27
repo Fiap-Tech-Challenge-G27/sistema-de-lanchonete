@@ -10,7 +10,7 @@ import {
 } from 'typeorm';
 import { OrdersProductsAmounts } from './orders-products-amounts';
 import { Customer } from '@customers/infra/typeorm/entities/customer';
-import { OrderState } from '@orders/core/order.entity';
+import { OrderState, PaymentState } from '@orders/core/order.entity';
 
 @Entity({ name: 'orders' })
 export class Order {
@@ -28,6 +28,13 @@ export class Order {
     enum: OrderState,
   })
   state: OrderState;
+
+  @Column({
+    type: 'enum',
+    enum: PaymentState,
+    nullable: true,
+  })
+  paymentState: PaymentState;
 
   @ManyToOne(() => Customer, { eager: true, nullable: false })
   @JoinColumn({ name: 'customer_id' })

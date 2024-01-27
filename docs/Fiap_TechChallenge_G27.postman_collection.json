@@ -1,403 +1,519 @@
 {
 	"info": {
-		"_postman_id": "ed750d38-2d51-4ffc-82e4-162474734778",
+		"_postman_id": "ddcedce9-e791-4ccf-aaee-4262b8ac3ca8",
 		"name": "Fiap_TechChallenge_G27",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "25814557"
+		"_exporter_id": "25095266"
 	},
 	"item": [
 		{
-			"name": "Create categories",
-			"event": [
+			"name": "categories",
+			"item": [
 				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"const jsonData = pm.response.json();",
-							"",
-							"if(!jsonData.error){",
-							"    const context = pm.environment.name ? pm.environment : pm.collectionVariables;",
-							"    context.set(\"_lastCategoryId\", jsonData.id);",
-							"    context.set(\"_lastCategorySlug\", jsonData.slug);",
-							"}",
-							"",
-							"pm.test(\"Status code is 201\", function () {",
-							"    pm.response.to.have.status(201);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"name\": \"Drink\",\n    \"slug\": \"drink\",\n    \"description\": \"{{$randomLoremSentence}}\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/categories",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"categories"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get all categories",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"const jsonData = pm.response.json();",
-							"",
-							"if(!jsonData.error){",
-							"    const context = pm.environment.name ? pm.environment : pm.collectionVariables;",
-							"    context.set(\"_lastCategoryId\", jsonData[0].id);",
-							"    context.set(\"_lastCategorySlug\", jsonData[0].slug);",
-							"}",
-							"",
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/categories",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"categories"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get categories and products by slug",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test('Response status code is 200', function () {",
-							"    pm.expect(pm.response.code).to.equal(200);",
-							"})"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/categories/:slug",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"categories",
-						":slug"
-					],
-					"variable": [
+					"name": "Create categories",
+					"event": [
 						{
-							"key": "slug",
-							"value": "drink"
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();",
+									"",
+									"if(!jsonData.error){",
+									"    const context = pm.environment.name ? pm.environment : pm.collectionVariables;",
+									"    context.set(\"_lastCategoryId\", jsonData.id);",
+									"    context.set(\"_lastCategorySlug\", jsonData.slug);",
+									"}",
+									"",
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
 						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Create products",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"const jsonData = pm.response.json();",
-							"",
-							"if(!jsonData.error){",
-							"    const context = pm.environment.name ? pm.environment : pm.collectionVariables;",
-							"    context.set(\"_lastProductId\", jsonData.id);",
-							"}",
-							"",
-							"pm.test(\"Status code is 201\", function () {",
-							"    pm.response.to.have.status(201);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"name\": \"{{$randomProductName}}\",\n    \"description\": \"{{$randomProductName}} description\",\n    \"price\": {{$randomPrice}},\n    \"quantity\": {{$randomInt}},\n    \"categoryId\": \"{{_lastCategoryId}}\",\n    \"status\": \"active\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Drink\",\n    \"slug\": \"drink\",\n    \"description\": \"{{$randomLoremSentence}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/categories",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"categories"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{baseUrl}}/products",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"products"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get all products",
-			"event": [
 				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"const jsonData = pm.response.json();",
-							"",
-							"if(!jsonData.error){",
-							"    const context = pm.environment.name ? pm.environment : pm.collectionVariables;",
-							"    context.set(\"_lastProductId\", jsonData[0].id);",
-							"}",
-							"",
-							"pm.test(\"Status code is 201\", function () {",
-							"    pm.response.to.have.status(201);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/products",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"products"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Delete a product",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/products/:productId",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"products",
-						":productId"
-					],
-					"variable": [
+					"name": "Get all categories",
+					"event": [
 						{
-							"key": "productId",
-							"value": ""
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
 						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Create a customer",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"const jsonData = pm.response.json();",
-							"",
-							"if(!jsonData.error){",
-							"    const context = pm.environment.name ? pm.environment : pm.collectionVariables;",
-							"    context.set(\"_lastCustomerId\", jsonData.id);",
-							"    context.set(\"_lastCustomerCpf\", jsonData.cpf);",
-							"}",
-							"",
-							"pm.test(\"Status code is 201\", function () {",
-							"    pm.response.to.have.status(201);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"name\": \"{{$randomFullName}}\",\n    \"email\": \"{{$randomEmail}}\",\n    \"cpf\": \"{{$randomInt}}{{$randomInt}}\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/categories",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"categories"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{baseUrl}}/customers",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"customers"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get all customers",
-			"event": [
 				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test('Response status code is 200', function () {",
-							"    pm.response.to.have.status(200);",
-							"})",
-							"",
-							"pm.test('Response body is an array', function () {",
-							"    pm.expect(pm.response.json()).to.be.an('array');",
-							"})"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/customers",
-					"host": [
-						"{{baseUrl}}"
-					],
-					"path": [
-						"customers"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Create a order",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"const jsonData = pm.response.json();",
-							"",
-							"if(!jsonData.error){",
-							"    const context = pm.environment.name ? pm.environment : pm.collectionVariables;",
-							"    context.set(\"_lastCustomerId\", jsonData.id);",
-							"}",
-							"",
-							"pm.test(\"Status code is 201\", function () {",
-							"    pm.response.to.have.status(201);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"customer_cpf\": \"{{_lastCustomerCpf}}\",\n    \"orderProducts\": [\n        {\n            \"productId\": \"{{_lastProductId}}\",\n            \"amount\": 3\n        },\n        {\n            \"productId\": \"f45aa9e3-9eec-4daa-898c-ebbe13bd4d0c\",\n            \"amount\": 10\n        }\n    ]\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+					"name": "Get categories and products by slug",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Response status code is 200', function () {",
+									"    pm.expect(pm.response.code).to.equal(200);",
+									"})"
+								],
+								"type": "text/javascript"
+							}
 						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}/orders",
-					"host": [
-						"{{baseUrl}}"
 					],
-					"path": [
-						"orders"
-					]
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/categories/:slug",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"categories",
+								":slug"
+							],
+							"variable": [
+								{
+									"key": "slug",
+									"value": "drink"
+								}
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "Get orders",
-			"event": [
+			"name": "products",
+			"item": [
 				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"const jsonData = pm.response.json();",
-							"",
-							"if(!jsonData.error){",
-							"    const context = pm.environment.name ? pm.environment : pm.collectionVariables;",
-							"    context.set(\"_lastCustomerId\", jsonData.id);",
-							"}",
-							"",
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}/orders",
-					"host": [
-						"{{baseUrl}}"
+					"name": "Create products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();",
+									"",
+									"if(!jsonData.error){",
+									"    const context = pm.environment.name ? pm.environment : pm.collectionVariables;",
+									"    context.set(\"_lastProductId\", jsonData.id);",
+									"}",
+									"",
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
 					],
-					"path": [
-						"orders"
-					]
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"{{$randomProductName}}\",\n    \"description\": \"{{$randomProductName}} description\",\n    \"price\": {{$randomPrice}},\n    \"quantity\": {{$randomInt}},\n    \"categoryId\": \"{{_lastCategoryId}}\",\n    \"status\": \"active\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/products",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();",
+									"",
+									"if(!jsonData.error){",
+									"    const context = pm.environment.name ? pm.environment : pm.collectionVariables;",
+									"    context.set(\"_lastProductId\", jsonData[0].id);",
+									"}",
+									"",
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/products",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a product",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/products/:productId",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"products",
+								":productId"
+							],
+							"variable": [
+								{
+									"key": "productId",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
+		},
+		{
+			"name": "customers",
+			"item": [
+				{
+					"name": "Create a customer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();",
+									"",
+									"if(!jsonData.error){",
+									"    const context = pm.environment.name ? pm.environment : pm.collectionVariables;",
+									"    context.set(\"_lastCustomerId\", jsonData.id);",
+									"    context.set(\"_lastCustomerCpf\", jsonData.cpf);",
+									"}",
+									"",
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"{{$randomFullName}}\",\n    \"email\": \"{{$randomEmail}}\",\n    \"cpf\": \"{{$randomInt}}{{$randomInt}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/customers",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"customers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all customers",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Response status code is 200', function () {",
+									"    pm.response.to.have.status(200);",
+									"})",
+									"",
+									"pm.test('Response body is an array', function () {",
+									"    pm.expect(pm.response.json()).to.be.an('array');",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/customers",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"customers"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "orders",
+			"item": [
+				{
+					"name": "Create a order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();",
+									"",
+									"if(!jsonData.error){",
+									"    const context = pm.environment.name ? pm.environment : pm.collectionVariables;",
+									"    context.set(\"_lastCustomerId\", jsonData.id);",
+									"}",
+									"",
+									"pm.test(\"Status code is 201\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"customer_cpf\": \"{{_lastCustomerCpf}}\",\n    \"orderProducts\": [\n        {\n            \"productId\": \"{{_lastProductId}}\",\n            \"amount\": 3\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/orders",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get orders",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();",
+									"",
+									"if(!jsonData.error){",
+									"    const context = pm.environment.name ? pm.environment : pm.collectionVariables;",
+									"    context.set(\"_lastCustomerId\", jsonData[0].id);",
+									"    context.set(\"_lastOrderId\", jsonData[0].id)",
+									"}",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/orders",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get order",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/orders/{{_lastOrderId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orders",
+								"{{_lastOrderId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update order state",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"state\": \"InPreparation\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/orders/{{_lastOrderId}}/state",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orders",
+								"{{_lastOrderId}}",
+								"state"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Webhook order payment",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"{{_lastOrderId}}\",\n    \"paymentState\": \"Approved\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/orders/webhooks/payment",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orders",
+								"webhooks",
+								"payment"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"event": [
@@ -449,6 +565,11 @@
 		{
 			"key": "_lastCategorySlug",
 			"value": ""
+		},
+		{
+			"key": "_lastOrderId",
+			"value": "",
+			"type": "string"
 		}
 	]
 }
