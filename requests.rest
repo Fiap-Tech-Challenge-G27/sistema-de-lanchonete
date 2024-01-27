@@ -1,5 +1,7 @@
 @baseUrl = http://localhost
-@port = 3000
+
+##Alterar a porta de acordo com a exposição do serviço pelo Kubernetes
+@port = 56077
 @host = {{baseUrl}}:{{port}}
 
 ### Post new category
@@ -82,7 +84,7 @@ Content-Type: application/json
 
 {
     "customer_cpf": "{{customerCPF}}",
-    "orderProducts": {
+    "orderProducts": [
         {
           "productId": "{{productID_0}}",
           "amount": 1
@@ -91,7 +93,7 @@ Content-Type: application/json
           "productId": "{{productID_1}}",
           "amount": 2
         }
-    }
+    ]
 }
 
 ### Get Order

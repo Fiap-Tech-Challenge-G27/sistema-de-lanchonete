@@ -2,15 +2,12 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { PostgresConfigServiceService } from './infra/databases/postgres/postgres.service';
+import { PostgresConfigServiceService } from '@infra/typeorm/postgres.service';
 
-import { AppService } from './domain/app.service';
-import { AppController } from './app.controller';
-
-import { ProductsModule } from './domain/products/products.module';
-import { CategoriesModule } from './domain/categories/categories.module';
-import { CustomersModule } from './domain/customers/customers.module';
-import { OrdersModule } from './domain/orders/orders.module';
+import { ProductsModule } from '@products/products.module';
+import { CategoriesModule } from '@categories/categories.module';
+import { CustomersModule } from '@customers/customers.module';
+import { OrdersModule } from '@orders/orders.module';
 
 @Module({
   imports: [
@@ -25,7 +22,6 @@ import { OrdersModule } from './domain/orders/orders.module';
     CustomersModule,
     OrdersModule,
   ],
-  controllers: [AppController],
-  providers: [AppService, PostgresConfigServiceService],
+  providers: [PostgresConfigServiceService],
 })
 export class AppModule {}

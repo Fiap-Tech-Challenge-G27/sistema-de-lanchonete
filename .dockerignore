@@ -1,6 +1,9 @@
-Dockerfile
 .dockerignore
 node_modules
 npm-debug.log
 dist
-pontos_para_refatorar.md
+minikube.exe
+kubectl.exe
+start_windows.ps1
+start_linux.sh
+kubernetes
