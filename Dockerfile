@@ -4,7 +4,7 @@ RUN npm i -g @nestjs/cli
 
 USER node
 
-WORKDIR /home/node/app
+WORKDIR /app
 
 COPY package.json .
 

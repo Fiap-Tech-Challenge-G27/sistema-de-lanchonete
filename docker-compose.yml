@@ -1,0 +1,33 @@
+version: '3.7'
+
+services:
+  app:
+    build: .
+    image: app
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/app
+    depends_on:
+      - postgres
+    environment:
+      - DATABASE_DIALECT=postgres
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DATABASE=app
+      - POSTGRES_DB=app
+      - TYPEORM_CONNECTION=postgres
+      - TYPEORM_URL=postgresql://admin:admin@postgres:5432/app
+
+  postgres:
+    container_name: database
+    image: postgres:16-alpine
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_HOST_ADDR: 0.0.0.0
