@@ -1,11 +1,11 @@
 @baseUrl = http://localhost
 ##Alterar a porta de acordo com a exposição do serviço pelo Kubernetes
-@port = 58904
+@port = 59596
 @host = {{baseUrl}}:{{port}}
 
 @urlPayment = http://localhost
 ##Alterar a porta de acordo com a exposição do serviço pelo Kubernetes
-@portPayment = 58906
+@portPayment = 59598
 @hostPayment = {{urlPayment}}:{{portPayment}}
 
 ### Post new category
@@ -36,7 +36,6 @@ GET {{host}}/categories
 
 ### Post new product
 # @prompt categoryId
-# @categoryId = {{getAllCategories.response.body.$[0].id}}
 POST {{host}}/products
 Content-Type: application/json
 
@@ -56,7 +55,6 @@ GET {{host}}/categories
 ### Post new product
 # @prompt categoryId
 
-# @categoryId = {{getAllCategories.response.body.$[1].id}}
 POST {{host}}/products
 Content-Type: application/json
 
