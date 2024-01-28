@@ -21,6 +21,7 @@ import { FindAllOrdersUseCase } from './use-cases/find-all-orders.usecase';
 import { ICustomerRepository } from '@modules/customers/core/customer-repository.abstract';
 import { FindOrderUseCase } from './use-cases/find-order.usecase';
 import { UpdateOrderUseCase } from './use-cases/update-order.usecase';
+import { ConfirmatePaymentUseCase } from './use-cases/confimate-payment.usecase';
 
 @Module({
   imports: [
@@ -58,6 +59,7 @@ import { UpdateOrderUseCase } from './use-cases/update-order.usecase';
     FindCustomerUseCase,
     FindOrderUseCase,
     UpdateOrderUseCase,
+    ConfirmatePaymentUseCase,
   ],
 })
 export class OrdersModule {}

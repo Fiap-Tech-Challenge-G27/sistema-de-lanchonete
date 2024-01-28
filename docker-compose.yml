@@ -39,6 +39,6 @@ services:
     ports:
       - 3002:3002
     environment:
-      - RESPONSE_URL=http://app:3000/results
+      - RESPONSE_URL=http://app:3000/actions/confirm-payment
       - PORT=3002
       - WAIT_SECONDS=5

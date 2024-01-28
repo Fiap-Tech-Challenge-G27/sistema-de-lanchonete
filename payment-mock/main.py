@@ -16,7 +16,7 @@ payments = []
 def confirm_payment(identifier):
     time.sleep(WAIT_SECONDS)
 
-    requests.post(RESPOSE_URL, json={"identifier": identifier})
+    requests.post(RESPOSE_URL, json={"identifier": identifier, "status": "approved"})
 
 
 @app.post("/payment")

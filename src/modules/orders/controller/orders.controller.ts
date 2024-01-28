@@ -5,7 +5,9 @@ import { ApiTags } from '@nestjs/swagger';
 import { CreateOrderDto } from 'src/modules/orders/dtos/create-order.dto';
 import { FindOrderUseCase } from '../use-cases/find-order.usecase';
 import { UpdateOrderDto } from '../dtos/update-customer.dto';
+import { PaymentConfirmationDto } from '../dtos/payment-confirmation.dto';
 import { UpdateOrderUseCase } from '../use-cases/update-order.usecase';
+import { ConfirmatePaymentUseCase } from '../use-cases/confimate-payment.usecase';
 
 @ApiTags('orders')
 @Controller('orders')
@@ -14,6 +16,7 @@ export class OrdersController {
     private readonly createOrderUseCase: CreateOrderUseCase,
     private readonly findAllOrdersUseCase: FindAllOrdersUseCase,
     private readonly findOrderUseCase: FindOrderUseCase,
+    private readonly confirmatePaymentUseCase: ConfirmatePaymentUseCase,
     private readonly updateOrderUseCase: UpdateOrderUseCase, //private readonly updateOrderPaymentStateUseCase: UpdateOrderPaymentStateUseCase,
   ) {}
 
@@ -40,12 +43,13 @@ export class OrdersController {
     return this.updateOrderUseCase.execute(orderId, statusDto);
   }
 
-  @Post('/webhooks/payment')
+  @Post('/webhooks/payment-confirmation')
   receivePaymentConfirmation(
-    @Body() paymentData: UpdateOrderDto,
+    @Body() payment_confirmation: PaymentConfirmationDto,
   ): Promise<void> {
-    const { id } = paymentData;
+    const orderId = payment_confirmation['identifier']['orderId']
+    const status = payment_confirmation['status']
 
-    return this.updateOrderUseCase.execute(id, paymentData);
+    return this.confirmatePaymentUseCase.execute(orderId, status)
   }
 }
