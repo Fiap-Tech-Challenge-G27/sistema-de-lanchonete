@@ -31,3 +31,14 @@ services:
       - 5432:5432
     environment:
       POSTGRES_HOST_ADDR: 0.0.0.0
+
+  payment-mock:
+    container_name: payment-mock
+    image: payment-mock
+    build: payment-mock/
+    ports:
+      - 3002:3002
+    environment:
+      - RESPONSE_URL=http://app:3000/results
+      - PORT=3002
+      - WAIT_SECONDS=5

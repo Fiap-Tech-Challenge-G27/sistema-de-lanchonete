@@ -32,15 +32,6 @@ export class OrdersController {
     return this.findOrderUseCase.execute(id);
   }
 
-  @Get('/:id/payment-status') // status do pagamento
-  getOrderPaymentStatus(
-    @Param('id') orderId: string,
-    @Body() statusDto: UpdateOrderDto,
-  ) {
-    console.log('statusDto', statusDto);
-    //return this.updateOrderStateUseCase.execute(orderId, statusDto);
-  }
-
   @Patch('/:id/state')
   updateOrderStatus(
     @Param('id') orderId: string,

@@ -59,6 +59,8 @@ export class CreateOrderUseCase implements UseCase {
 
     const order = this.orderMapper.mapFrom({ customer, orderProductsEntity });
 
+    
+
     return await this.orderRepository.create(order);
   }
 }
