@@ -41,6 +41,6 @@ services:
     ports:
       - 3002:3002
     environment:
-      - RESPONSE_URL=http://172.28.0.1:3000/orders/webhooks/payment-confirmation
+      - RESPONSE_URL=http://172.17.0.1:3000/orders/webhooks/payment-confirmation
       - PORT=3002
       - WAIT_SECONDS=5

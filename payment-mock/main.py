@@ -10,14 +10,29 @@ PORT = int(os.environ["PORT"])
 
 app = Flask(__name__)
 
-payments = []
+will_approve = True
 
+def get_status():
+    if will_approve:
+        return 'approved'
+    return 'canceled'
+
+@app.put("/toggle")
+def toggle_result():
+    global will_approve
+
+    will_approve = not will_approve
+
+    return f"Now the payments will be {get_status()}"
 
 def confirm_payment(identifier):
+    print("Sleeping", flush=True)
     time.sleep(WAIT_SECONDS)
-
-    response = requests.post(RESPOSE_URL, json={"identifier": identifier, "status": "approved"})
+    
+    print("Sending", flush=True)
+    response = requests.post(RESPOSE_URL, json={"identifier": identifier, "status": get_status()}, timeout=5)
     print("confirm", response, flush=True)
+    print("status", get_status(), flush=True)
 
 
 @app.post("/payment")

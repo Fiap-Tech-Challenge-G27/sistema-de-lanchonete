@@ -5,7 +5,8 @@ metadata:
 spec:
   selector:
     app: payment-mock
-  type: ClusterIP
+  type: NodePort
   ports:
   - port: 3000
     targetPort: 3000
+    nodePort: 30002
