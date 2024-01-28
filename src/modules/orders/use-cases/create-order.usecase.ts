@@ -8,6 +8,7 @@ import { OrderProductMapper } from '../core/mappers/order-product.mapper';
 import { OrderProductEntity } from '../core/order.entity';
 import { IProductRepository } from '@products/core/product-repository.abstract';
 import { IOrderRepository } from '../core/order-repository.abstract';
+import { IPaymentGateway } from '../core/payment-gateway';
 
 @Injectable()
 export class CreateOrderUseCase implements UseCase {
@@ -15,6 +16,8 @@ export class CreateOrderUseCase implements UseCase {
     private readonly findCustomerUseCase: FindCustomerUseCase,
     @Inject(IExceptionService)
     private readonly exceptionService: IExceptionService,
+    @Inject(IPaymentGateway)
+    private readonly paymentGateway: IPaymentGateway,
     private readonly orderMapper: OrderMapper,
     private readonly orderProductMapper: OrderProductMapper,
     @Inject(IProductRepository)
@@ -59,8 +62,11 @@ export class CreateOrderUseCase implements UseCase {
 
     const order = this.orderMapper.mapFrom({ customer, orderProductsEntity });
 
+    const result = await this.orderRepository.create(order);
+    await this.paymentGateway.create(result.id)
     
 
-    return await this.orderRepository.create(order);
+    
+    return result
   }
 }
