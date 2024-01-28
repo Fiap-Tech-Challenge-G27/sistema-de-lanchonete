@@ -21,6 +21,10 @@ import { FindAllOrdersUseCase } from './use-cases/find-all-orders.usecase';
 import { ICustomerRepository } from '@modules/customers/core/customer-repository.abstract';
 import { FindOrderUseCase } from './use-cases/find-order.usecase';
 import { UpdateOrderUseCase } from './use-cases/update-order.usecase';
+import { ConfirmatePaymentUseCase } from './use-cases/confimate-payment.usecase';
+import { IPaymentGateway } from './core/payment-gateway';
+import { PaymentGateway } from './infra/typeorm/thirdParties/payment-gateway';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -30,7 +34,7 @@ import { UpdateOrderUseCase } from './use-cases/update-order.usecase';
       Category,
       Customer,
       Product,
-    ]),
+    ])
   ],
   controllers: [OrdersController],
   providers: [
@@ -50,6 +54,10 @@ import { UpdateOrderUseCase } from './use-cases/update-order.usecase';
       provide: ICustomerRepository,
       useClass: CustomerRepository,
     },
+    {
+      provide: IPaymentGateway,
+      useClass: PaymentGateway
+    },
     OrderMapper,
     OrderProductMapper,
     FindCustomerUseCase,
@@ -58,6 +66,7 @@ import { UpdateOrderUseCase } from './use-cases/update-order.usecase';
     FindCustomerUseCase,
     FindOrderUseCase,
     UpdateOrderUseCase,
+    ConfirmatePaymentUseCase,
   ],
 })
-export class OrdersModule {}
+export class OrdersModule { }

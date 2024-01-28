@@ -10,6 +10,7 @@ services:
       - .:/app
     depends_on:
       - postgres
+      - payment-mock
     environment:
       - DATABASE_DIALECT=postgres
       - POSTGRES_HOST=postgres
@@ -20,6 +21,7 @@ services:
       - POSTGRES_DB=app
       - TYPEORM_CONNECTION=postgres
       - TYPEORM_URL=postgresql://admin:admin@postgres:5432/app
+      - PAYMENT_API_URL=http://payment-mock:3002/payment
 
   postgres:
     container_name: database
@@ -31,3 +33,14 @@ services:
       - 5432:5432
     environment:
       POSTGRES_HOST_ADDR: 0.0.0.0
+
+  payment-mock:
+    container_name: payment-mock
+    image: payment-mock
+    build: payment-mock/
+    ports:
+      - 3002:3002
+    environment:
+      - RESPONSE_URL=http://172.17.0.1:3000/orders/webhooks/payment-confirmation
+      - PORT=3002
+      - WAIT_SECONDS=5
