@@ -8,6 +8,7 @@ import { ProductsModule } from '@products/products.module';
 import { CategoriesModule } from '@categories/categories.module';
 import { CustomersModule } from '@customers/customers.module';
 import { OrdersModule } from '@orders/orders.module';
+import { HealthModule } from '@modules/health/health.module';
 
 @Module({
   imports: [
@@ -21,7 +22,8 @@ import { OrdersModule } from '@orders/orders.module';
     ProductsModule,
     CustomersModule,
     OrdersModule,
+    HealthModule,
   ],
   providers: [PostgresConfigServiceService],
 })
-export class AppModule {}
+export class AppModule { }

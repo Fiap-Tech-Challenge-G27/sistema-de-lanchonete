@@ -1,12 +1,12 @@
 #!/bin/bash
 
 # Verificar se o Docker está em execução
-if ! command -v docker &> /dev/null; then
+if command -v docker1 2> /dev/null; then
     echo "O Docker não existe. Por favor, instale e inicie o Docker antes de prosseguir com este script."
     exit 1
 fi
 
-if command -v minikube &> /dev/null; then
+if command -v minikube 2> /dev/null; then
     echo "Iniciando MiniKube."
     # Iniciar o MiniKube
     minikube start --driver=docker
@@ -25,7 +25,7 @@ else
 fi
 
 # Verificar se o kubectl está instalado
-if ! command -v kubectl &> /dev/null; then
+if ! command -v kubectl 2> /dev/null; then
     echo "O kubectl não está instalado. Instalando..."
     # Baixar o kubectl
     curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
