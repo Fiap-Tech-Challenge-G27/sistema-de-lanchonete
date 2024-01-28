@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "ddcedce9-e791-4ccf-aaee-4262b8ac3ca8",
+		"_postman_id": "8c79f5b9-f930-46fc-bef7-2a0f1ebb19cd",
 		"name": "Fiap_TechChallenge_G27",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "25095266"
+		"_exporter_id": "1842954"
 	},
 	"item": [
 		{
@@ -514,6 +514,23 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Toggle Payment Mock",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{mockUrl}}/toggle",
+					"host": [
+						"{{mockUrl}}"
+					],
+					"path": [
+						"toggle"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"event": [
@@ -539,7 +556,12 @@
 	"variable": [
 		{
 			"key": "baseUrl",
-			"value": "http://localhost:3000",
+			"value": "http://192.168.49.2:3000",
+			"type": "string"
+		},
+		{
+			"key": "mockUrl",
+			"value": "",
 			"type": "string"
 		},
 		{
