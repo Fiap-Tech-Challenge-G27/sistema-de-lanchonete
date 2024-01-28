@@ -52,4 +52,4 @@ echo "Aguardando inicialização da aplicação. (60 segundos)"
 sleep 60
 
 echo "Use a URL abaixo para teste da aplicação"
-minikube service backend --url 
+minikube service backend payment-mock --url 

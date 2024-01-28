@@ -91,4 +91,4 @@ Write-Host "Aguardando inicializacao da aplicacao. (60 segundos)"
 
 Start-Sleep -s 60
 
-.\minikube service backend
+.\minikube service backend payment-mock

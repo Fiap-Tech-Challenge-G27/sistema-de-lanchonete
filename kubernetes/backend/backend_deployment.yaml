@@ -26,6 +26,8 @@ spec:
             httpGet:
               path: /health
               port: 3000
+            initialDelaySeconds: 60
+            periodSeconds: 10
           envFrom:
             - configMapRef:
                 name: backend-configmap

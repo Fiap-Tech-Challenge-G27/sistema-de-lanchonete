@@ -1,8 +1,12 @@
 @baseUrl = http://localhost
-
 ##Alterar a porta de acordo com a exposição do serviço pelo Kubernetes
-@port = 56077
+@port = 59596
 @host = {{baseUrl}}:{{port}}
+
+@urlPayment = http://localhost
+##Alterar a porta de acordo com a exposição do serviço pelo Kubernetes
+@portPayment = 59598
+@hostPayment = {{urlPayment}}:{{portPayment}}
 
 ### Post new category
 # @name newCategory
@@ -10,52 +14,63 @@ POST {{host}}/categories
 Content-Type: application/json
 
 {
-    "name": "Food",
-    "slug": "food",
-    "description": "Food description"
+    "name": "Lanches",
+    "slug": "Lanches",
+    "description": "Categoria de lanches disponíveis na lanchonete"
+}
+
+### Post new category
+# @name newCategory
+POST {{host}}/categories
+Content-Type: application/json
+
+{
+    "name": "Bebidas",
+    "slug": "Bebidas",
+    "description": "Categoria de bebidas disponíveis na lanchonete"
 }
 
 ### Gel all categories
 # @name getAllCategories
 GET {{host}}/categories
 
-### Get category by slug
-GET {{host}}/categories/food
-
-### Update category
-# @prompt categoryId
-
-PATCH {{host}}/categories/{{categoryId}}
-Content-Type: application/json
-
-{
-    "name": "Food Category",
-    "slug": "food",
-    "description": "Category produts of food"
-}
-
 ### Post new product
-# @prompt productName
-
-@categoryId = {{getAllCategories.response.body.$[0].id}}
+# @prompt categoryId
 POST {{host}}/products
 Content-Type: application/json
 
 {
-    "name": "{{productName}}",
-    "description": "{{productName}} description",
-    "price": 100,
-    "quantity": 10,
+    "name": "X-Burguer",
+    "description": "Lanche simples de hamburguer e queijo",
+    "price": 10,
+    "quantity": 5,
     "categoryId": "{{categoryId}}",
     "status": "active"
 }
 
+### Gel all categories
+# @name getAllCategories
+GET {{host}}/categories
+
+### Post new product
+# @prompt categoryId
+
+POST {{host}}/products
+Content-Type: application/json
+
+{
+    "name": "Suco de Uva",
+    "description": "Suco natural de uva",
+    "price": 3,
+    "quantity": 3,
+    "categoryId": "{{categoryId}}",
+    "status": "active"
+}
+
+
 ### Get all products
 # @name getAllProducts
 GET {{host}}/products
-
-### Delete product
-DELETE {{host}}/products/4148c311-0b60-4dea-be3d-95418aecd087
 
 ### Post new customer
 # @name newCustomer
@@ -63,13 +78,21 @@ POST {{host}}/customers
 Content-Type: application/json
 
 {
-    "name": "Hugo Marques",
-    "email": "hugomarques@gmail.com",
+    "name": "Fulano da Silva",
+    "email": "fulanodasilva@gmail.com",
     "cpf": "12345678912"
 }
 
-### Get customer  by cpf
-GET {{host}}/customers/
+### Post new customer
+# @name newCustomer
+POST {{host}}/customers
+Content-Type: application/json
+
+{
+    "name": "Beltrano de Oliveira",
+    "email": "beltranodeoliveira@gmail.com",
+    "cpf": "12345678913"
+}
 
 ### Get all customers
 # @name getAllCustomers
@@ -87,14 +110,45 @@ Content-Type: application/json
     "orderProducts": [
         {
           "productId": "{{productID_0}}",
-          "amount": 1
+          "amount": 2
         },
         {
           "productId": "{{productID_1}}",
-          "amount": 2
+          "amount": 1
         }
     ]
 }
 
 ### Get Order
 GET {{host}}/orders
+
+
+### Toggle payment status
+PUT {{hostPayment}}/toggle
+
+### Post Order
+@customerCPF = {{getAllCustomers.response.body.$[1].cpf}}
+@productID_0 = {{getAllProducts.response.body.$[0].id}}
+@productID_1 = {{getAllProducts.response.body.$[1].id}}
+POST {{host}}/orders
+Content-Type: application/json
+
+{
+    "customer_cpf": "{{customerCPF}}",
+    "orderProducts": [
+        {
+          "productId": "{{productID_0}}",
+          "amount": 4
+        },
+        {
+          "productId": "{{productID_1}}",
+          "amount": 3
+        }
+    ]
+}
+
+### Get Order
+# @prompt orderId
+GET {{host}}/orders/{{orderId}}
+
+
