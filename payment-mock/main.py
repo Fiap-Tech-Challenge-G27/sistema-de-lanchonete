@@ -26,6 +26,9 @@ def receive_payment():
 
     return ""
 
+@app.get("/health")
+def health_check():
+    return ""
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=PORT, debug=True)

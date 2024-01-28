@@ -43,6 +43,11 @@ minikube image build -t tech_challenge_fiap_4_group_27 .
 kubectl apply -f kubernetes/backend/backend_deployment.yaml
 kubectl apply -f kubernetes/backend/backend_service.yml
 
+minikube image build -t payment-mock payment-mock/
+
+kubectl apply -f kubernetes/payment-mock/payment-mock-deployment.yaml
+kubectl apply -f kubernetes/payment-mock/payment-mock-service.yml
+
 echo "Aguardando inicialização da aplicação. (60 segundos)"
 sleep 60
 

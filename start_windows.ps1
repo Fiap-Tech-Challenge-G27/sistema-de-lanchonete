@@ -82,6 +82,11 @@ kubectl apply -f kubernetes/postgresql/postgresql_service.yml
 kubectl apply -f kubernetes/backend/backend_deployment.yaml
 kubectl apply -f kubernetes/backend/backend_service.yml 
 
+.\minikube image build -t payment-mock payment-mock/
+
+kubectl apply -f kubernetes/payment-mock/payment-mock-deployment.yaml
+kubectl apply -f kubernetes/payment-mock/payment-mock-service.yml
+
 Write-Host "Aguardando inicializacao da aplicacao. (60 segundos)"
 
 Start-Sleep -s 60
