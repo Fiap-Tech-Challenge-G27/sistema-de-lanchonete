@@ -74,3 +74,4 @@ Ao acessar a rota <b>/api-docs</b> no navegador você terá acesso ao Swagger qu
 ### Documentações
 
 1. [DDD](wiki/DDD)
+2. [Arquitetura de Software e Infraestrutura](wiki/Arquitetura-de-Software-e-Infraestrutura)
