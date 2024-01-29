@@ -65,12 +65,11 @@ sh scripts/load_generator.sh
 </details>
 
 
-
 ### Observações:
 
 
 A aplicação será executada na porta exposta pelo serviço do Minikube. Altere a porta de execução das chamadas de API conforme necessário (ver vídeo de demonstração para exemplo prático).
-Ao acessar a rota [/api-docs](/api-docs) no navegador você terá acesso ao Swagger que poderá ser utilizado para executar as interações com a aplicação, caso prefiram foi disponibilizado na pasta [/docs](https://github.com/hiagofss/fiap-tech-challenge-01/tree/main/docs) o arquivo com a Collection do [Postman](https://github.com/hiagofss/fiap-tech-challenge-01/blob/main/docs/Fiap_TechChallenge_G27.postman_collection.json).
+Ao acessar a rota <b>/api-docs</b> no navegador você terá acesso ao Swagger que poderá ser utilizado para executar as interações com a aplicação. Caso prefiram foi disponibilizado na pasta [/docs](https://github.com/hiagofss/fiap-tech-challenge-01/tree/main/docs) o arquivo com a Collection do [Postman](https://github.com/hiagofss/fiap-tech-challenge-01/blob/main/docs/Fiap_TechChallenge_G27.postman_collection.json), apenas altere as variáveis de ambiente de <b>baseUrl</b> e <b>mockUrl</b> para o endpoint e porta correspondentes do Minikube.
 
 ### Documentações
 
