@@ -1,11 +1,11 @@
 @baseUrl = http://localhost
 ##Alterar a porta de acordo com a exposição do serviço pelo Kubernetes
-@port = 59596
+@port = 65278
 @host = {{baseUrl}}:{{port}}
 
 @urlPayment = http://localhost
 ##Alterar a porta de acordo com a exposição do serviço pelo Kubernetes
-@portPayment = 59598
+@portPayment = 65280
 @hostPayment = {{urlPayment}}:{{portPayment}}
 
 ### Post new category
@@ -122,6 +122,18 @@ Content-Type: application/json
 ### Get Order
 GET {{host}}/orders
 
+### Update Order status
+# @prompt orderId
+PATCH {{host}}/orders/{{orderId}}/state
+Content-Type: application/json
+
+{
+  "state": "Finished"
+}
+
+### Get Order
+GET {{host}}/orders
+
 
 ### Toggle payment status
 PUT {{hostPayment}}/toggle
@@ -151,4 +163,31 @@ Content-Type: application/json
 # @prompt orderId
 GET {{host}}/orders/{{orderId}}
 
+### Toggle payment status
+PUT {{hostPayment}}/toggle
+
+### Post Order
+@customerCPF = {{getAllCustomers.response.body.$[1].cpf}}
+@productID_0 = {{getAllProducts.response.body.$[0].id}}
+@productID_1 = {{getAllProducts.response.body.$[1].id}}
+POST {{host}}/orders
+Content-Type: application/json
+
+{
+    "customer_cpf": "{{customerCPF}}",
+    "orderProducts": [
+        {
+          "productId": "{{productID_0}}",
+          "amount": 4
+        },
+        {
+          "productId": "{{productID_1}}",
+          "amount": 3
+        }
+    ]
+}
+
+### Get Order
+# @prompt orderId
+GET {{host}}/orders/{{orderId}}
 

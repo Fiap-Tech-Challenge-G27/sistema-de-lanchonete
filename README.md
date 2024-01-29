@@ -47,7 +47,7 @@ sh scripts/load_generator.sh
 2. Perfil administrador no ambiente 
 
 #### Passos:
-1. Faça um clone do [repositório](https://github.com/hiagofss/fiap-tech-challenge-01).
+1. Faça um clone do [repositório](https://github.comd/hiagofss/fiap-tech-challenge-01).
 2. Entre na pasta do projeto.
 3. Abra o terminal e execute o comando a seguir como <b>administrador</b>
 
@@ -65,10 +65,11 @@ sh scripts/load_generator.sh
 </details>
 
 
-
 ### Observações:
-A aplicação será executada na porta 3000.
-Ao acessar a rota [localhost:3000/api-docs](localhost:3000/api-docs) no navegador você terá acesso ao Swagger que poderá ser utilizado para executar as interações com a aplicação, caso prefiram foi disponibilizado na pasta [/docs](https://github.com/hiagofss/fiap-tech-challenge-01/tree/main/docs) o arquivo com a Collection do [Postman](https://github.com/hiagofss/fiap-tech-challenge-01/blob/main/docs/Fiap_TechChallenge_G27.postman_collection.json).
+
+
+A aplicação será executada na porta exposta pelo serviço do Minikube. Altere a porta de execução das chamadas de API conforme necessário (ver vídeo de demonstração para exemplo prático).
+Ao acessar a rota <b>/api-docs</b> no navegador você terá acesso ao Swagger que poderá ser utilizado para executar as interações com a aplicação. Caso prefiram foi disponibilizado na pasta [/docs](https://github.com/hiagofss/fiap-tech-challenge-01/tree/main/docs) o arquivo com a Collection do [Postman](https://github.com/hiagofss/fiap-tech-challenge-01/blob/main/docs/Fiap_TechChallenge_G27.postman_collection.json), apenas altere as variáveis de ambiente de <b>baseUrl</b> e <b>mockUrl</b> para o endpoint e porta correspondentes do Minikube.
 
 ### Documentações
 
