@@ -1,0 +1,57 @@
+name: Build and Push to ECR and Deploy to EKS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      AWS_REGION: ${{ secrets.AWS_REGION }}
+      ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
+      ECR_REPOSITORY: ${{ secrets.ECR_REPOSITO0RY }}
+      VERSION: ${{ github.run_number }}
+      EKS_CLUSTER_NAME: eks-techchallenge
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v1
+        with:
+          registries: ${{ secrets.AWS_ACCOUNT_ID }}
+          mask-password: "true" # see: https://github.com/aws-actions/amazon-ecr-login#docker-credentials    
+
+      - name: Set Docker buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and Push Docker image
+        run: |
+          docker buildx build --platform linux/amd64 -t $ECR_REGISTRY/$ECR_REPOSITORY:$VERSION .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$VERSION
+          
+      - name: Update kube config
+        run: aws eks update-kubeconfig --name $EKS_CLUSTER_NAME --region $AWS_REGION
+        
+      - name: Update deployment.yaml
+        run: |
+          chmod +x update_deployment.sh
+          ./update_deployment.sh $VERSION
+
+      - name: Deploy to AWS EKS
+        run: |
+          kubectl apply -f kubernetes/backend/backend_deployment.yaml
+          kubectl apply -f kubernetes/backend/backend_service.yml
+          kubectl apply -f kubernetes/payment-mock/payment-mock-deployment.yaml
+          kubectl apply -f kubernetes/payment-mock/payment-mock-service.yml
