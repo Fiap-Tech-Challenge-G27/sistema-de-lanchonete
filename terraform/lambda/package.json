@@ -1,0 +1,15 @@
+// {
+//     "name": "teste-usuario-cognito",
+//     "version": "1.0.0",
+//     "description": "",
+//     "main": "testUser.js",
+//     "scripts": {
+//         "test": "echo \"Error: no test specified\" && exit 1"
+//     },
+//     "keywords": [],
+//     "author": "",
+//     "license": "ISC",
+//     "dependecies": {
+//         "aws-sdk": "^2.1571.0"
+//     }
+// }

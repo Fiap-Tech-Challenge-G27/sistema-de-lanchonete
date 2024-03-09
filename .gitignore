@@ -131,3 +131,4 @@ dist
 .docker/postgres
 minikube.exe
 kubectl.exe
+.terraform/
