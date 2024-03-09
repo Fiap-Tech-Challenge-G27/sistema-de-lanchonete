@@ -12,7 +12,7 @@ jobs:
     env:
       AWS_REGION: ${{ secrets.AWS_REGION }}
       ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
-      ECR_REPOSITORY: ${{ secrets.ECR_REPOSITO0RY }}
+      ECR_REPOSITORY: sistema-de-lanchonete
       VERSION: ${{ github.run_number }}
       EKS_CLUSTER_NAME: eks-techchallenge
 
@@ -53,5 +53,3 @@ jobs:
         run: |
           kubectl apply -f kubernetes/backend/backend_deployment.yaml
           kubectl apply -f kubernetes/backend/backend_service.yml
-          kubectl apply -f kubernetes/payment-mock/payment-mock-deployment.yaml
-          kubectl apply -f kubernetes/payment-mock/payment-mock-service.yml

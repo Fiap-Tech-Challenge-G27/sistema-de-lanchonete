@@ -62,4 +62,4 @@ data:
   POSTGRES_DB: 'app'
   TYPEORM_CONNECTION: 'postgres'
   TYPEORM_URL: 'postgres://admin:admin@postgresql:5432/app'
-  PAYMENT_API_URL: 'http://payment-mock:3000/payment'
+  PAYMENT_API_URL: 'http://sistema-de-pagamento:3000/payment'
