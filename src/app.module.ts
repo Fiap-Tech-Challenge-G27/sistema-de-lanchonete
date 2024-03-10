@@ -26,4 +26,4 @@ import { HealthModule } from '@modules/health/health.module';
   ],
   providers: [PostgresConfigServiceService],
 })
-export class AppModule { }
+export class AppModule {}
