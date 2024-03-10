@@ -39,25 +39,43 @@ data "aws_iam_policy_document" "policyDocEKS" {
   }
 }
 
+data "aws_iam_policy_document" "policyDocNodeEKS" {
+  statement {
+    effect = "Allow"
+
+    principals {
+      type        = "Service"
+      identifiers = ["ec2.amazonaws.com"]
+    }
+
+    actions = ["sts:AssumeRole"]
+  }
+}
+
 resource "aws_iam_role" "roleEKS" {
   name               = "roleEKS"
   assume_role_policy = data.aws_iam_policy_document.policyDocEKS.json
 
+  inline_policy {
+    name = "EKSEC2Policy"
+
+    policy = jsonencode({
+      Version = "2012-10-17",
+      Statement = [{
+        Effect   = "Allow",
+        Action   = [
+          "ec2:DescribeInstances",
+          # Adicione outras ações necessárias para o serviço EC2
+        ],
+        Resource = "*",
+      }],
+    })
+  }
 }
 
 resource "aws_iam_role" "roleNodeEKS" {
   name = "roleNodeEKS"
-
-  assume_role_policy = jsonencode({
-    "Version"   : "2012-10-17",
-    "Statement" : [{
-      "Effect"    : "Allow",
-      "Principal" : {
-        "Service" : "ec2.amazonaws.com"
-      },
-      "Action"    : "sts:AssumeRole"
-    }]
-  })
+  assume_role_policy = data.aws_iam_policy_document.policyDocNodeEKS.json
 }
 
 resource "aws_iam_role_policy_attachment" "policyEKSAmazonEKSClusterPolicy" {
