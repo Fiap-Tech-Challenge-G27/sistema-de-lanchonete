@@ -2,18 +2,17 @@ import { Inject, Injectable } from '@nestjs/common';
 import { IExceptionService } from 'src/shared/exceptions/exceptions.interface';
 import { UseCase } from '@shared/core/use-case';
 import { OrderState, PaymentState } from '@orders/core/order.entity';
-import { UpdateOrderDto } from '../dtos/update-customer.dto';
 import { IOrderRepository } from '../core/order-repository.abstract';
 
 const PAYMENT_STATUS_MAP = new Map<string, PaymentState>([
-  ["approved", PaymentState.Approved],
-  ["canceled", PaymentState.Canceled]
-])
+  ['approved', PaymentState.Approved],
+  ['canceled', PaymentState.Canceled],
+]);
 
 const ORDER_STATUS_MAP = new Map<string, OrderState>([
-  ["approved", OrderState.InPreparation],
-  ["canceled", OrderState.Finished]
-])
+  ['approved', OrderState.InPreparation],
+  ['canceled', OrderState.Finished],
+]);
 
 @Injectable()
 export class ConfirmatePaymentUseCase implements UseCase {
@@ -22,7 +21,7 @@ export class ConfirmatePaymentUseCase implements UseCase {
     private readonly orderRepository: IOrderRepository,
     @Inject(IExceptionService)
     private readonly exceptionService: IExceptionService,
-  ) { }
+  ) {}
 
   async execute(orderId: string, paymentStatus: string) {
     const orderExists = await this.orderRepository.findOne(orderId);
@@ -46,7 +45,10 @@ export class ConfirmatePaymentUseCase implements UseCase {
 
     const updatedOrder = { ...orderExists, ...fieldsToUpdate };
 
-    const updatedCustomer = await this.orderRepository.update(orderId, updatedOrder);
+    const updatedCustomer = await this.orderRepository.update(
+      orderId,
+      updatedOrder,
+    );
 
     return updatedCustomer;
   }

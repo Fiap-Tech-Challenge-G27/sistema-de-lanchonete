@@ -65,6 +65,21 @@ export class OrderRepository implements IOrderRepository {
     return orders.map((order) => this.mapModelToEntity(order));
   }
 
+  async findAllByCustomerId(customerId: string): Promise<OrderEntity[]> {
+    const orders = await this.orderRepository.find({
+      where: { customer: { id: customerId } },
+      relations: {
+        orders_products_amounts: {
+          product: {
+            category: true,
+          },
+        },
+      },
+    });
+
+    return orders.map((order) => this.mapModelToEntity(order));
+  }
+
   async findOne(id: string): Promise<OrderEntity> {
     try {
       const order = await this.orderRepository.findOne({

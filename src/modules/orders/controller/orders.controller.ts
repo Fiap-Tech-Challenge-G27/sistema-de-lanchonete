@@ -1,7 +1,17 @@
 import { FindAllOrdersUseCase } from './../use-cases/find-all-orders.usecase';
 import { CreateOrderUseCase } from './../use-cases/create-order.usecase';
-import { Controller, Get, Post, Body, Param, Patch } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Patch,
+  UseGuards,
+  Request,
+} from '@nestjs/common';
+import { AuthGuard } from '@modules/auth/auth.guard';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { CreateOrderDto } from 'src/modules/orders/dtos/create-order.dto';
 import { FindOrderUseCase } from '../use-cases/find-order.usecase';
 import { UpdateOrderDto } from '../dtos/update-customer.dto';
@@ -21,13 +31,17 @@ export class OrdersController {
   ) {}
 
   @Post()
-  create(@Body() createOrdersDto: CreateOrderDto) {
-    return this.createOrderUseCase.execute(createOrdersDto);
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  create(@Body() createOrdersDto: CreateOrderDto, @Request() req) {
+    return this.createOrderUseCase.execute(createOrdersDto, req.customer.data);
   }
 
   @Get()
-  findAll() {
-    return this.findAllOrdersUseCase.execute();
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard)
+  findAll(@Request() req) {
+    return this.findAllOrdersUseCase.execute(req.customer.data);
   }
 
   @Get(':id')
@@ -47,9 +61,9 @@ export class OrdersController {
   receivePaymentConfirmation(
     @Body() payment_confirmation: PaymentConfirmationDto,
   ): Promise<void> {
-    const orderId = payment_confirmation['identifier']['orderId']
-    const status = payment_confirmation['status']
+    const orderId = payment_confirmation['identifier']['orderId'];
+    const status = payment_confirmation['status'];
 
-    return this.confirmatePaymentUseCase.execute(orderId, status)
+    return this.confirmatePaymentUseCase.execute(orderId, status);
   }
 }
