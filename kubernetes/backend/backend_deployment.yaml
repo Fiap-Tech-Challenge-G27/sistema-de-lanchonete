@@ -13,8 +13,8 @@ spec:
         app: backend
     spec:
       containers:
-        - name: backend
-          image: tech_challenge_fiap_4_group_27:latest
+        - name: sistema-de-lanchonete
+          image: 851725345801.dkr.ecr.us-east-1.amazonaws.com/sistema-de-lanchonete:{{VERSION}}
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 3000
