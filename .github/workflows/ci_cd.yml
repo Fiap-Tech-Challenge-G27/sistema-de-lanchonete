@@ -46,9 +46,9 @@ jobs:
         
       # - name: Update deployment.yaml
       #   run: |
-      #     sed -i "s/{{VERSION}}/$VERSION/g" kubernetes/sistema-de-pagamento/sistema-de-pagamento-deployment.yaml
+      #     sed -i "s/{{VERSION}}/$VERSION/g" kubernetes/sistema-de-lanchonete/sistema-de-lanchonete-deployment.yaml
           
       # - name: Deploy to AWS EKS
       #   run: |
-      #     kubectl apply -f kubernetes/sistema-de-pagamento/sistema-de-pagamento-deployment.yaml
-      #     kubectl apply -f kubernetes/sistema-de-pagamento/sistema-de-pagamento-service.yml
+      #     kubectl apply -f kubernetes/sistema-de-lanchonete/sistema-de-lanchonete-deployment.yaml
+      #     kubectl apply -f kubernetes/sistema-de-lanchonete/sistema-de-lanchonete-service.yml
