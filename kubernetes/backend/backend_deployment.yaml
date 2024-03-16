@@ -28,11 +28,48 @@ spec:
               port: 3000
             initialDelaySeconds: 60
             periodSeconds: 10
-          envFrom:
-            - configMapRef:
-                name: backend-configmap
+          env:
+            - name: DATABASE_DIALECT
+              value: 'postgres'
+            - name: POSTGRES_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: db_credentials  # Nome do Kubernetes Secret onde os segredos estão armazenados
+                  key: host  # Chave do segredo correspondente no AWS Secrets Manager
+            - name: POSTGRES_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: db_credentials
+                  key: port
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: db_credentials
+                  key: username
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db_credentials
+                  key: password
+            - name: POSTGRES_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: db_credentials
+                  key: db
+            - name: TYPEORM_CONNECTION
+              value: 'postgres'
+            - name: TYPEORM_URL
+              value: 'postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DATABASE}'  # Ajuste necessário no código da aplicação
+            - name: PAYMENT_API_URL
+              value: 'http://sistema-de-pagamento:3000/payment'
+      volumes:
+        - name: secrets-store-inline
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: "aws-secrets"  # O nome do seu SecretProviderClass
       restartPolicy: Always
-
 ---
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
@@ -47,19 +84,69 @@ spec:
   maxReplicas: 10
   targetCPUUtilizationPercentage: 80
 
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: backend-configmap
-data:
-  DATABASE_DIALECT: 'postgres'
-  POSTGRES_HOST: 'postgres'
-  POSTGRES_PORT: '5432'
-  POSTGRES_USER: 'admin'
-  POSTGRES_PASSWORD: 'admin'
-  POSTGRES_DATABASE: 'app'
-  POSTGRES_DB: 'app'
-  TYPEORM_CONNECTION: 'postgres'
-  TYPEORM_URL: 'postgres://admin:admin@postgresql:5432/app'
-  PAYMENT_API_URL: 'http://sistema-de-pagamento:3000/payment'
+
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: backend
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       app: backend
+#   template:
+#     metadata:
+#       labels:
+#         app: backend
+#     spec:
+#       containers:
+#         - name: sistema-de-lanchonete
+#           image: 851725345801.dkr.ecr.us-east-1.amazonaws.com/sistema-de-lanchonete:{{VERSION}}
+#           imagePullPolicy: IfNotPresent
+#           ports:
+#             - containerPort: 3000
+#           resources:
+#             limits:
+#               memory: "512Mi"
+#               cpu: "0.5"
+#           livenessProbe:
+#             httpGet:
+#               path: /health
+#               port: 3000
+#             initialDelaySeconds: 60
+#             periodSeconds: 10
+#           envFrom:
+#             - configMapRef:
+#                 name: backend-configmap
+#       restartPolicy: Always
+
+# ---
+# apiVersion: autoscaling/v1
+# kind: HorizontalPodAutoscaler
+# metadata:
+#   name: backend
+# spec:
+#   scaleTargetRef:
+#     apiVersion: apps/v1
+#     kind: Deployment
+#     name: backend
+#   minReplicas: 1
+#   maxReplicas: 10
+#   targetCPUUtilizationPercentage: 80
+
+# ---
+# apiVersion: v1
+# kind: ConfigMap
+# metadata:
+#   name: backend-configmap
+# data:
+#   DATABASE_DIALECT: 'postgres'
+#   POSTGRES_HOST: 'postgres'
+#   POSTGRES_PORT: '5432'
+#   POSTGRES_USER: 'admin'
+#   POSTGRES_PASSWORD: 'admin'
+#   POSTGRES_DATABASE: 'app'
+#   POSTGRES_DB: 'app'
+#   TYPEORM_CONNECTION: 'postgres'
+#   TYPEORM_URL: 'postgres://admin:admin@postgresql:5432/app'
+#   PAYMENT_API_URL: 'http://sistema-de-pagamento:3000/payment'
