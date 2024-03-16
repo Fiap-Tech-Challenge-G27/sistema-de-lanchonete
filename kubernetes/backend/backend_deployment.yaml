@@ -13,8 +13,8 @@ spec:
         app: backend
     spec:
       containers:
-        - name: backend
-          image: tech_challenge_fiap_4_group_27:latest
+        - name: sistema-de-lanchonete
+          image: 851725345801.dkr.ecr.us-east-1.amazonaws.com/sistema-de-lanchonete:{{VERSION}}
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 3000
@@ -62,4 +62,4 @@ data:
   POSTGRES_DB: 'app'
   TYPEORM_CONNECTION: 'postgres'
   TYPEORM_URL: 'postgres://admin:admin@postgresql:5432/app'
-  PAYMENT_API_URL: 'http://payment-mock:3000/payment'
+  PAYMENT_API_URL: 'http://sistema-de-pagamento:3000/payment'

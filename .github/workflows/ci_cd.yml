@@ -1,0 +1,52 @@
+name: Build and Push to ECR and Deploy to EKS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      AWS_REGION: ${{ secrets.AWS_REGION }}
+     
+      ECR_REPOSITORY: sistema-de-lanchonete
+      VERSION: ${{ github.run_number }}
+    
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+          aws-region:  ${{ secrets.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v1
+        with:
+          registries: ${{ secrets.AWS_ACCOUNT_ID }}
+          mask-password: "true" # see: https://github.com/aws-actions/amazon-ecr-login#docker-credentials    
+
+      - name: Set Docker buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and Push Docker image
+        run: |
+          
+          
+    
+        
+      # - name: Update deployment.yaml
+      #   run: |
+      #     sed -i "s/{{VERSION}}/$VERSION/g" kubernetes/sistema-de-lanchonete/sistema-de-lanchonete-deployment.yaml
+          
+      # - name: Deploy to AWS EKS
+      #   run: |
+      #     kubectl apply -f kubernetes/sistema-de-lanchonete/sistema-de-lanchonete-deployment.yaml
+      #     kubectl apply -f kubernetes/sistema-de-lanchonete/sistema-de-lanchonete-service.yml

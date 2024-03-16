@@ -2,8 +2,7 @@
 node_modules
 npm-debug.log
 dist
-minikube.exe
-kubectl.exe
-start_windows.ps1
-start_linux.sh
 kubernetes
+docs
+scripts
+requests.rest
