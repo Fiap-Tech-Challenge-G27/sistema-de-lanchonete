@@ -58,13 +58,10 @@ jobs:
             echo "::set-output name=exists::false"
           fi
 
-      - name: Instalar/Atualizar o Secrets Store CSI Driver
+      - name: Instalar o Secrets Store CSI Driver se não estiver instalado
+        if: steps.csi_driver_check.outputs.exists == 'false'
         run: |
-          if [ "${{ steps.csi_driver_check.outputs.exists }}" == "true" ]; then
-            helm upgrade -n kube-system csi-secrets-store secrets-store-csi-driver/secrets-store-csi-driver
-          else
-            helm install -n kube-system csi-secrets-store secrets-store-csi-driver/secrets-store-csi-driver
-          fi
+          helm install -n kube-system csi-secrets-store secrets-store-csi-driver/secrets-store-csi-driver
 
       - name: Adicionar Helm repo para o AWS Secrets Manager
         run: |
@@ -80,13 +77,10 @@ jobs:
             echo "::set-output name=exists::false"
           fi
 
-      - name: Instalar/Atualizar o AWS Secrets Manager provider
+      - name: Instalar o AWS Secrets Manager provider se não estiver instalado
+        if: steps.aws_provider_check.outputs.exists == 'false'
         run: |
-          if [ "${{ steps.aws_provider_check.outputs.exists }}" == "true" ]; then
-            helm upgrade -n kube-system secrets-provider-aws aws-secrets-manager/secrets-store-csi-driver-provider-aws
-          else
-            helm install -n kube-system secrets-provider-aws aws-secrets-manager/secrets-store-csi-driver-provider-aws
-          fi
+          helm install -n kube-system secrets-provider-aws aws-secrets-manager/secrets-store-csi-driver-provider-aws
 
       - name: Aplicar SecretProviderClass
         run: kubectl apply -f kubernetes/backend/secretproviderclass.yaml
