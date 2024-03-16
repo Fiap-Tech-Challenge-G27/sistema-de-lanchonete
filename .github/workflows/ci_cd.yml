@@ -11,10 +11,10 @@ jobs:
 
     env:
       AWS_REGION: ${{ secrets.AWS_REGION }}
-      ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
+      ECR_REGISTRY: 851725345801.dkr.ecr.us-east-1.amazonaws.com
       ECR_REPOSITORY: sistema-de-lanchonete
       VERSION: ${{ github.run_number }}
-      EKS_CLUSTER_NAME: eks-techchallenge
+      EKS_CLUSTER_NAME: techchallenge
 
     steps:
       - name: Checkout Repository
@@ -38,11 +38,32 @@ jobs:
 
       - name: Build and Push Docker image
         run: |
-          docker buildx build --platform linux/amd64 -t $ECR_REGISTRY/$ECR_REPOSITORY:$VERSION .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$VERSION
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$GITHUB_RUN_NUMBER .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$GITHUB_RUN_NUMBER
           
       - name: Update kube config
         run: aws eks update-kubeconfig --name $EKS_CLUSTER_NAME --region $AWS_REGION
+
+      - name: Adicionar Helm repo para o Secrets Store CSI Driver
+        run: |
+          helm repo add secrets-store-csi-driver https://kubernetes-sigs.github.io/secrets-store-csi-driver/charts
+          helm repo update
+
+      - name: Instalar o Secrets Store CSI Driver
+        run: |
+          helm install -n kube-system csi-secrets-store secrets-store-csi-driver/secrets-store-csi-driver
+
+      - name: Adicionar Helm repo para o AWS Secrets Manager
+        run: |
+          helm repo add aws-secrets-manager https://aws.github.io/secrets-store-csi-driver-provider-aws
+          helm repo update
+
+      - name: Instalar o AWS Secrets Manager provider
+        run: |
+          helm install -n kube-system secrets-provider-aws aws-secrets-manager/secrets-store-csi-driver-provider-aws
+
+      - name: Aplicar SecretProviderClass
+        run: kubectl apply -f kubernetes/backend/secretproviderclass.yaml
         
       - name: Update deployment.yaml
         run: |
