@@ -46,21 +46,47 @@ jobs:
 
       - name: Adicionar Helm repo para o Secrets Store CSI Driver
         run: |
-          helm repo add secrets-store-csi-driver https://kubernetes-sigs.github.io/secrets-store-csi-driver/charts
+          helm repo add secrets-store-csi-driver https://kubernetes-sigs.github.io/secrets-store-csi-driver/charts || true
           helm repo update
 
-      - name: Instalar o Secrets Store CSI Driver
+      - name: Verificar se o Secrets Store CSI Driver já está instalado
+        id: csi_driver_check
         run: |
-          helm install -n kube-system csi-secrets-store secrets-store-csi-driver/secrets-store-csi-driver
+          if helm list -n kube-system | grep -q 'csi-secrets-store'; then
+            echo "::set-output name=exists::true"
+          else
+            echo "::set-output name=exists::false"
+          fi
+
+      - name: Instalar/Atualizar o Secrets Store CSI Driver
+        run: |
+          if [ "${{ steps.csi_driver_check.outputs.exists }}" == "true" ]; then
+            helm upgrade -n kube-system csi-secrets-store secrets-store-csi-driver/secrets-store-csi-driver
+          else
+            helm install -n kube-system csi-secrets-store secrets-store-csi-driver/secrets-store-csi-driver
+          fi
 
       - name: Adicionar Helm repo para o AWS Secrets Manager
         run: |
-          helm repo add aws-secrets-manager https://aws.github.io/secrets-store-csi-driver-provider-aws
+          helm repo add aws-secrets-manager https://aws.github.io/secrets-store-csi-driver-provider-aws || true
           helm repo update
 
-      - name: Instalar o AWS Secrets Manager provider
+      - name: Verificar se o AWS Secrets Manager provider já está instalado
+        id: aws_provider_check
         run: |
-          helm install -n kube-system secrets-provider-aws aws-secrets-manager/secrets-store-csi-driver-provider-aws
+          if helm list -n kube-system | grep -q 'secrets-provider-aws'; then
+            echo "::set-output name=exists::true"
+          else
+            echo "::set-output name=exists::false"
+          fi
+
+      - name: Instalar/Atualizar o AWS Secrets Manager provider
+        run: |
+          if [ "${{ steps.aws_provider_check.outputs.exists }}" == "true" ]; then
+            helm upgrade -n kube-system secrets-provider-aws aws-secrets-manager/secrets-store-csi-driver-provider-aws
+          else
+            helm install -n kube-system secrets-provider-aws aws-secrets-manager/secrets-store-csi-driver-provider-aws
+          fi
 
       - name: Aplicar SecretProviderClass
         run: kubectl apply -f kubernetes/backend/secretproviderclass.yaml
