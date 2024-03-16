@@ -34,27 +34,27 @@ spec:
             - name: POSTGRES_HOST
               valueFrom:
                 secretKeyRef:
-                  name: db_credentials  # Nome do Kubernetes Secret onde os segredos estão armazenados
+                  name: dbcredentials  # Nome do Kubernetes Secret onde os segredos estão armazenados
                   key: host  # Chave do segredo correspondente no AWS Secrets Manager
             - name: POSTGRES_PORT
               valueFrom:
                 secretKeyRef:
-                  name: db_credentials
+                  name: dbcredentials
                   key: port
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
-                  name: db_credentials
+                  name: dbcredentials
                   key: username
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: db_credentials
+                  name: dbcredentials
                   key: password
             - name: POSTGRES_DATABASE
               valueFrom:
                 secretKeyRef:
-                  name: db_credentials
+                  name: dbcredentials
                   key: db
             - name: TYPEORM_CONNECTION
               value: 'postgres'
