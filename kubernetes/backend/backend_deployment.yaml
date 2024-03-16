@@ -59,7 +59,10 @@ spec:
             - name: TYPEORM_CONNECTION
               value: 'postgres'
             - name: TYPEORM_URL
-              value: 'postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DATABASE}'  # Ajuste necessário no código da aplicação
+              valueFrom:
+                secretKeyRef:
+                  name: dbcredentials
+                  key: typeorm
             - name: PAYMENT_API_URL
               value: 'http://sistema-de-pagamento:3000/payment'
       volumes:
