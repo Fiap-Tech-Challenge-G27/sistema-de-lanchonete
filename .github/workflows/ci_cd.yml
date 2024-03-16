@@ -11,10 +11,10 @@ jobs:
 
     env:
       AWS_REGION: ${{ secrets.AWS_REGION }}
-      ECR_REGISTRY: 851725345801.dkr.ecr.us-east-1.amazonaws.com
+     
       ECR_REPOSITORY: sistema-de-lanchonete
       VERSION: ${{ github.run_number }}
-      EKS_CLUSTER_NAME: techchallenge
+    
 
     steps:
       - name: Checkout Repository
@@ -25,7 +25,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
+          aws-region:  ${{ secrets.AWS_REGION }}
 
       - name: Login to Amazon ECR
         uses: aws-actions/amazon-ecr-login@v1
@@ -38,39 +38,15 @@ jobs:
 
       - name: Build and Push Docker image
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$GITHUB_RUN_NUMBER .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$GITHUB_RUN_NUMBER
           
-      - name: Update kube config
-        run: aws eks update-kubeconfig --name $EKS_CLUSTER_NAME --region $AWS_REGION
-
-      - name: Adicionar Helm repo para o Secrets Store CSI Driver
-        run: |
-          helm repo add secrets-store-csi-driver https://kubernetes-sigs.github.io/secrets-store-csi-driver/charts
-          helm repo update
-
-      - name: Instalar o Secrets Store CSI Driver
-        run: |
-          helm install -n kube-system csi-secrets-store secrets-store-csi-driver/secrets-store-csi-driver
-
-      - name: Adicionar Helm repo para o AWS Secrets Manager
-        run: |
-          helm repo add aws-secrets-manager https://aws.github.io/secrets-store-csi-driver-provider-aws
-          helm repo update
-
-      - name: Instalar o AWS Secrets Manager provider
-        run: |
-          helm install -n kube-system secrets-provider-aws aws-secrets-manager/secrets-store-csi-driver-provider-aws
-
-      - name: Aplicar SecretProviderClass
-        run: kubectl apply -f kubernetes/backend/secretproviderclass.yaml
+          
+    
         
-      - name: Update deployment.yaml
-        run: |
-          chmod +x update_deployment.sh
-          ./update_deployment.sh $VERSION
-
-      - name: Deploy to AWS EKS
-        run: |
-          kubectl apply -f kubernetes/backend/backend_deployment.yaml
-          kubectl apply -f kubernetes/backend/backend_service.yml
+      # - name: Update deployment.yaml
+      #   run: |
+      #     sed -i "s/{{VERSION}}/$VERSION/g" kubernetes/sistema-de-lanchonete/sistema-de-lanchonete-deployment.yaml
+          
+      # - name: Deploy to AWS EKS
+      #   run: |
+      #     kubectl apply -f kubernetes/sistema-de-lanchonete/sistema-de-lanchonete-deployment.yaml
+      #     kubectl apply -f kubernetes/sistema-de-lanchonete/sistema-de-lanchonete-service.yml
