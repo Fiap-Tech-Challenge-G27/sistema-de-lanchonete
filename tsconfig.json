@@ -24,7 +24,7 @@
       "@orders/*": ["src/modules/orders/*"],
       "@products/*": ["src/modules/products/*"],
       "@customers/*": ["src/modules/customers/*"],
-      "@categories/*": ["src/modules/categories/*"],
+      "@categories/*": ["src/modules/categories/*"]
     }
   }
 }

@@ -24,7 +24,7 @@ import { UpdateOrderUseCase } from './use-cases/update-order.usecase';
 import { ConfirmatePaymentUseCase } from './use-cases/confimate-payment.usecase';
 import { IPaymentGateway } from './core/payment-gateway';
 import { PaymentGateway } from './infra/typeorm/thirdParties/payment-gateway';
-import { ConfigModule } from '@nestjs/config';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -34,7 +34,8 @@ import { ConfigModule } from '@nestjs/config';
       Category,
       Customer,
       Product,
-    ])
+    ]),
+    JwtModule,
   ],
   controllers: [OrdersController],
   providers: [
@@ -56,7 +57,7 @@ import { ConfigModule } from '@nestjs/config';
     },
     {
       provide: IPaymentGateway,
-      useClass: PaymentGateway
+      useClass: PaymentGateway,
     },
     OrderMapper,
     OrderProductMapper,
@@ -69,4 +70,4 @@ import { ConfigModule } from '@nestjs/config';
     ConfirmatePaymentUseCase,
   ],
 })
-export class OrdersModule { }
+export class OrdersModule {}

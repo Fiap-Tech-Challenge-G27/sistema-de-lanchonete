@@ -1,16 +1,16 @@
 {
 	"info": {
-		"_postman_id": "8c79f5b9-f930-46fc-bef7-2a0f1ebb19cd",
+		"_postman_id": "ed750d38-2d51-4ffc-82e4-162474734778",
 		"name": "Fiap_TechChallenge_G27",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "1842954"
+		"_exporter_id": "25814557"
 	},
 	"item": [
 		{
-			"name": "categories",
+			"name": "auth",
 			"item": [
 				{
-					"name": "Create categories",
+					"name": "Auth",
 					"event": [
 						{
 							"listen": "test",
@@ -18,139 +18,8 @@
 								"exec": [
 									"const jsonData = pm.response.json();",
 									"",
-									"if(!jsonData.error){",
-									"    const context = pm.environment.name ? pm.environment : pm.collectionVariables;",
-									"    context.set(\"_lastCategoryId\", jsonData.id);",
-									"    context.set(\"_lastCategorySlug\", jsonData.slug);",
-									"}",
-									"",
-									"pm.test(\"Status code is 201\", function () {",
-									"    pm.response.to.have.status(201);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"Drink\",\n    \"slug\": \"drink\",\n    \"description\": \"{{$randomLoremSentence}}\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/categories",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"categories"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get all categories",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/categories",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"categories"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get categories and products by slug",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test('Response status code is 200', function () {",
-									"    pm.expect(pm.response.code).to.equal(200);",
-									"})"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/categories/:slug",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"categories",
-								":slug"
-							],
-							"variable": [
-								{
-									"key": "slug",
-									"value": "drink"
-								}
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "products",
-			"item": [
-				{
-					"name": "Create products",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"const jsonData = pm.response.json();",
-									"",
-									"if(!jsonData.error){",
-									"    const context = pm.environment.name ? pm.environment : pm.collectionVariables;",
-									"    context.set(\"_lastProductId\", jsonData.id);",
-									"}",
-									"",
-									"pm.test(\"Status code is 201\", function () {",
-									"    pm.response.to.have.status(201);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
+									"const context = pm.environment.name ? pm.environment : pm.collectionVariables;",
+									"context.set(\"access_token\", jsonData.access_token);",
 									""
 								],
 								"type": "text/javascript"
@@ -162,7 +31,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"{{$randomProductName}}\",\n    \"description\": \"{{$randomProductName}} description\",\n    \"price\": {{$randomPrice}},\n    \"quantity\": {{$randomInt}},\n    \"categoryId\": \"{{_lastCategoryId}}\",\n    \"status\": \"active\"\n}",
+							"raw": "{\n    \"cpf\": \"847177\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -170,73 +39,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/products",
+							"raw": "{{authEndpoint}}/auth",
 							"host": [
-								"{{baseUrl}}"
+								"{{authEndpoint}}"
 							],
 							"path": [
-								"products"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get all products",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"const jsonData = pm.response.json();",
-									"",
-									"if(!jsonData.error){",
-									"    const context = pm.environment.name ? pm.environment : pm.collectionVariables;",
-									"    context.set(\"_lastProductId\", jsonData[0].id);",
-									"}",
-									"",
-									"pm.test(\"Status code is 201\", function () {",
-									"    pm.response.to.have.status(201);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/products",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"products"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete a product",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/products/:productId",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"products",
-								":productId"
-							],
-							"variable": [
-								{
-									"key": "productId",
-									"value": ""
-								}
+								"auth"
 							]
 						}
 					},
@@ -245,288 +53,465 @@
 			]
 		},
 		{
-			"name": "customers",
-			"item": [
+			"name": "Create categories",
+			"event": [
 				{
-					"name": "Create a customer",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"const jsonData = pm.response.json();",
-									"",
-									"if(!jsonData.error){",
-									"    const context = pm.environment.name ? pm.environment : pm.collectionVariables;",
-									"    context.set(\"_lastCustomerId\", jsonData.id);",
-									"    context.set(\"_lastCustomerCpf\", jsonData.cpf);",
-									"}",
-									"",
-									"pm.test(\"Status code is 201\", function () {",
-									"    pm.response.to.have.status(201);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"{{$randomFullName}}\",\n    \"email\": \"{{$randomEmail}}\",\n    \"cpf\": \"{{$randomInt}}{{$randomInt}}\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/customers",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"customers"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get all customers",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test('Response status code is 200', function () {",
-									"    pm.response.to.have.status(200);",
-									"})",
-									"",
-									"pm.test('Response body is an array', function () {",
-									"    pm.expect(pm.response.json()).to.be.an('array');",
-									"})"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/customers",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"customers"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "orders",
-			"item": [
-				{
-					"name": "Create a order",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"const jsonData = pm.response.json();",
-									"",
-									"if(!jsonData.error){",
-									"    const context = pm.environment.name ? pm.environment : pm.collectionVariables;",
-									"    context.set(\"_lastCustomerId\", jsonData.id);",
-									"}",
-									"",
-									"pm.test(\"Status code is 201\", function () {",
-									"    pm.response.to.have.status(201);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"customer_cpf\": \"{{_lastCustomerCpf}}\",\n    \"orderProducts\": [\n        {\n            \"productId\": \"{{_lastProductId}}\",\n            \"amount\": 3\n        }\n    ]\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/orders",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"orders"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get orders",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"const jsonData = pm.response.json();",
-									"",
-									"if(!jsonData.error){",
-									"    const context = pm.environment.name ? pm.environment : pm.collectionVariables;",
-									"    context.set(\"_lastCustomerId\", jsonData[0].id);",
-									"    context.set(\"_lastOrderId\", jsonData[0].id)",
-									"}",
-									"",
-									"pm.test(\"Status code is 200\", function () {",
-									"    pm.response.to.have.status(200);",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/orders",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"orders"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get order",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{baseUrl}}/orders/{{_lastOrderId}}",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"orders",
-								"{{_lastOrderId}}"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update order state",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "PATCH",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();",
+							"",
+							"if(!jsonData.error){",
+							"    const context = pm.environment.name ? pm.environment : pm.collectionVariables;",
+							"    context.set(\"_lastCategoryId\", jsonData.id);",
+							"    context.set(\"_lastCategorySlug\", jsonData.slug);",
+							"}",
+							"",
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});"
 						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"state\": \"InPreparation\"\n}"
-						},
-						"url": {
-							"raw": "{{baseUrl}}/orders/{{_lastOrderId}}/state",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"orders",
-								"{{_lastOrderId}}",
-								"state"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Webhook order payment",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"id\": \"{{_lastOrderId}}\",\n    \"paymentState\": \"Approved\"\n}"
-						},
-						"url": {
-							"raw": "{{baseUrl}}/orders/webhooks/payment",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"orders",
-								"webhooks",
-								"payment"
-							]
-						}
-					},
-					"response": []
+						"type": "text/javascript"
+					}
 				}
-			]
-		},
-		{
-			"name": "Toggle Payment Mock",
+			],
 			"request": {
-				"method": "PUT",
+				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Drink\",\n    \"slug\": \"drink\",\n    \"description\": \"{{$randomLoremSentence}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "{{mockUrl}}/toggle",
+					"raw": "{{baseUrl}}/categories",
 					"host": [
-						"{{mockUrl}}"
+						"{{baseUrl}}"
 					],
 					"path": [
-						"toggle"
+						"categories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all categories",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();",
+							"",
+							"if(!jsonData.error){",
+							"    const context = pm.environment.name ? pm.environment : pm.collectionVariables;",
+							"    context.set(\"_lastCategoryId\", jsonData[0].id);",
+							"    context.set(\"_lastCategorySlug\", jsonData[0].slug);",
+							"}",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/categories",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"categories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get categories and products by slug",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Response status code is 200', function () {",
+							"    pm.expect(pm.response.code).to.equal(200);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/categories/:slug",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"categories",
+						":slug"
+					],
+					"variable": [
+						{
+							"key": "slug",
+							"value": "drink"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create products",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();",
+							"",
+							"if(!jsonData.error){",
+							"    const context = pm.environment.name ? pm.environment : pm.collectionVariables;",
+							"    context.set(\"_lastProductId\", jsonData.id);",
+							"}",
+							"",
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"{{$randomProductName}}\",\n    \"description\": \"{{$randomProductName}} description\",\n    \"price\": {{$randomPrice}},\n    \"quantity\": {{$randomInt}},\n    \"categoryId\": \"{{_lastCategoryId}}\",\n    \"status\": \"active\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/products",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all products",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();",
+							"",
+							"if(!jsonData.error){",
+							"    const context = pm.environment.name ? pm.environment : pm.collectionVariables;",
+							"    context.set(\"_lastProductId\", jsonData[0].id);",
+							"}",
+							"",
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/products",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a product",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/products/:productId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"products",
+						":productId"
+					],
+					"variable": [
+						{
+							"key": "productId",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a customer",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();",
+							"",
+							"if(!jsonData.error){",
+							"    const context = pm.environment.name ? pm.environment : pm.collectionVariables;",
+							"    context.set(\"_lastCustomerId\", jsonData.id);",
+							"    context.set(\"_lastCustomerCpf\", jsonData.cpf);",
+							"}",
+							"",
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"{{$randomFullName}}\",\n    \"email\": \"{{$randomEmail}}\",\n    \"cpf\": \"{{$randomInt}}{{$randomInt}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/customers",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"customers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all customers",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Response status code is 200', function () {",
+							"    pm.response.to.have.status(200);",
+							"})",
+							"",
+							"pm.test('Response body is an array', function () {",
+							"    pm.expect(pm.response.json()).to.be.an('array');",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/customers",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"customers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a order",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();",
+							"",
+							"if(!jsonData.error){",
+							"    const context = pm.environment.name ? pm.environment : pm.collectionVariables;",
+							"    context.set(\"_lastCustomerId\", jsonData.id);",
+							"}",
+							"",
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"orderProducts\": [\n        {\n            \"productId\": \"{{_lastProductId}}\",\n            \"amount\": 5\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/orders",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get orders",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();",
+							"",
+							"if(!jsonData.error){",
+							"    const context = pm.environment.name ? pm.environment : pm.collectionVariables;",
+							"    context.set(\"_lastCustomerId\", jsonData.id);",
+							"}",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access_token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/orders",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get orders Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();",
+							"",
+							"if(!jsonData.error){",
+							"    const context = pm.environment.name ? pm.environment : pm.collectionVariables;",
+							"    context.set(\"_lastCustomerId\", jsonData.id);",
+							"}",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3333/api/payment/bill/process",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3333",
+					"path": [
+						"api",
+						"payment",
+						"bill",
+						"process"
 					]
 				}
 			},
@@ -556,13 +541,17 @@
 	"variable": [
 		{
 			"key": "baseUrl",
-			"value": "http://192.168.49.2:3000",
+			"value": "http://localhost:3000",
 			"type": "string"
 		},
 		{
-			"key": "mockUrl",
-			"value": "",
+			"key": "authEndpoint",
+			"value": "http://localhost:3001",
 			"type": "string"
+		},
+		{
+			"key": "access_token",
+			"value": ""
 		},
 		{
 			"key": "_lastCategoryID",
@@ -587,11 +576,6 @@
 		{
 			"key": "_lastCategorySlug",
 			"value": ""
-		},
-		{
-			"key": "_lastOrderId",
-			"value": "",
-			"type": "string"
 		}
 	]
 }
