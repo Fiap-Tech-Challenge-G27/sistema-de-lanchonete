@@ -12,6 +12,7 @@ spec:
       labels:
         app: backend
     spec:
+      serviceAccountName: irsasecrets
       containers:
         - name: sistema-de-lanchonete
           image: 851725345801.dkr.ecr.us-east-1.amazonaws.com/sistema-de-lanchonete:{{VERSION}}
@@ -90,7 +91,7 @@ spec:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: irsaSecrets
+  name: irsasecrets
   annotations:
     eks.amazonaws.com/role-arn: "arn:aws:iam::851725345801:role/roleNodeSecrets"
 
