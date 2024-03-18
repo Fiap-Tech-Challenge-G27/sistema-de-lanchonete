@@ -13,8 +13,10 @@ export class PostgresConfigServiceService implements TypeOrmOptionsFactory {
   constructor(private configService: ConfigService) {}
   createTypeOrmOptions(): TypeOrmModuleOptions | Promise<TypeOrmModuleOptions> {
     return {
-      type: this.configService.get('TYPEORM_CONNECTION'),
-      url: this.configService.get('TYPEORM_URL'),
+      // type: this.configService.get('TYPEORM_CONNECTION'),
+      type: "postgres",
+      url: "postgres://fe0x8xEtGHbkj8ME:yTDcAvztw8TW9ixB@postgresapp.c5m86oo0sf33.us-east-1.rds.amazonaws.com:5432/app",
+      // url: this.configService.get('TYPEORM_URL'),
       entities: [Customer, Product, Order, Category, OrdersProductsAmounts],
       synchronize: true,
     };

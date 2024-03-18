@@ -29,54 +29,54 @@ spec:
               port: 3000
             initialDelaySeconds: 120
             periodSeconds: 10
-          volumeMounts:
-          - name: secrets-store-inline
-            mountPath: "/mnt/secrets-store"
-            readOnly: true
+          # volumeMounts:
+          # - name: secrets-store-inline
+          #   mountPath: "/mnt/secrets-store"
+          #   readOnly: true
           env:
             - name: DATABASE_DIALECT
               value: 'postgres'
-            - name: POSTGRES_HOST
-              valueFrom:
-                secretKeyRef:
-                  name: dbcredentials  # Nome do Kubernetes Secret onde os segredos estão armazenados
-                  key: host  # Chave do segredo correspondente no AWS Secrets Manager
-            - name: POSTGRES_PORT
-              valueFrom:
-                secretKeyRef:
-                  name: dbcredentials
-                  key: port
-            - name: POSTGRES_USER
-              valueFrom:
-                secretKeyRef:
-                  name: dbcredentials
-                  key: username
-            - name: POSTGRES_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: dbcredentials
-                  key: password
-            - name: POSTGRES_DATABASE
-              valueFrom:
-                secretKeyRef:
-                  name: dbcredentials
-                  key: db
-            - name: TYPEORM_CONNECTION
-              value: 'postgres'
-            - name: TYPEORM_URL
-              valueFrom:
-                secretKeyRef:
-                  name: dbcredentials
-                  key: typeorm
+            # - name: POSTGRES_HOST
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: dbcredentials  # Nome do Kubernetes Secret onde os segredos estão armazenados
+            #       key: host  # Chave do segredo correspondente no AWS Secrets Manager
+            # - name: POSTGRES_PORT
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: dbcredentials
+            #       key: port
+            # - name: POSTGRES_USER
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: dbcredentials
+            #       key: username
+            # - name: POSTGRES_PASSWORD
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: dbcredentials
+            #       key: password
+            # - name: POSTGRES_DATABASE
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: dbcredentials
+            #       key: db
+            # - name: TYPEORM_CONNECTION
+            #   value: 'postgres'
+            # - name: TYPEORM_URL
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: dbcredentials
+            #       key: typeorm
             - name: PAYMENT_API_URL
               value: 'http://sistema-de-pagamento:3000/payment'
-      volumes:
-        - name: secrets-store-inline
-          csi:
-            driver: secrets-store.csi.k8s.io
-            readOnly: true
-            volumeAttributes:
-              secretProviderClass: "aws-secrets"  # O nome do seu SecretProviderClass
+      # volumes:
+      #   - name: secrets-store-inline
+      #     csi:
+      #       driver: secrets-store.csi.k8s.io
+      #       readOnly: true
+      #       volumeAttributes:
+      #         secretProviderClass: "aws-secrets"  # O nome do seu SecretProviderClass
       restartPolicy: Always
 ---
 apiVersion: autoscaling/v1
