@@ -45,8 +45,8 @@ jobs:
       - name: Update kube config
         run: aws eks update-kubeconfig --name $EKS_CLUSTER_NAME --region $AWS_REGION
 
-      - name: Aplicar SecretProviderClass
-        run: kubectl apply -f kubernetes/backend/secretproviderclass.yaml
+      # - name: Aplicar SecretProviderClass
+      #   run: kubectl apply -f kubernetes/backend/secretproviderclass.yaml
         
       - name: Update deployment.yaml
         run: |
