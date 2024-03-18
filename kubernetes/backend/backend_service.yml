@@ -7,12 +7,13 @@ metadata:
       alb.ingress.kubernetes.io/scheme: internet-facing
       alb.ingress.kubernetes.io/healthcheck-protocol: HTTP 
       alb.ingress.kubernetes.io/healthcheck-port: traffic-port
-      alb.ingress.kubernetes.io/healthcheck-interval-seconds: '15'
+      alb.ingress.kubernetes.io/healthcheck-interval-seconds: '60'
       alb.ingress.kubernetes.io/healthcheck-timeout-seconds: '5'
       alb.ingress.kubernetes.io/success-codes: '200'
       alb.ingress.kubernetes.io/healthy-threshold-count: '2'
       alb.ingress.kubernetes.io/unhealthy-threshold-count: '2'
       alb.ingress.kubernetes.io/healthcheck-path: /health
+      alb.ingress.kubernetes.io/target-group-attributes: slow_start.duration_seconds=90
 spec:  
   rules:
   - http:
