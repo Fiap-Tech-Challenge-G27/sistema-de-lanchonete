@@ -56,4 +56,3 @@ jobs:
         run: |
           kubectl apply -f kubernetes/backend/backend_deployment.yaml
           kubectl apply -f kubernetes/backend/backend_service.yml
-          kubectl apply -f https://s3.us-west-2.amazonaws.com/amazon-eks/docs/eks-console-full-access.yaml
