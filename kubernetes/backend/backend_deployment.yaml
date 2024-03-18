@@ -28,6 +28,10 @@ spec:
               port: 3000
             initialDelaySeconds: 60
             periodSeconds: 10
+          volumeMounts:
+          - name: secrets-store-inline
+            mountPath: "/mnt/secrets-store"
+            readOnly: true
           env:
             - name: DATABASE_DIALECT
               value: 'postgres'
