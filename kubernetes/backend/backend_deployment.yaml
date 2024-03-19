@@ -39,8 +39,8 @@ spec:
             - name: POSTGRES_HOST
               valueFrom:
                 secretKeyRef:
-                  name: dbcredentials  # Nome do Kubernetes Secret onde os segredos estão armazenados
-                  key: host  # Chave do segredo correspondente no AWS Secrets Manager
+                  name: dbcredentials 
+                  key: host 
             - name: POSTGRES_PORT
               valueFrom:
                 secretKeyRef:
@@ -76,7 +76,7 @@ spec:
             driver: secrets-store.csi.k8s.io
             readOnly: true
             volumeAttributes:
-              secretProviderClass: "aws-secrets"  # O nome do seu SecretProviderClass
+              secretProviderClass: "aws-secrets"
       restartPolicy: Always
 ---
 apiVersion: autoscaling/v1
