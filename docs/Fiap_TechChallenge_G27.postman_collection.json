@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "ed750d38-2d51-4ffc-82e4-162474734778",
+		"_postman_id": "f40a0544-1122-4ed9-88e9-fd5eb10762c4",
 		"name": "Fiap_TechChallenge_G27",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "25814557"
+		"_exporter_id": "33698690"
 	},
 	"item": [
 		{
@@ -22,7 +22,8 @@
 									"context.set(\"access_token\", jsonData.access_token);",
 									""
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -71,7 +72,8 @@
 							"    pm.response.to.have.status(201);",
 							"});"
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],
@@ -80,7 +82,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"name\": \"Drink\",\n    \"slug\": \"drink\",\n    \"description\": \"{{$randomLoremSentence}}\"\n}",
+					"raw": "{\n    \"name\": \"Lanche\",\n    \"slug\": \"lanche\",\n    \"description\": \"{{$randomLoremSentence}}\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -234,11 +236,12 @@
 							"    context.set(\"_lastProductId\", jsonData[0].id);",
 							"}",
 							"",
-							"pm.test(\"Status code is 201\", function () {",
-							"    pm.response.to.have.status(201);",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
 							"});"
 						],
-						"type": "text/javascript"
+						"type": "text/javascript",
+						"packages": {}
 					}
 				}
 			],
@@ -269,6 +272,18 @@
 		},
 		{
 			"name": "Delete a product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
 			"request": {
 				"method": "DELETE",
 				"header": [],
@@ -470,48 +485,6 @@
 					],
 					"path": [
 						"orders"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get orders Copy",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"const jsonData = pm.response.json();",
-							"",
-							"if(!jsonData.error){",
-							"    const context = pm.environment.name ? pm.environment : pm.collectionVariables;",
-							"    context.set(\"_lastCustomerId\", jsonData.id);",
-							"}",
-							"",
-							"pm.test(\"Status code is 200\", function () {",
-							"    pm.response.to.have.status(200);",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:3333/api/payment/bill/process",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3333",
-					"path": [
-						"api",
-						"payment",
-						"bill",
-						"process"
 					]
 				}
 			},
