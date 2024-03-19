@@ -541,12 +541,12 @@
 	"variable": [
 		{
 			"key": "baseUrl",
-			"value": "http://localhost:3000",
+			"value": "https://f09dwx71k4.execute-api.us-east-1.amazonaws.com/lanchonete",
 			"type": "string"
 		},
 		{
 			"key": "authEndpoint",
-			"value": "http://localhost:3001",
+			"value": "https://f09dwx71k4.execute-api.us-east-1.amazonaws.com/lanchonete/auth",
 			"type": "string"
 		},
 		{
