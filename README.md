@@ -12,7 +12,9 @@
 
 ### Instruções para execução do projeto
 
-Utilizar collection [Postman](https://github.com/Fiap-Tech-Challenge-G27/sistema-de-lanchonete/blob/main/docs/Fiap_TechChallenge_G27.postman_collection.json) para chamada dos endpoints hospedados na AWS
+Utilizar collection [Postman](https://github.com/Fiap-Tech-Challenge-G27/sistema-de-lanchonete/blob/main/docs/Fiap_TechChallenge_G27.postman_collection.json) para chamada dos endpoints hospedados na AWS.
+
+Deploy automatizado via Github Actions
 
 ### Documentações
 
