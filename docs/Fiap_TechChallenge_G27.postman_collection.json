@@ -546,7 +546,7 @@
 		},
 		{
 			"key": "authEndpoint",
-			"value": "https://f09dwx71k4.execute-api.us-east-1.amazonaws.com/lanchonete/auth",
+			"value": "https://f09dwx71k4.execute-api.us-east-1.amazonaws.com/lanchonete",
 			"type": "string"
 		},
 		{
